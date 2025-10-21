@@ -11,16 +11,16 @@ namespace BankApp.Transactions
     {
 
         private Guid TransactionID { get; set; }
-        public int ToAccount { get; set; } //Should be AccountNumber not int
-        public int FromAccount { get; set; } // Should be AccountNumber
+        public AccountNumber ToAccount { get; set; } 
+        public AccountNumber FromAccount { get; set; } 
         public decimal Value { get; set; }
         public string TransactionName { get; set; }
         public string PersonalNote { get; set; }
         //bool isRecurring?
 
-        public Transaction(Guid transactionID, int toAccount, int fromAccount, decimal value, string transactionName, string personalNote)
+        public Transaction(Guid transactionID, AccountNumber toAccount, AccountNumber fromAccount, decimal value, string transactionName, string personalNote)
         {
-            TransactionID = transactionID;
+            TransactionID = Guid.NewGuid();
             ToAccount = toAccount;
             FromAccount = fromAccount;
             Value = value;

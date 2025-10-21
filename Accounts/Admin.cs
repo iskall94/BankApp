@@ -8,12 +8,8 @@ namespace BankApp.Accounts
 {
     internal class Admin : User
     {
-        public Admin(Guid userID, string passoword, string name, List<BankAccount> userBankAccount) : base(UserID, Password, name, userBankAccount)
+        public Admin(Guid userID, string password, string name, List<BankAccount> userBankAccount) : base(userID, password, name, userBankAccount)
         {
-            UserID = userID;
-            Password = password;
-            Name = name;
-            UserBankAccount = userBankAccount;
         }
 
         public void CreateUser()

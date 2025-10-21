@@ -10,7 +10,7 @@ namespace BankApp.Accounts
     {
         public User(Guid userID, string password, string name, List<BankAccount> userBankAccount)
         {
-            UserID = userID;
+            UserID = Guid.NewGuid();
             Password = password;
             Name = name;
             UserBankAccount = userBankAccount;
@@ -20,7 +20,7 @@ namespace BankApp.Accounts
         private string Password { get; set; }
         public string Name { get; set; }
 
-        private List<BankAccount> UserBankAccount { get; set; } = new List<BankAccount>
+        private List<BankAccount> UserBankAccount { get; set; } = new List<BankAccount>();
 
         public void Login()
         {

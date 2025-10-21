@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace BankApp.Accounts
 {
@@ -17,18 +18,19 @@ namespace BankApp.Accounts
             Balance = balance;
             Interest = interest;
             TransactionHistory = transactionHistory;
+            AccountNumber = AccountNumber.Generate();
         }
 
         public string AccountName { get; set; }
         public AccountType AccountType { get; set; }
         public Currency Currency { get; set; }
         
-        //AccountNumber
+        public AccountNumber AccountNumber { get; set; }
         private decimal Balance { get; set; }
 
         public float Interest { get; set; }
 
-        private List<Transaction> TransactionHistory { get; set; } = new List<Transaction>
+        private List<Transaction> TransactionHistory { get; set; } = new List<Transaction>();
 
         public decimal Withdraw()
         {

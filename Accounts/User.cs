@@ -6,6 +6,7 @@ using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace BankApp.Accounts
 {
@@ -45,6 +46,14 @@ namespace BankApp.Accounts
 
         }
 
+        public BankAccount FindAccount(AccountNumber accountNumber)
+        {
+            BankAccount foundAccount = UserBankAccounts.Find(a => a.AccountNumber == accountNumber);
+
+            return foundAccount;
+        }
+
+   
         public void CreateBankAccount(string accountName, AccountType accountType, Currency currency, decimal balance)
         {
             BankAccount account = new BankAccount(accountName, accountType, currency, balance);
@@ -56,7 +65,11 @@ namespace BankApp.Accounts
                 Console.WriteLine(account.Balance);
             }
             UserBankAccounts?.Add(account);
+           
+       
         }
+
+       
 
         public void EditBankAccount()
         {

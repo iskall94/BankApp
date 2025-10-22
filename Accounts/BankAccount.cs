@@ -10,6 +10,7 @@ namespace BankApp.Accounts
 {
     internal class BankAccount
     {
+      
         public BankAccount(string accountName, AccountType accountType, Currency currency, decimal balance)
         {
             AccountName = accountName;
@@ -20,6 +21,9 @@ namespace BankApp.Accounts
             TransactionHistory = new List <Transaction>();
             AccountNumber = AccountNumber.Generate();
         }
+
+
+       
 
         public string AccountName { get; set; }
         public AccountType AccountType { get; set; }
@@ -32,14 +36,14 @@ namespace BankApp.Accounts
 
         private List<Transaction> TransactionHistory { get; set; } = new List<Transaction>();
 
-        public decimal Withdraw()
+        public decimal Withdraw(decimal value)
         {
-            return 0;
+            return Balance - value;
         }
 
-        public decimal Deposit() 
+        public decimal Deposit(decimal value) 
         {
-            return 0; 
+            return Balance + value;
         }
 
         public void GetAccountHistory()

@@ -52,5 +52,15 @@ namespace BankApp.Accounts
 
         }
 
+        public override string ToString()
+        {
+            return $"Account: {AccountName}\n" +
+                   $"Type: {AccountType}\n" +
+                   $"Currency: {Currency}\n" +
+                   $"Balance: {Balance}\n" +
+                   $"Interest: {Interest}%\n" +
+                   $"AccountNumber: {AccountNumber}\n";
+        }
+
     }
 }

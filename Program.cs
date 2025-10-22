@@ -1,4 +1,6 @@
-﻿using BankApp.Enums;
+﻿using BankApp.Accounts;
+using BankApp.Enums;
+using System.Transactions;
 
 namespace BankApp
 {
@@ -6,11 +8,16 @@ namespace BankApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            List<Transaction> accountHistory = new List<Transaction>();
 
-            var TEST = AccountNumber.Generate();
+            BankAccount bankAccount = new BankAccount("konto", AccountType.Normal, Currency.SEK, 40000, 2.00f, accountHistory);
 
-            Console.WriteLine(TEST);
+            Admin admin = new Admin(Guid.NewGuid(), "admin", "Admin");
+
+            User aldor = admin.CreateUser("lösenord", "Aldor", bankAccount);
+
+            Console.WriteLine(aldor);
+            
         }
     }
 }

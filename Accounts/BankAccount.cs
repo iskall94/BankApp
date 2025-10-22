@@ -10,14 +10,14 @@ namespace BankApp.Accounts
 {
     internal class BankAccount
     {
-        public BankAccount(string accountName, AccountType accountType, Currency currency, decimal balance, float interest, List<Transaction> transactionHistory)
+        public BankAccount(string accountName, AccountType accountType, Currency currency, decimal balance)
         {
             AccountName = accountName;
             AccountType = accountType;
             Currency = currency;
             Balance = balance;
-            Interest = interest;
-            TransactionHistory = transactionHistory;
+            Interest = 0;
+            TransactionHistory = new List <Transaction>();
             AccountNumber = AccountNumber.Generate();
         }
 
@@ -26,9 +26,9 @@ namespace BankApp.Accounts
         public Currency Currency { get; set; }
         
         public AccountNumber AccountNumber { get; set; }
-        private decimal Balance { get; set; }
+        public decimal Balance { get; set; } // Should be private
 
-        public float Interest { get; set; }
+        public float Interest { get; set; } // Should be private
 
         private List<Transaction> TransactionHistory { get; set; } = new List<Transaction>();
 

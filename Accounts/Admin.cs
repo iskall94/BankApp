@@ -14,9 +14,9 @@ namespace BankApp.Accounts
 
         public User CreateUser(string password, string name, BankAccount account)
         {
-            List<BankAccount> userBankAccount = new List<BankAccount>();
-            userBankAccount.Add(account);
-            User newUser = new User(Guid.NewGuid(), password, name, userBankAccount);
+            List<BankAccount> userBankAccounts = new List<BankAccount>();
+            userBankAccounts.Add(account);
+            User newUser = new User(Guid.NewGuid(), password, name, userBankAccounts);
             return newUser;
 
         }

@@ -25,7 +25,7 @@ namespace BankApp.Enums
             // sets a number between 1- 9999 for each block
           
             string Block() => random.Next(0, 10000).ToString("D4");
-            string accountNumber = $"5300 {Block()} {Block()} {Block()} {Block()}";
+            string accountNumber = $"5300 {Block()} {Block()} {Block()}";
 
 
             return new AccountNumber(accountNumber);

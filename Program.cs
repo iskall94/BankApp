@@ -26,8 +26,7 @@ namespace BankApp
 
             //paulina.HandleTransfer(toAcc, fromacc, value);
 
-            MainMenu mainMenu = new MainMenu();
-            mainMenu.MainMenuStart();
+            MainMenu.MainMenuStart();
             
 
 

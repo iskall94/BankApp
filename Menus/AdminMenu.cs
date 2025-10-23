@@ -9,39 +9,37 @@ using System.Threading.Tasks;
 
 namespace BankApp.Menus
 {
-
-    internal class AdminMenu : Menu
+    internal static class AdminMenu
     {
-        private string _password = "default";
-        public AdminMenu() : base(GetAdminOptions()) { }
-        public static List<string> GetAdminOptions()
+        private static string Password { get; set; } = "default";
+
+        public static List<string> GetAdminOptions { get; set; } = new List<string>
         {
-            return new List<string>
-            {
             "Create User?",
-            "TEMP Check user BankAccount (Freeze User?)",
+            "Freeze User?",
             "Unfreeze Password for User",
             "Lists of Accounts",
             "Change Currency Exchange Rate",
             "Exit To Main Menu..."
-            };
-        }
-        public void AdminMenuStart()
+        };
+
+        public static void AdminMenuStart()
         {
             Console.Clear();
             while (true)
             {
+                Menu.MenuOptions = GetAdminOptions;
                 string title = "---Admin Menu---";
 
-                int menuChoice = Run(title);
+                int menuChoice = Menu.Run(title);
 
                 switch (menuChoice)
                 {
                     case 0:
-                        AdminCreateUser();
+                        AdminMenu.AdminCreateUser();
                         break;
                     case 1:
-                        //CheckBankAcc(bankAccount);
+                        
                         break;
                     case 2:
                         
@@ -52,13 +50,16 @@ namespace BankApp.Menus
                         break;
                     case 4:
                         break;
-                    default:
+                    case 5:
+                        
+                        break;
+                        default:
                         break;
                 }
             }
         }
 
-        public void AdminCreateUser()
+        public static void AdminCreateUser()
         {
             Console.Clear();
             Console.WriteLine("---User Creation Tool---");
@@ -84,19 +85,10 @@ namespace BankApp.Menus
                 }
             }
             BankAccount bankAccount = new BankAccount("account", Enums.AccountType.Normal, Enums.Currency.SEK, decimalNumber);
-             User  createdUser = Admin.CreateUser(_password, name, bankAccount);
+             User  createdUser = Admin.CreateUser(Password, name, bankAccount);
             UserDB.AddUser(createdUser);   
             Console.WriteLine(createdUser.ToString());
             Console.ReadKey();
         }
-
-        //public void CheckBankAcc(BankAccount createdAccount)
-        //{
-        //    Console.Clear();
-            
-        //    Console.WriteLine($"Name: {createdAccount.AccountName}");
-        //    Console.WriteLine($"Balance: {createdAccount.Balance}");
-        //    Console.ReadKey();
-        //}
     }
 }

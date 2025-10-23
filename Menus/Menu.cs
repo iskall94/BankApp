@@ -6,24 +6,23 @@ using System.Threading.Tasks;
 
 namespace BankApp.Menus
 {
-    internal class Menu
+    internal static class Menu
     {
-        public List<string> MenuOptions { get; set; } = new List<string>();
-        public int MenuIndex { get; set; }
+        public static List<string> MenuOptions { get; set; } = new List<string>();
+        public static int MenuIndex { get; set; } = 0;
 
-        public Menu(List<string> menuOptions)
+        static Menu()
         {
-            MenuOptions = menuOptions;
-            MenuIndex = 0;
+            //MenuOptions = menuOptions;
         }
-
+        //List<string> menuOptions
 
         /// <summary>
         /// The core part of the menu, where it lets user choose an option in a list depending on its selected index.
         /// </summary>
         /// <param name="headerText">An optional title/header text for the menu</param>
         /// <returns>Returns an int (index of a list)</returns>
-        public int Run(string headerText = "")
+        public static int Run(string headerText = "")
         {
             int menuOptionsCount = MenuOptions.Count;
             while (true)
@@ -61,7 +60,7 @@ namespace BankApp.Menus
         /// <summary>
         /// DisplayMenu basically prints out the menu, colors the text black/white, background white/black based on index selected.
         /// </summary>
-        public void DisplayMenu()
+        public static void DisplayMenu()
         {
             for (int i = 0; i < MenuOptions.Count; i++)
             {

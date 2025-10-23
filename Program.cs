@@ -15,6 +15,9 @@ namespace BankApp
 
 
             Admin admin = new Admin(Guid.NewGuid(), "admin", "Admin");
+            BankAccount adminsKonto = new BankAccount("admins konto", AccountType.BankSavingsAccount, Currency.SEK, 10000000);
+
+
             BankAccount paulinasKonto = new BankAccount("paulinas konto", AccountType.Normal, Currency.SEK, 25000);
             BankAccount gabrielsKonto = new BankAccount("gabriels konto", AccountType.Normal, Currency.SEK, 25000);
             User paulina = admin.CreateUser("lösenordet", "Paulina Porsmyr", paulinasKonto);

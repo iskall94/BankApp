@@ -26,8 +26,7 @@ namespace BankApp.Menus
         {
             while (true)
             {
-                AsciiTitle();
-                string title = "MAIN MENU BANK APP";
+                string title = AsciiTitle();
 
                 int menuChoice = Run(title);
 
@@ -47,7 +46,7 @@ namespace BankApp.Menus
                 }
             }
         }
-        public static void AsciiTitle()
+        public static string AsciiTitle()
         {
             string asciiTitle = @"
 PPPP   LL      AAA    CCCC  EEEE  HH  HH   OOO   LL      DDDD   EEEE  RRRR   
@@ -63,7 +62,7 @@ NN  NN  A   A  MM   M EE
 NN  NN  A   A  MM   M EEEE
             ";
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(asciiTitle);
+            return asciiTitle;
         }
     }
 }

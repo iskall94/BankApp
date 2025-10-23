@@ -11,12 +11,6 @@ namespace BankApp.Menus
         public static List<string> MenuOptions { get; set; } = new List<string>();
         public static int MenuIndex { get; set; } = 0;
 
-        static Menu()
-        {
-            //MenuOptions = menuOptions;
-        }
-        //List<string> menuOptions
-
         /// <summary>
         /// The core part of the menu, where it lets user choose an option in a list depending on its selected index.
         /// </summary>

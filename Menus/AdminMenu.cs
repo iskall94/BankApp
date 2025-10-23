@@ -51,9 +51,10 @@ namespace BankApp.Menus
                     case 4:
                         break;
                     case 5:
-                        
+                        MainMenu.MainMenuStart();
                         break;
-                        default:
+
+                    default:
                         break;
                 }
             }
@@ -62,6 +63,7 @@ namespace BankApp.Menus
         public static void AdminCreateUser()
         {
             Console.Clear();
+            Console.CursorVisible = true;
             Console.WriteLine("---User Creation Tool---");
             Console.WriteLine("Please enter a name for user:");
             string name = Console.ReadLine() ?? "";

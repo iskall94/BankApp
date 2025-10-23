@@ -38,12 +38,16 @@ namespace BankApp.Accounts
 
         public decimal Withdraw(decimal value)
         {
-            return Balance - value;
+            Balance = Balance - value;
+
+           return Balance;
         }
 
         public decimal Deposit(decimal value) 
         {
-            return Balance + value;
+
+            Balance = Balance + value;
+            return Balance ;
         }
 
         public void GetAccountHistory()

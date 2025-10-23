@@ -34,15 +34,7 @@ namespace BankApp.Transactions
             return newTx;
         }
 
-        public BankAccount findAccount(AccountNumber accountNumber)
-        {
-            BankAccount bankAccount = null;
-
-            bankAccount.AccountNumber.Equals(accountNumber);
-
-
-            return bankAccount;
-        }
+   
 
 
         public void ExecuteTransaction(Transaction transaction) // 15 min delay
@@ -51,11 +43,16 @@ namespace BankApp.Transactions
             AccountNumber sender = transaction.FromAccount;
             AccountNumber reciever = transaction.ToAccount;
 
-            //BankAccount senderAccount = //includes sender
-            //BankAccount recieverAccount = //includes reciever
 
-            //senderAccount.Withdraw(transaction.Value);
-            //recieverAccount.Deposit(transaction.Value);
+
+           BankAccount senderAccount =  BankAccountDB.FindBankAccount(sender);
+           BankAccount recieverAccount = BankAccountDB.FindBankAccount(reciever);
+
+
+
+
+            senderAccount.Withdraw(transaction.Value);
+            recieverAccount.Deposit(transaction.Value);
 
 
         }

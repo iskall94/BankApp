@@ -24,7 +24,7 @@ namespace BankApp.Accounts
         private string Password { get; set; }
         public string Name { get; set; }
 
-        private List<BankAccount>? UserBankAccounts { get; set; } = new List<BankAccount>();
+        public List<BankAccount>? UserBankAccounts { get; set; } = new List<BankAccount>();
 
         public void Login()
         {
@@ -54,7 +54,7 @@ namespace BankApp.Accounts
         }
 
    
-        public void CreateBankAccount(string accountName, AccountType accountType, Currency currency, decimal balance)
+        public BankAccount CreateBankAccount(string accountName, AccountType accountType, Currency currency, decimal balance)
         {
             BankAccount account = new BankAccount(accountName, accountType, currency, balance);
             if (accountType == AccountType.Savings)
@@ -65,8 +65,26 @@ namespace BankApp.Accounts
                 Console.WriteLine(account.Balance);
             }
             UserBankAccounts?.Add(account);
+            BankAccountDB.AddBankAccount(account);
+
+            return account;
            
        
+        }
+
+     
+        
+
+    public void HandleTransfer( AccountNumber to , AccountNumber from, decimal value)
+        {
+            BankAccount From = FindAccount(from);
+            BankAccount To = FindAccount(to);
+            From.Withdraw(value);
+            To.Deposit(value);
+
+            Console.WriteLine($" FROM {From}");
+            Console.WriteLine($" TO {To}");
+
         }
 
        

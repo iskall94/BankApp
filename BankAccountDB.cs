@@ -15,20 +15,22 @@ namespace BankApp
             BankAccounts = new List<BankAccount>();
         }
 
-        public List<BankAccount> BankAccounts { get; set; }
+        public static List<BankAccount> BankAccounts { get; set; } = new List<BankAccount>();
 
 
 
-        public  void AddBankAccount(BankAccount bankAccount)
+        public static  void AddBankAccount(BankAccount bankAccount)
         {
             BankAccounts.Add(bankAccount);
         }
 
-        public BankAccount FindBankAccount(AccountNumber accountNumber)
+        public  static BankAccount FindBankAccount(AccountNumber accountNumber)
         {
              BankAccount foundAccount = BankAccounts.Find(a => a.AccountNumber == accountNumber);
             return foundAccount;
         }
+
+        
 
 
     }

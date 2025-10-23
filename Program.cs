@@ -11,16 +11,30 @@ namespace BankApp
             List<Transaction> accountHistory = new List<Transaction>();
             List<BankAccount> bankAccounts = new List<BankAccount>();
 
-            
-
-            BankAccount bankAccount = new BankAccount("konto", AccountType.Normal, Currency.SEK, 40000);
 
             Admin admin = new Admin(Guid.NewGuid(), "admin", "Admin");
+            BankAccount paulinasKonto = new BankAccount("paulinas konto", AccountType.Normal, Currency.SEK, 25000);
+            User paulina = admin.CreateUser("lösenordet", "Paulina Porsmyr", paulinasKonto);
 
-            User aldor = admin.CreateUser("lösenord", "Aldor", bankAccount);
-           
-            aldor.CreateBankAccount("Aldors Sparkonto", AccountType.Savings, Currency.SEK, 100000);
-            Console.WriteLine(aldor);
+            BankAccount resekonto = paulina.CreateBankAccount("Paulinas Resekonto", AccountType.Savings, Currency.SEK, 20000);
+
+            AccountNumber fromacc = paulinasKonto.AccountNumber;
+            AccountNumber toAcc = resekonto.AccountNumber;
+
+            decimal value = 10000;
+
+            paulina.HandleTransfer(toAcc, fromacc, value);
+
+
+      
+
+
+
+
+            
+
+          
+
 
             
 

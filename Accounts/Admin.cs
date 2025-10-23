@@ -16,6 +16,7 @@ namespace BankApp.Accounts
         {
             List<BankAccount> userBankAccounts = new List<BankAccount>();
             userBankAccounts.Add(account);
+            BankAccountDB.AddBankAccount(account);
             User newUser = new User(Guid.NewGuid(), password, name, userBankAccounts);
             return newUser;
 

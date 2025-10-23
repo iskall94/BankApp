@@ -24,6 +24,9 @@ namespace BankApp.Accounts
         private string Password { get; set; }
         public string Name { get; set; }
 
+       
+        
+
         public List<BankAccount>? UserBankAccounts { get; set; } = new List<BankAccount>();
 
         public void Login()

@@ -34,7 +34,6 @@ namespace BankApp.Transactions
 
 
 
-
         public void ExecuteTransaction(Transaction transaction) // 15 min delay
         {
 
@@ -45,8 +44,6 @@ namespace BankApp.Transactions
 
             BankAccount senderAccount = BankAccountDB.FindBankAccount(sender);
             BankAccount recieverAccount = BankAccountDB.FindBankAccount(reciever);
-
-
 
 
             senderAccount.Withdraw(transaction.Value);

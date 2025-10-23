@@ -22,8 +22,9 @@ namespace BankApp.Accounts
             AccountNumber = AccountNumber.Generate();
         }
 
+        public static List<Transaction> TransactionHistory { get; set; }  = new List<Transaction>(); 
 
-       
+
 
         public string AccountName { get; set; }
         public AccountType AccountType { get; set; }
@@ -34,7 +35,7 @@ namespace BankApp.Accounts
 
         public float Interest { get; set; } // Should be private
 
-        private List<Transaction> TransactionHistory { get; set; } = new List<Transaction>();
+       
 
         public decimal Withdraw(decimal value)
         {
@@ -49,9 +50,20 @@ namespace BankApp.Accounts
             Balance = Balance + value;
             return Balance ;
         }
-
-        public void GetAccountHistory()
+        public static void AddTransaction(Transaction transaction)
         {
+            TransactionHistory.Add(transaction);
+        }
+
+
+        public void GetTransactionHistory()
+        {
+            foreach (Transaction transaction in TransactionHistory)
+
+            {
+                Console.WriteLine(transaction);
+            }
+
 
         }
 

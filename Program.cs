@@ -10,6 +10,7 @@ namespace BankApp
         static void Main(string[] args)
         {
             List<Transaction> accountHistory = new List<Transaction>();
+            List<Transaction> TransactionHistory = new List<Transaction>();
             List<BankAccount> bankAccounts = new List<BankAccount>();
 
 

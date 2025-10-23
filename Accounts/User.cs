@@ -1,4 +1,5 @@
 ﻿using BankApp.Enums;
+using BankApp.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,6 @@ using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
-using System.Transactions;
 
 namespace BankApp.Accounts
 {
@@ -46,6 +46,14 @@ namespace BankApp.Accounts
 
         }
 
+        public void ShowAllAccounts()
+        {
+            foreach (BankAccount account in UserBankAccounts)
+            {
+                Console.WriteLine(account.ToString());
+            }
+        }
+
         public BankAccount FindAccount(AccountNumber accountNumber)
         {
             BankAccount foundAccount = UserBankAccounts.Find(a => a.AccountNumber == accountNumber);
@@ -72,10 +80,17 @@ namespace BankApp.Accounts
        
         }
 
-     
-        
+        public  Transaction CreateTransaction(AccountNumber toAccount, AccountNumber fromAccount, decimal value, string personalNote)
+        {
+            Transaction newTx = new Transaction(toAccount, fromAccount, value, personalNote);
 
-    public void HandleTransfer( AccountNumber to , AccountNumber from, decimal value)
+            return newTx;
+        }
+
+
+
+
+        public void HandleTransfer( AccountNumber to , AccountNumber from, decimal value)
         {
             BankAccount From = FindAccount(from);
             BankAccount To = FindAccount(to);

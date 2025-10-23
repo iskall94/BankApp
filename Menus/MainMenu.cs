@@ -36,7 +36,8 @@ namespace BankApp.Menus
                         //Logga in?
                         break;
                     case 1:
-                        //Logga in som admin?
+                        AdminMenu adminMenu = new AdminMenu();
+                        adminMenu.AdminMenuStart();
                         break;
                     case 2:
                         //Avsluta?

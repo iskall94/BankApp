@@ -1,5 +1,6 @@
 ﻿using BankApp.Accounts;
 using BankApp.Enums;
+using BankApp.Menus;
 using System.Transactions;
 
 namespace BankApp
@@ -25,8 +26,9 @@ namespace BankApp
 
             paulina.HandleTransfer(toAcc, fromacc, value);
 
-
-      
+            MainMenu mainMenu = new MainMenu();
+            mainMenu.MainMenuStart();
+            
 
 
 

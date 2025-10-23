@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,8 @@ namespace BankApp.Menus
 
     internal class AdminMenu : Menu
     {
-        public AdminMenu() : base (GetAdminOptions()) { }
+        private string _password = "default";
+        public AdminMenu() : base(GetAdminOptions()) { }
         public static List<string> GetAdminOptions()
         {
             return new List<string>
@@ -19,6 +21,8 @@ namespace BankApp.Menus
             "Create User?",
             "Freeze User?",
             "Unfreeze Password for User",
+            "Lists of Accounts",
+            "Change Currency Exchange Rate",
             "Exit To Main Menu..."
             };
         }
@@ -34,16 +38,18 @@ namespace BankApp.Menus
                 switch (menuChoice)
                 {
                     case 0:
-                        
+                        AdminCreateUser();
                         break;
                     case 1:
-                        //Logga in som admin?
+                        
                         break;
                     case 2:
-                        //Avsluta?
+                        
                         break;
                     case 3:
-                        //
+                        
+                        break;
+                    case 4:
                         break;
                     default:
                         break;
@@ -57,10 +63,28 @@ namespace BankApp.Menus
             Console.WriteLine("---User Creation Tool---");
             Console.WriteLine("Please enter a name for user:");
             string name = Console.ReadLine() ?? "";
-            Console.WriteLine("Please enter a password for user");
-            string password = Console.ReadLine() ?? "";
+            
+            bool successful = false;
+            string balanceInput;
+            decimal decimalNumber = 0;
 
-            BankAccount bankAccount = new BankAccount(name, );
+            while (!successful)
+            {
+                Console.WriteLine("Please enter a balance:");
+                balanceInput = Console.ReadLine() ?? "";
+                successful = decimal.TryParse(balanceInput, out decimalNumber);
+                if (successful)
+                {
+                    
+                }
+                else
+                {
+                    Console.WriteLine("Could not parse the balance input. Please enter a valid input.");
+                }
+                Console.WriteLine("Balance successfully implemented.");
+            }
+            BankAccount bankAccount = new BankAccount(name, Enums.AccountType.Normal, Enums.Currency.SEK, decimalNumber);
+            AdminMenuStart();
         }
     }
 }

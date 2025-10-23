@@ -19,7 +19,7 @@ namespace BankApp.Menus
             return new List<string>
             {
             "Create User?",
-            "Freeze User?",
+            "TEMP Check user BankAccount (Freeze User?)",
             "Unfreeze Password for User",
             "Lists of Accounts",
             "Change Currency Exchange Rate",
@@ -41,7 +41,7 @@ namespace BankApp.Menus
                         AdminCreateUser();
                         break;
                     case 1:
-                        
+                        //CheckBankAcc(bankAccount);
                         break;
                     case 2:
                         
@@ -75,16 +75,25 @@ namespace BankApp.Menus
                 successful = decimal.TryParse(balanceInput, out decimalNumber);
                 if (successful)
                 {
-                    
+                    Console.WriteLine("Balance successfully implemented.");
                 }
                 else
                 {
                     Console.WriteLine("Could not parse the balance input. Please enter a valid input.");
                 }
-                Console.WriteLine("Balance successfully implemented.");
             }
             BankAccount bankAccount = new BankAccount(name, Enums.AccountType.Normal, Enums.Currency.SEK, decimalNumber);
-            AdminMenuStart();
+            Console.WriteLine(bankAccount.ToString());
+            Console.ReadKey();
         }
+
+        //public void CheckBankAcc(BankAccount createdAccount)
+        //{
+        //    Console.Clear();
+            
+        //    Console.WriteLine($"Name: {createdAccount.AccountName}");
+        //    Console.WriteLine($"Balance: {createdAccount.Balance}");
+        //    Console.ReadKey();
+        //}
     }
 }

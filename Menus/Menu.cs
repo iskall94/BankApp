@@ -17,6 +17,7 @@ namespace BankApp.Menus
             MenuIndex = 0;
         }
 
+
         /// <summary>
         /// The core part of the menu, where it lets user choose an option in a list depending on its selected index.
         /// </summary>

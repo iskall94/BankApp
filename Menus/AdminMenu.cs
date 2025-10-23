@@ -47,6 +47,7 @@ namespace BankApp.Menus
                         
                         break;
                     case 3:
+                        UserDB.ShowAllUsers();
                         
                         break;
                     case 4:
@@ -82,8 +83,10 @@ namespace BankApp.Menus
                     Console.WriteLine("Could not parse the balance input. Please enter a valid input.");
                 }
             }
-            BankAccount bankAccount = new BankAccount(name, Enums.AccountType.Normal, Enums.Currency.SEK, decimalNumber);
-            Console.WriteLine(bankAccount.ToString());
+            BankAccount bankAccount = new BankAccount("account", Enums.AccountType.Normal, Enums.Currency.SEK, decimalNumber);
+             User  createdUser = Admin.CreateUser(_password, name, bankAccount);
+            UserDB.AddUser(createdUser);   
+            Console.WriteLine(createdUser.ToString());
             Console.ReadKey();
         }
 

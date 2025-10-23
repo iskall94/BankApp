@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Transactions;
+using BankApp.Transactions;
 
 namespace BankApp.Accounts
 {
@@ -50,7 +50,7 @@ namespace BankApp.Accounts
             Balance = Balance + value;
             return Balance ;
         }
-        public static void AddTransaction(Transaction transaction)
+        public  void AddTransaction(Transaction transaction)
         {
             TransactionHistory.Add(transaction);
         }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace BankApp.Transactions
 {
@@ -40,7 +41,7 @@ namespace BankApp.Transactions
             AccountNumber sender = transaction.FromAccount;
             AccountNumber reciever = transaction.ToAccount;
 
-
+        
 
             BankAccount senderAccount = BankAccountDB.FindBankAccount(sender);
             BankAccount recieverAccount = BankAccountDB.FindBankAccount(reciever);
@@ -49,11 +50,23 @@ namespace BankApp.Transactions
             senderAccount.Withdraw(transaction.Value);
             recieverAccount.Deposit(transaction.Value);
 
+            senderAccount.AddTransaction(transaction);
+            recieverAccount.AddTransaction(transaction);
+
             Console.WriteLine(senderAccount.Balance);
             Console.WriteLine(recieverAccount.Balance);
 
 
         }
-
+        public override string ToString()
+        {
+            return $"TransactionID: {TransactionID}\n" +
+                   $"To account: {ToAccount}\n" +
+                   $"From account: {FromAccount}\n" +
+                   $"Value: {Value}\n" +
+                   $"Personal note: {PersonalNote}%\n" ;
+               
+        }
     }
 }
+

@@ -37,18 +37,21 @@ namespace BankApp
 
             paulina.ShowAllAccounts();
 
-
-      
-
+            paulinasKonto.GetTransactionHistory();
 
 
 
-            
-
-          
 
 
-            
+
+
+
+
+
+
+
+
+
 
 
 

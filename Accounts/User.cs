@@ -1,12 +1,5 @@
 ﻿using BankApp.Enums;
 using BankApp.Transactions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BankApp.Accounts
 {
@@ -38,7 +31,7 @@ namespace BankApp.Accounts
         {
 
         }
-        
+
         public void ResetPassword()
         {
 
@@ -64,7 +57,7 @@ namespace BankApp.Accounts
             return foundAccount;
         }
 
-   
+
         public BankAccount CreateBankAccount(string accountName, AccountType accountType, Currency currency, decimal balance)
         {
             BankAccount account = new BankAccount(accountName, accountType, currency, balance);
@@ -72,28 +65,35 @@ namespace BankApp.Accounts
             {
                 account.Interest = 1.5f;
                 Console.WriteLine(account.Balance);
-                account.Balance = balance * (decimal)(1 + account.Interest/100);
+                account.Balance = balance * (decimal)(1 + account.Interest / 100);
                 Console.WriteLine(account.Balance);
             }
             UserBankAccounts?.Add(account);
             BankAccountDB.AddBankAccount(account);
 
             return account;
-           
-       
+
+
         }
 
-        public  Transaction CreateTransaction(AccountNumber toAccount, AccountNumber fromAccount, decimal value, string personalNote)
+        public Transaction CreateTransaction(AccountNumber toAccount, AccountNumber fromAccount, decimal value, string personalNote)
         {
             Transaction newTx = new Transaction(toAccount, fromAccount, value, personalNote);
 
             return newTx;
         }
 
+        public Loan CreateLoan(AccountNumber toAccount, AccountNumber fromAdmin, decimal value, string transactionName, string personalNote)
+        {
 
 
+            //lånet blev godkänt och skapas här
+            Loan newLoan = new Loan(toAccount, fromAdmin, value, transactionName, personalNote, 2.5m);
+            return newLoan;
+        }
 
-        public void HandleTransfer( AccountNumber to , AccountNumber from, decimal value)
+
+        public void HandleTransfer(AccountNumber to, AccountNumber from, decimal value)
         {
             BankAccount From = FindAccount(from);
             BankAccount To = FindAccount(to);
@@ -105,7 +105,7 @@ namespace BankApp.Accounts
 
         }
 
-       
+
 
         public void EditBankAccount()
         {
@@ -120,7 +120,7 @@ namespace BankApp.Accounts
                    $"Password: {Password}\n" +
                    "\n---\n" +
             $"Bank Accounts:\n{accountsInfo}";
-                   
+
         }
     }
 }

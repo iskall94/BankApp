@@ -22,7 +22,7 @@ namespace BankApp
             BankAccount resekonto = paulina.CreateBankAccount("Paulinas Resekonto", AccountType.Savings, Currency.SEK, 20000);
 
 
-            AccountNumber fromacc = paulinasKonto.AccountNumber;
+            AccountNumber fromAcc = paulinasKonto.AccountNumber;
             AccountNumber toAcc = gabrielsKonto.AccountNumber;
 
 
@@ -30,7 +30,7 @@ namespace BankApp
             decimal value = 10000;
 
 
-           Transaction transx =  paulina.CreateTransaction(fromacc, toAcc, value, "Överförning till Gustav");
+           Transaction transx =  paulina.CreateTransaction(fromAcc, toAcc, value, "Överförning till Gustav");
 
             transx.ExecuteTransaction(transx);
 

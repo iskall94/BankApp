@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace BankApp.Accounts
 {
-    internal class Admin : User
+    internal  class Admin : User
     {
         public Admin(Guid userID, string password, string name) : base(userID, password, name)
         {
         }
 
-        public User CreateUser(string password, string name, BankAccount account)
+        public static User CreateUser(string password, string name, BankAccount account)
         {
             List<BankAccount> userBankAccounts = new List<BankAccount>();
             userBankAccounts.Add(account);

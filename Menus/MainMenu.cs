@@ -6,29 +6,22 @@ using System.Threading.Tasks;
 
 namespace BankApp.Menus
 {
-    internal class MainMenu : Menu
+    internal static class MainMenu
     {
-        public MainMenu() : base(GetMainMenuOptions())
+        public static List<string> GetMainMenuOptions { get; set; } = new List<string>
         {
-
-        }
-        public static List<string> GetMainMenuOptions()
-        {
-            return new List<string>
-            {
             "Logga in?",
             "Logga in som admin?",
             "Avsluta"
-            };
-        }
+        };
 
-        public void MainMenuStart()
+        public static void MainMenuStart()
         {
             while (true)
             {
+                Menu.MenuOptions = GetMainMenuOptions;
                 string title = AsciiTitle();
-
-                int menuChoice = Run(title);
+                int menuChoice = Menu.Run(title);
 
                 switch (menuChoice)
                 {
@@ -36,7 +29,7 @@ namespace BankApp.Menus
                         //Logga in?
                         break;
                     case 1:
-                        //Logga in som admin?
+                        AdminMenu.AdminMenuStart();
                         break;
                     case 2:
                         //Avsluta?

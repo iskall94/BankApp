@@ -15,7 +15,7 @@ namespace BankApp
 
 
             Admin admin = new Admin(Guid.NewGuid(), "admin", "Admin");
-            BankAccount adminsKonto = new BankAccount("admins konto", AccountType.BankSavingsAccount, Currency.SEK, 10000000);
+
 
 
             BankAccount paulinasKonto = new BankAccount("paulinas konto", AccountType.Normal, Currency.SEK, 25000);
@@ -34,7 +34,7 @@ namespace BankApp
             decimal value = 10000;
 
 
-           Transaction transx =  paulina.CreateTransaction(fromAcc, toAcc, value, "Överförning till Gustav");
+            Transaction transx = paulina.CreateTransaction(fromAcc, toAcc, value, "Överförning till Gustav", TransactionType.Normal);
 
             transx.ExecuteTransaction(transx);
 
@@ -45,13 +45,26 @@ namespace BankApp
 
 
 
+            //söka om ett lån
+
+            BankAccount loanFromAdmin = Admin.bankaccount;
+            AccountNumber LoanToAcc = gabrielsKonto.AccountNumber;
+
+
+            try
+            {
+                Transaction loanTransx = gabriel.CreateLoan(LoanToAcc, loanFromAdmin, 800, gabrielsKonto.Balance, "bil lån", TransactionType.Loan);
+                loanTransx.ExecuteTransaction(loanTransx);
+
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
 
 
-
-
-
-
+            gabrielsKonto.GetTransactionHistory();
 
 
 

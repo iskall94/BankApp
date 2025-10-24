@@ -17,8 +17,8 @@ namespace BankApp.Accounts
         private string Password { get; set; }
         public string Name { get; set; }
 
-       
-        
+
+
 
         public List<BankAccount>? UserBankAccounts { get; set; } = new List<BankAccount>();
 
@@ -76,20 +76,26 @@ namespace BankApp.Accounts
 
         }
 
-        public Transaction CreateTransaction(AccountNumber toAccount, AccountNumber fromAccount, decimal value, string personalNote)
+        public Transaction CreateTransaction(AccountNumber toAccount, AccountNumber fromAccount, decimal value, string personalNote, TransactionType transactionType)
         {
-            Transaction newTx = new Transaction(toAccount, fromAccount, value, personalNote);
+            Transaction newTx = new Transaction(toAccount, fromAccount, value, personalNote, transactionType);
 
             return newTx;
         }
 
-        public Loan CreateLoan(AccountNumber toAccount, AccountNumber fromAdmin, decimal value, string transactionName, string personalNote)
+        public Loan CreateLoan(AccountNumber toAccount, BankAccount admin, decimal valueOfLoan, decimal accountBalance, string personalNote, TransactionType transactionType)
         {
+            decimal interestRate = 0.035m; // TODO: hårdkodad interest kanske bör ändras?
 
-
-            //lånet blev godkänt och skapas här
-            Loan newLoan = new Loan(toAccount, fromAdmin, value, transactionName, personalNote, 2.5m);
-            return newLoan;
+            if (valueOfLoan > accountBalance * 5)
+            {
+                throw new InvalidOperationException("This loan cannot be granted: the amount exceeds 5× your current balance.");
+            }
+            else
+            {
+                Loan newLoan = new Loan(toAccount, admin.AccountNumber, valueOfLoan, personalNote, interestRate, transactionType);
+                return newLoan;
+            }
         }
 
 

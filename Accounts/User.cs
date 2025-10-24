@@ -1,4 +1,5 @@
-﻿using BankApp.Enums;
+﻿using BankApp.Accounts;
+using BankApp.Enums;
 using BankApp.Transactions;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace BankApp.Accounts
 {
@@ -24,15 +26,58 @@ namespace BankApp.Accounts
         private string Password { get; set; }
         public string Name { get; set; }
 
-       
-        
+        public static List<User> AllUsers { get; set; } = new List<User>();
+
+        public void AddUser(User user)
+        {
+            AllUsers.Add(user);
+        }
+
+     
 
         public List<BankAccount>? UserBankAccounts { get; set; } = new List<BankAccount>();
 
-        public void Login()
-        {
 
+
+        public static bool LogIn()
+        {
+            foreach (User user in AllUsers)
+            {
+                Console.WriteLine(user.ToString());
+            }
+
+            int failedCount = 0;
+
+            while (failedCount < 3)
+            {
+                Console.Write("Enter your name: ");
+                string inputName = Console.ReadLine();
+
+                Console.Write("Enter your password: ");
+                string inputPassword = Console.ReadLine();
+
+              
+
+                foreach (User user in AllUsers)
+                {
+                    if (inputName == user.Name && inputPassword == user.Password)
+                    {
+                        Console.WriteLine("Login succeeded!");
+                        return true; 
+                    }
+                }
+
+                failedCount++;
+                Console.WriteLine($"Try again. Attempts left: {3 - failedCount}");
+            }
+
+            Console.WriteLine("You have been locked out of your account, please contact your bank.");
+            return false; 
         }
+                
+        
+
+        
 
         public void Logout()
         {
@@ -119,8 +164,10 @@ namespace BankApp.Accounts
             return $"User: {Name}\n" +
                    $"Password: {Password}\n" +
                    "\n---\n" +
-            $"Bank Accounts:\n{accountsInfo}";
+            $"Bank Accounts:\n{UserBankAccounts}";
                    
         }
     }
 }
+
+

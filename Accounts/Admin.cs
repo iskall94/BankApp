@@ -18,6 +18,7 @@ namespace BankApp.Accounts
             userBankAccounts.Add(account);
             BankAccountDB.AddBankAccount(account);
             User newUser = new User(Guid.NewGuid(), password, name, userBankAccounts);
+            newUser.AddUser(newUser);
             return newUser;
 
         }

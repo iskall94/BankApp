@@ -28,6 +28,7 @@ namespace BankApp.Menus
                 {
                     case 0:
                         UserMenu.UserMenuStart();
+                        //User.Login() Replace later!
                         break;
                     case 1:
                         AdminMenu.AdminMenuStart();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BankApp.Accounts
 {
-    internal  class Admin : User
+    internal class Admin : User
     {
         public Admin(Guid userID, string password, string name) : base(userID, password, name)
         {
@@ -22,12 +22,12 @@ namespace BankApp.Accounts
 
         }
 
-        public void FreezeBankAccount()
+        public static void FreezeBankAccount()
         {
 
         }
 
-        public void UpdateExchangeRates()
+        public static void UpdateExchangeRates()
         {
 
         }

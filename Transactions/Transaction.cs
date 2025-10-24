@@ -33,22 +33,22 @@ namespace BankApp.Transactions
         {
         }
 
-   
+
         public void ExecutePendingTransactions()
         {
             int isQuarter = DateTime.Now.Minute;
-           
 
-            if ( isQuarter % 15 == 0 )
+
+            if (isQuarter % 15 == 0)
             {
                 foreach (Transaction tx in PendingTransactions)
                 {
                     ExecuteTransaction(tx);
-                    
+
                 }
                 PendingTransactions.Clear();
             }
-
+        }
 
         public void ExecuteTransaction(Transaction transaction) // 15 min delay
         {

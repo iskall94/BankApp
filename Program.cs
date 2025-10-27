@@ -1,4 +1,6 @@
 using BankApp.Menus;
+using BankApp.Accounts;
+using BankApp.Enums;
 
 namespace BankApp
 {
@@ -6,18 +8,25 @@ namespace BankApp
     {
         static void Main(string[] args)
         {
-            List<BankAccount> userBankAccounts = new List<BankAccount>();
-            User user = new User(Guid.NewGuid(), "default", "Gabriel Kassarp", userBankAccounts);
-            UserDB.AddUser(user);
+            MainMenu.MainMenuStart();
             
-            User.Login();
-            // MainMenu.MainMenuStart();
+            // To test Login() Method
 
-            BankAccount test = new BankAccount("test", AccountType.Normal, 100000m);
-            BankAccountDB.AddBankAccount(test);
-            AccountNumber accountNumber = test.AccountNumber;
-            Console.WriteLine(accountNumber);
-            test.ChangeAccountCurrency(accountNumber, CurrencyType.USD);
+            //List<BankAccount> userBankAccounts = new List<BankAccount>();
+            //User user = new User(Guid.NewGuid(), "default", "Gabriel Kassarp", userBankAccounts);
+            //UserDB.AddUser(user);
+
+            //User.Login();
+
+            // -----------------------
+
+            // To test ChangeAccountCurrency
+
+            //BankAccount test = new BankAccount("test", AccountType.Normal, 100000m);
+            //BankAccountDB.AddBankAccount(test);
+            //AccountNumber accountNumber = test.AccountNumber;
+            //Console.WriteLine(accountNumber);
+            //test.ChangeAccountCurrency(accountNumber, CurrencyType.USD);
         }
     }
 }

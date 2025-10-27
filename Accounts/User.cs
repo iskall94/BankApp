@@ -1,5 +1,6 @@
 ﻿using BankApp.Enums;
 using BankApp.Transactions;
+using BankApp.Menus;
 
 namespace BankApp.Accounts
 {
@@ -41,9 +42,9 @@ namespace BankApp.Accounts
                     if (inputName != user.Name)
                     {
                         Console.WriteLine("Name not found, please check your spelling and try again.");
-                        Console.Write("Enter your name:");
+                        Console.Write("Enter your name: ");
                         inputName = Console.ReadLine();
-                        Console.Write("Enter your password:");
+                        Console.Write("Enter your password: ");
                         inputPassword = Console.ReadLine();
                     }
                     else if (inputPassword != user.Password)
@@ -63,10 +64,10 @@ namespace BankApp.Accounts
                         if (user.FirstTimeLogin)
                         {
                             Console.WriteLine("Change password to new one.");
-                            Console.WriteLine("Enter new password:");
+                            Console.WriteLine("Enter new password: ");
                             string newPassword = Console.ReadLine();
 
-                            Console.WriteLine("Confirm new password.");
+                            Console.WriteLine("Confirm new password: ");
                             string confirmNewPassword = Console.ReadLine();
 
                             while (newPassword != confirmNewPassword)
@@ -76,7 +77,7 @@ namespace BankApp.Accounts
                                 confirmNewPassword = Console.ReadLine();
                             }
 
-                            Console.WriteLine($" new password : {newPassword}");
+                            Console.WriteLine($" New password: {newPassword}");
                             user.Password = newPassword;
                             user.FirstTimeLogin = false;
                         }
@@ -146,7 +147,7 @@ namespace BankApp.Accounts
         }
 
 
-        public BankAccount CreateBankAccount(string accountName, AccountType accountType, Currency currency, decimal balance)
+        public BankAccount CreateBankAccount(string accountName, AccountType accountType, decimal balance)
         {
             BankAccount account = new BankAccount(accountName, accountType, balance);
             if (accountType == AccountType.Savings)

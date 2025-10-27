@@ -4,7 +4,7 @@ namespace BankApp.Accounts
 {
     internal class Admin : User
     {
-        public static BankAccount bankaccount { get; set; } = new BankAccount("admins konto", AccountType.Normal, Currency.SEK, 10000000);
+        public static BankAccount bankaccount { get; set; } = new BankAccount("admins konto", AccountType.Normal, 10000000);
         public Admin(Guid userID, string password, string name) : base(userID, password, name)
         {
 

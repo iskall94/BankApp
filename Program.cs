@@ -6,25 +6,13 @@ namespace BankApp
     {
         static void Main(string[] args)
         {
+            // MainMenu.MainMenuStart();
 
-            MainMenu.MainMenuStart();
-
-
-
-            //// --------- kod som behövs i menyn när allterativet 'sök lån' finns -----------
-            ///
-            //try
-            //{
-            //    Transaction loanTransx = gabriel.CreateLoan(LoanToAcc, loanFromAdmin, 80000, gabrielsKonto.Balance, "bil lån", TransactionType.Loan);
-            //    loanTransx.ExecuteTransaction(loanTransx);
-
-            //}
-            //catch (InvalidOperationException ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //}
-
-
+            BankAccount test = new BankAccount("test", AccountType.Normal, 100000m);
+            BankAccountDB.AddBankAccount(test);
+            AccountNumber accountNumber = test.AccountNumber;
+            Console.WriteLine(accountNumber);
+            test.ChangeAccountCurrency(accountNumber, CurrencyType.USD);
         }
     }
 }

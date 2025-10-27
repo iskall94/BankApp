@@ -1,7 +1,4 @@
-using BankApp.Accounts;
-using BankApp.Enums;
 using BankApp.Menus;
-using BankApp.Transactions;
 
 namespace BankApp
 {

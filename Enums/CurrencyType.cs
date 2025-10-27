@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace BankApp.Enums
 {
-    public enum Currency
+    public enum CurrencyType
     {
         SEK,
         EUR,
-        USD
+        USD,
+        GBP
     }
 }

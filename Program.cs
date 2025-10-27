@@ -9,7 +9,13 @@ namespace BankApp
     {
         static void Main(string[] args)
         {
-            MainMenu.MainMenuStart();
+            // MainMenu.MainMenuStart();
+
+            BankAccount test = new BankAccount("test", AccountType.Normal, 100000m);
+            BankAccountDB.AddBankAccount(test);
+            AccountNumber accountNumber = test.AccountNumber;
+            Console.WriteLine(accountNumber);
+            test.ChangeAccountCurrency(accountNumber, CurrencyType.USD);
         }
     }
 }

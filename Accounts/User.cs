@@ -110,9 +110,9 @@ namespace BankApp.Accounts
         }
 
    
-        public BankAccount CreateBankAccount(string accountName, AccountType accountType, Currency currency, decimal balance)
+        public BankAccount CreateBankAccount(string accountName, AccountType accountType, CurrencyType currency, decimal balance)
         {
-            BankAccount account = new BankAccount(accountName, accountType, currency, balance);
+            BankAccount account = new BankAccount(accountName, accountType, balance);
             if (accountType == AccountType.Savings)
             {
                 account.Interest = 1.5f;
@@ -150,7 +150,7 @@ namespace BankApp.Accounts
 
         }
 
-       
+
 
         public void EditBankAccount()
         {

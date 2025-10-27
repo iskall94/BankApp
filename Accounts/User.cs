@@ -18,6 +18,8 @@ namespace BankApp.Accounts
             Password = password;
             Name = name;
             UserBankAccounts = userBankAccounts;
+            FirstTimeLogin = true;
+            IsLocked = false;
         }
 
         private Guid UserID { get; set; }
@@ -32,70 +34,76 @@ namespace BankApp.Accounts
         public List<BankAccount>? UserBankAccounts { get; set; } = new List<BankAccount>();
 
 
-         
+
         public static User Login()
         {
-
+            Console.Clear();
+            int failedCount = 0;
+            Console.Write("Enter your name: ");
+            string inputName = Console.ReadLine();
+            Console.Write("Enter your password: ");
+            string inputPassword = Console.ReadLine();
             foreach (User user in UserDB.allUsers)
             {
-                Console.WriteLine(user.ToString());
-                
-            }
-
-            int failedCount = 0;
-
-            while (failedCount < 3)
-            {
-                Console.Write("Enter your name: ");
-                string inputName = Console.ReadLine();
-
-                Console.Write("Enter your password: ");
-                string inputPassword = Console.ReadLine();
-
-           
-
-                foreach (User user in UserDB.allUsers)
+                while (failedCount != 2)
                 {
-                    if (inputName.ToLower() == user.Name.ToLower() && inputPassword == user.Password)
+                    if (inputName != user.Name)
                     {
-                       if (user.IsLocked) 
-                        
+                        Console.WriteLine("Name not found, please check your spelling and try again.");
+                        Console.Write("Enter your name:");
+                        inputName = Console.ReadLine();
+                        Console.Write("Enter your password:");
+                        inputPassword = Console.ReadLine();
+                    }
+                    else if (inputPassword != user.Password)
+                    {
+                        failedCount++;
+                        Console.WriteLine($"Wrong password, please try again. Attempts left: {3 - failedCount}");
+                        Console.Write("Enter your password: ");
+                        inputPassword = Console.ReadLine();
+                    }
+                     else if (inputName.ToLower() == user.Name.ToLower() && inputPassword == user.Password)
+                    {
+                        if (user.IsLocked)
                         {
                             Console.WriteLine(" Your account has been locked, please contact your bank.");
+                            break;
                         }
-                        Console.WriteLine("Login succeeded!");
-                        return user;
-                    }
-
-                    if(user.FirstTimeLogin)
-                    {
-                        Console.WriteLine("Change password to new one.");
-                        string newPassword = Console.ReadLine();
-                        
-                        Console.WriteLine("Confirm new password.");
-                        string confirmNewPassword = Console.ReadLine();
-                       
-                       while (newPassword != confirmNewPassword)
+                        if (user.FirstTimeLogin)
                         {
-                            Console.WriteLine("Password did not match, try again.");
-                            Console.WriteLine("Confirm password: ");
-                            confirmNewPassword = Console.ReadLine(); 
-                        }
+                            Console.WriteLine("Change password to new one.");
+                            Console.WriteLine("Enter new password:");
+                            string newPassword = Console.ReadLine();
 
-                       
-                        user.Password = newPassword;
-                        user.FirstTimeLogin = false;
-                       
+                            Console.WriteLine("Confirm new password.");
+                            string confirmNewPassword = Console.ReadLine();
+
+                            while (newPassword != confirmNewPassword)
+                            {
+                                Console.WriteLine("Password did not match, try again.");
+                                Console.WriteLine("Confirm password: ");
+                                confirmNewPassword = Console.ReadLine();
+                            }
+
+                            Console.WriteLine($" new password : {newPassword}");
+                            user.Password = newPassword;
+                            user.FirstTimeLogin = false;
+                        }
+                        break;
                     }
                 }
 
-                failedCount++;
-                Console.WriteLine($"Try again. Attempts left: {3 - failedCount}");
+                if (failedCount == 3)
+                {
+                    user.IsLocked = true;
+                    Console.WriteLine(" Your account has been locked, please contact your bank.");
+                    break;
+                }
+            }
+
                 User confirmUser = UserDB.FindUserByName(inputName);
                 Console.WriteLine(confirmUser.ToString());
                 return confirmUser;
-            }
-
         }
 
         public static void Logout()

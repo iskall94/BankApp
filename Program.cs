@@ -10,7 +10,7 @@ namespace BankApp
         static void Main(string[] args)
         {
             List<BankAccount> userBankAccounts = new List<BankAccount>();
-            User user = new User(Guid.NewGuid(), "lösenordet", "Paulina Porsmyr", userBankAccounts);
+            User user = new User(Guid.NewGuid(), "default", "Gabriel Kassarp", userBankAccounts);
             UserDB.AddUser(user);
             
             User.Login();

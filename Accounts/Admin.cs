@@ -1,4 +1,5 @@
-﻿using BankApp.Enums;
+﻿using BankApp.Currencies;
+using BankApp.Enums;
 
 namespace BankApp.Accounts
 {
@@ -28,6 +29,11 @@ namespace BankApp.Accounts
 
         public static void UpdateExchangeRates()
         {
+            Console.WriteLine("Choose currency: ");
+            foreach(CurrencyType c in CurrencyManager.AccountCurrency)
+            {
+                Console.WriteLine(c);
+            }
 
         }
 

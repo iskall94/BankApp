@@ -47,9 +47,19 @@ namespace BankApp.Transactions
             }
         }
 
+        /// <summary>
+        /// Executes a transaction between two accounts, handling special cases for loan transactions.
+        /// Withdraws the amount from the sender account and deposits it to the receiver account,
+        /// then records the transaction in both accounts.
+        /// </summary>
+        /// <param name="transaction">The transaction to execute, containing sender, receiver, amount, and type.</param>
+        /// <remarks>
+        /// If the transaction type is <see cref="TransactionType.Loan"/>, the funds are taken from the admin bank account
+        /// instead of the sender's account.
+        /// </remarks>
         public void ExecuteTransaction(Transaction transaction) // 15 min delay
         {
-          
+
             AccountNumber sender = transaction.FromAccount;
             AccountNumber reciever = transaction.ToAccount;
 

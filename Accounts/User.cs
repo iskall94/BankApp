@@ -1,14 +1,5 @@
-﻿using BankApp.Accounts;
-using BankApp.Enums;
+﻿using BankApp.Enums;
 using BankApp.Transactions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace BankApp.Accounts
 {
@@ -33,7 +24,7 @@ namespace BankApp.Accounts
             AllUsers.Add(user);
         }
 
-     
+
 
         public List<BankAccount>? UserBankAccounts { get; set; } = new List<BankAccount>();
 
@@ -56,14 +47,14 @@ namespace BankApp.Accounts
                 Console.Write("Enter your password: ");
                 string inputPassword = Console.ReadLine();
 
-              
+
 
                 foreach (User user in AllUsers)
                 {
                     if (inputName == user.Name && inputPassword == user.Password)
                     {
                         Console.WriteLine("Login succeeded!");
-                        return true; 
+                        return true;
                     }
                 }
 
@@ -72,12 +63,12 @@ namespace BankApp.Accounts
             }
 
             Console.WriteLine("You have been locked out of your account, please contact your bank.");
-            return false; 
+            return false;
         }
-                
-        
 
-        
+
+
+
 
         public void Logout()
         {
@@ -135,9 +126,23 @@ namespace BankApp.Accounts
             return newTx;
         }
 
+        /// <summary>
+        /// Creates a new loan for a specified account if the loan amount is within allowed limits.
+        /// </summary>
+        /// <param name="toAccount">The account that will receive the loan.</param>
+        /// <param name="admin">The bank admin account providing the loan funds.</param>
+        /// <param name="valueOfLoan">The requested loan amount.</param>
+        /// <param name="accountBalance">The current balance of the account to check against loan limit.</param>
+        /// <param name="personalNote">A personal note or purpose for the loan.</param>
+        /// <param name="transactionType">The type of transaction for the loan.</param>
+        /// <returns>A Loan object representing the created loan.</returns>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if the requested loan exceeds 5× the account balance.
+        /// </exception>
         public Loan CreateLoan(AccountNumber toAccount, BankAccount admin, decimal valueOfLoan, decimal accountBalance, string personalNote, TransactionType transactionType)
         {
-            decimal interestRate = 0.035m; // TODO: hårdkodad interest kanske bör ändras?
+            decimal interestRate = 2m; // TODO: hårdkodad interest kanske bör ändras?
+            int years = 3;
 
             if (valueOfLoan > accountBalance * 5)
             {
@@ -146,6 +151,7 @@ namespace BankApp.Accounts
             else
             {
                 Loan newLoan = new Loan(toAccount, admin.AccountNumber, valueOfLoan, personalNote, interestRate, transactionType);
+                Console.WriteLine(newLoan.CalculateLoan(valueOfLoan, interestRate, years));
                 return newLoan;
             }
         }
@@ -178,7 +184,7 @@ namespace BankApp.Accounts
                    $"Password: {Password}\n" +
                    "\n---\n" +
             $"Bank Accounts:\n{UserBankAccounts}";
-                   
+
         }
     }
 }

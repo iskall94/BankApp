@@ -13,7 +13,7 @@ namespace BankApp
             User user = new User(Guid.NewGuid(), "lösenordet", "Paulina Porsmyr", userBankAccounts);
             UserDB.AddUser(user);
             
-            User.LogIn();
+            User.Login();
         }
             //MainMenu.MainMenuStart();
     }

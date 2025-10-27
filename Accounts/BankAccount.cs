@@ -1,4 +1,5 @@
 ﻿using BankApp.Enums;
+using BankApp.Currencies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,16 +7,17 @@ using System.Text;
 using System.Threading.Tasks;
 using BankApp.Transactions;
 
+
 namespace BankApp.Accounts
 {
     internal class BankAccount
     {
       
-        public BankAccount(string accountName, AccountType accountType, Currency currency, decimal balance)
+        public BankAccount(string accountName, AccountType accountType, decimal balance)
         {
             AccountName = accountName;
             AccountType = accountType;
-            Currency = currency;
+            Currency = Enums.CurrencyType.SEK;
             Balance = balance;
             Interest = 0;
             TransactionHistory = new List <Transaction>();
@@ -28,7 +30,7 @@ namespace BankApp.Accounts
 
         public string AccountName { get; set; }
         public AccountType AccountType { get; set; }
-        public Currency Currency { get; set; }
+        public CurrencyType Currency { get; set; }
         
         public AccountNumber AccountNumber { get; set; }
         public decimal Balance { get; set; } // Should be private
@@ -67,9 +69,19 @@ namespace BankApp.Accounts
 
         }
 
-        public void ChangeCurrency()
+        public void ChangeAccountCurrency(AccountNumber accountNumber, Enums.CurrencyType currency)
         {
+            Console.WriteLine(accountNumber);
+            var account = BankAccountDB.FindBankAccount(accountNumber);
+            Console.WriteLine(account == null ? "account is null" : "account is ok");
+            Console.WriteLine(account.ToString());
+            
+            decimal ExchangeRate = CurrencyManager.AccountCurrency[currency];
 
+            account.Currency = currency;
+            account.Balance = Balance * ExchangeRate;
+            Console.WriteLine(account.ToString());
+            Console.ReadKey();
         }
 
         public override string ToString()

@@ -21,18 +21,22 @@ namespace BankApp.Menus
             {
                 Menu.MenuOptions = GetMainMenuOptions;
                 string title = AsciiTitle();
+                Console.ResetColor();
                 int menuChoice = Menu.Run(title);
 
                 switch (menuChoice)
                 {
                     case 0:
-                        //Logga in?
+                        UserMenu.UserMenuStart();
+                        //User.Login() Replace later!
                         break;
                     case 1:
                         AdminMenu.AdminMenuStart();
                         break;
                     case 2:
-                        //Avsluta?
+                        Console.WriteLine("Exiting the Bank App after 3 seconds...");
+                        Thread.Sleep(3000);
+                        Environment.Exit(0);
                         break;
                     default:
                         break;
@@ -42,11 +46,11 @@ namespace BankApp.Menus
         public static string AsciiTitle()
         {
             string asciiTitle = @"
-PPPP   LL      AAA    CCCC  EEEE  HH  HH   OOO   LL      DDDD   EEEE  RRRR   
+PPPP   LL      AAA    CCCC EEEE  HH  HH   OOO   LL      DDDD   EEEE  RRRR   
 P   P  LL     A   A  CC    EE    HH  HH  O   O  LL      D   D  EE    R   R  
 PPPP   LL     AAAAA  CC    EEEE  HHHHHH  O   O  LL      D   D  EEEE  RRRR   
 P      LL     A   A  CC    EE    HH  HH  O   O  LL      D   D  EE    R R    
-P      LLLLLL A   A   CCCC EEEE  HH  HH   OOO   LLLLLL DDDD   EEEE  R  RR  
+P      LLLLLL A   A   CCCC EEEE  HH  HH   OOO   LLLLLL  DDDD   EEEE  R  RR  
 
 NN  NN   AAA   MM  MM EEEE 
 NNN NN  A   A  MMM MM EE   

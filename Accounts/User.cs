@@ -1,12 +1,5 @@
 ﻿using BankApp.Enums;
 using BankApp.Transactions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BankApp.Accounts
 {
@@ -32,8 +25,6 @@ namespace BankApp.Accounts
        
 
         public List<BankAccount>? UserBankAccounts { get; set; } = new List<BankAccount>();
-
-
 
         public static void Login()
         {
@@ -154,36 +145,64 @@ namespace BankApp.Accounts
             return foundAccount;
         }
 
-   
+
         public BankAccount CreateBankAccount(string accountName, AccountType accountType, Currency currency, decimal balance)
         {
-            BankAccount account = new BankAccount(accountName, accountType, currency, balance);
+            BankAccount account = new BankAccount(accountName, accountType, balance);
             if (accountType == AccountType.Savings)
             {
                 account.Interest = 1.5f;
                 Console.WriteLine(account.Balance);
-                account.Balance = balance * (decimal)(1 + account.Interest/100);
+                account.Balance = balance * (decimal)(1 + account.Interest / 100);
                 Console.WriteLine(account.Balance);
             }
             UserBankAccounts?.Add(account);
             BankAccountDB.AddBankAccount(account);
 
             return account;
-           
-       
+
+
         }
 
-        public  Transaction CreateTransaction(AccountNumber toAccount, AccountNumber fromAccount, decimal value, string personalNote)
+        public Transaction CreateTransaction(AccountNumber toAccount, AccountNumber fromAccount, decimal value, string personalNote, TransactionType transactionType)
         {
-            Transaction newTx = new Transaction(toAccount, fromAccount, value, personalNote);
+            Transaction newTx = new Transaction(toAccount, fromAccount, value, personalNote, transactionType);
 
             return newTx;
         }
 
+        /// <summary>
+        /// Creates a new loan for a specified account if the loan amount is within allowed limits.
+        /// </summary>
+        /// <param name="toAccount">The account that will receive the loan.</param>
+        /// <param name="admin">The bank admin account providing the loan funds.</param>
+        /// <param name="valueOfLoan">The requested loan amount.</param>
+        /// <param name="accountBalance">The current balance of the account to check against loan limit.</param>
+        /// <param name="personalNote">A personal note or purpose for the loan.</param>
+        /// <param name="transactionType">The type of transaction for the loan.</param>
+        /// <returns>A Loan object representing the created loan.</returns>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if the requested loan exceeds 5× the account balance.
+        /// </exception>
+        public Loan CreateLoan(AccountNumber toAccount, BankAccount admin, decimal valueOfLoan, decimal accountBalance, string personalNote, TransactionType transactionType)
+        {
+            decimal interestRate = 2m; // TODO: hårdkodad interest kanske bör ändras?
+            int years = 3;
+
+            if (valueOfLoan > accountBalance * 5)
+            {
+                throw new InvalidOperationException("This loan cannot be granted: the amount exceeds 5× your current balance.");
+            }
+            else
+            {
+                Loan newLoan = new Loan(toAccount, admin.AccountNumber, valueOfLoan, personalNote, interestRate, transactionType);
+                Console.WriteLine(newLoan.CalculateLoan(valueOfLoan, interestRate, years));
+                return newLoan;
+            }
+        }
 
 
-
-        public void HandleTransfer( AccountNumber to , AccountNumber from, decimal value)
+        public void HandleTransfer(AccountNumber to, AccountNumber from, decimal value)
         {
             BankAccount From = FindAccount(from);
             BankAccount To = FindAccount(to);
@@ -195,7 +214,7 @@ namespace BankApp.Accounts
 
         }
 
-       
+
 
         public void EditBankAccount()
         {
@@ -209,8 +228,10 @@ namespace BankApp.Accounts
             return $"User: {Name}\n" +
                    $"Password: {Password}\n" +
                    "\n---\n" +
-            $"Bank Accounts:\n{accountsInfo}";
-                   
+            $"Bank Accounts:\n{UserBankAccounts}";
+
         }
     }
 }
+
+

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BankApp.Enums;
 
 namespace BankApp.Accounts
 {
     internal class Admin : User
     {
+        public static BankAccount bankaccount { get; set; } = new BankAccount("admins konto", AccountType.Normal, Currency.SEK, 10000000);
         public Admin(Guid userID, string password, string name) : base(userID, password, name)
         {
+
         }
 
         public static User CreateUser(string password, string name, BankAccount account)
@@ -33,7 +31,7 @@ namespace BankApp.Accounts
 
         }
 
-        
+
 
     }
 }

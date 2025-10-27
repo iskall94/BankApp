@@ -35,7 +35,7 @@ namespace BankApp.Accounts
 
 
 
-        public static User Login()
+        public static void Login()
         {
             Console.Clear();
             int failedCount = 0;
@@ -103,7 +103,7 @@ namespace BankApp.Accounts
 
                 User confirmUser = UserDB.FindUserByName(inputName);
                 Console.WriteLine(confirmUser.ToString());
-                return confirmUser;
+             UserMenu.UserMenuStart(confirmUser);
         }
 
         public static void Logout()

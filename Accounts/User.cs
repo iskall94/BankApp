@@ -25,14 +25,45 @@ namespace BankApp.Accounts
         public string Name { get; set; }
 
        
+
         
+   
 
         public List<BankAccount>? UserBankAccounts { get; set; } = new List<BankAccount>();
 
-        public void Login()
-        {
 
-        }
+        //lägg till felhantering, tolower, 
+        public static bool LogIn()
+        {
+            foreach (User user in UserDB.allUsers)
+            {
+                Console.WriteLine(user.ToString());
+            }
+
+            int failedCount = 0;
+
+            while (failedCount < 3)
+            {
+                Console.Write("Enter your name: ");
+                string inputName = Console.ReadLine();
+
+                Console.Write("Enter your password: ");
+                string inputPassword = Console.ReadLine();
+
+              
+
+                foreach (User user in UserDB.allUsers)
+                {
+                    if (inputName.ToLower() == user.Name.ToLower() && inputPassword.ToLower() == user.Password.ToLower())
+                    {
+                        Console.WriteLine("Login succeeded!");
+                        return true; 
+                    }
+                }
+
+                failedCount++;
+                Console.WriteLine($"Try again. Attempts left: {3 - failedCount}");
+            }
 
         public void Logout()
         {

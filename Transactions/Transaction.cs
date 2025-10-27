@@ -5,7 +5,7 @@ namespace BankApp.Transactions
 {
     internal class Transaction
     {
-
+        public List<Transaction> PendingTransactions { get; set; }
         private Guid TransactionID { get; set; }
         public AccountNumber ToAccount { get; set; }
         public AccountNumber FromAccount { get; set; }
@@ -31,9 +31,25 @@ namespace BankApp.Transactions
         }
 
 
+        public void ExecutePendingTransactions()
+        {
+            int isQuarter = DateTime.Now.Minute;
+
+
+            if (isQuarter % 15 == 0)
+            {
+                foreach (Transaction tx in PendingTransactions)
+                {
+                    ExecuteTransaction(tx);
+
+                }
+                PendingTransactions.Clear();
+            }
+        }
 
         public void ExecuteTransaction(Transaction transaction) // 15 min delay
         {
+          
             AccountNumber sender = transaction.FromAccount;
             AccountNumber reciever = transaction.ToAccount;
 

@@ -1,7 +1,6 @@
-ï»¿using BankApp.Accounts;
+using BankApp.Accounts;
 using BankApp.Enums;
 using BankApp.Transactions;
-
 
 namespace BankApp
 {
@@ -10,14 +9,16 @@ namespace BankApp
         static void Main(string[] args)
         {
 
-            Admin admin = new Admin(Guid.NewGuid(), "admin", "Admin");
+            //MainMenu.MainMenuStart();
 
 
-            //sÃ¶ka om ett lÃ¥n
+
+
+            //söka om ett lån
 
             BankAccount gabrielsKonto = new BankAccount("gabriels konto", AccountType.Normal, Currency.SEK, 25000);
 
-            User gabriel = admin.CreateUser("lÃ¶senord", "Gabriel Kassarp", gabrielsKonto);
+            User gabriel = Admin.CreateUser("lösenord", "Gabriel Kassarp", gabrielsKonto);
 
 
             BankAccount loanFromAdmin = Admin.bankaccount;
@@ -26,7 +27,7 @@ namespace BankApp
 
             try
             {
-                Transaction loanTransx = gabriel.CreateLoan(LoanToAcc, loanFromAdmin, 80000, gabrielsKonto.Balance, "bil lÃ¥n", TransactionType.Loan);
+                Transaction loanTransx = gabriel.CreateLoan(LoanToAcc, loanFromAdmin, 80000, gabrielsKonto.Balance, "bil lån", TransactionType.Loan);
                 loanTransx.ExecuteTransaction(loanTransx);
 
             }

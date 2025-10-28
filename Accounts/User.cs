@@ -153,6 +153,7 @@ namespace BankApp.Accounts
             if (accountType == AccountType.Savings)
             {
                 account.Interest = 1.5f;
+                account.LastInterestDate = DateTime.Now;
                 Console.WriteLine(account.Balance);
                 account.Balance = balance * (decimal)(1 + account.Interest / 100);
                 Console.WriteLine(account.Balance);

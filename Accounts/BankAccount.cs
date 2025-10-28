@@ -1,11 +1,12 @@
-﻿using BankApp.Enums;
-using BankApp.Currencies;
+﻿using BankApp.Currencies;
+using BankApp.Enums;
+using BankApp.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
-using BankApp.Transactions;
 
 
 namespace BankApp.Accounts
@@ -37,7 +38,9 @@ namespace BankApp.Accounts
 
         public float Interest { get; set; } // Should be private
 
-       
+        public DateTime? LastInterestDate { get; set; }
+
+
 
         public decimal Withdraw(decimal value)
         {
@@ -84,6 +87,27 @@ namespace BankApp.Accounts
             Console.ReadKey();
         }
 
+
+        public static string applyInterest(BankAccount account)
+        {
+            DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
+      
+            DateOnly lastApplied = DateOnly.FromDateTime(account.LastInterestDate.Value);
+            DateOnly nextEligibilityDate = lastApplied.AddYears(1);
+            if (currentDate >= nextEligibilityDate)
+            {
+                double rateFactor = 1.0 + (account.Interest / 100.0);
+                decimal balanceBefore = account.Balance;
+                account.Balance = account.Balance * (decimal)rateFactor;
+                account.LastInterestDate = currentDate.ToDateTime(TimeOnly.MinValue);
+
+                return $"Interest applied for Account {account.AccountNumber}. Balance changed from {balanceBefore:C} to {account.Balance:C}.";
+            }
+            else
+            {
+                return $"Account {account.AccountNumber} is not yet eligible for interest. Next eligibility: {nextEligibilityDate:yyyy-MM-dd}.";
+            }
+        }
         public override string ToString()
         {
             return $"Account: {AccountName}\n" +

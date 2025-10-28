@@ -1,5 +1,6 @@
 ﻿using BankApp.Enums;
 using BankApp.Transactions;
+using BankApp.Menus;
 
 namespace BankApp.Accounts
 {
@@ -11,73 +12,118 @@ namespace BankApp.Accounts
             Password = password;
             Name = name;
             UserBankAccounts = userBankAccounts;
+            FirstTimeLogin = true;
+            IsLocked = false;
         }
 
         private Guid UserID { get; set; }
         protected string Password { get; set; }
         public string Name { get; set; }
 
-        public static List<User> AllUsers { get; set; } = new List<User>();
+        public bool FirstTimeLogin { get; set; }
 
-        public void AddUser(User user)
-        {
-            AllUsers.Add(user);
-        }
-
-
+        public bool IsLocked { get; set; }
+       
 
         public List<BankAccount>? UserBankAccounts { get; set; } = new List<BankAccount>();
 
-
-
-        public static bool LogIn()
+        public static void Login()
         {
-            foreach (User user in AllUsers)
-            {
-                Console.WriteLine(user.ToString());
-            }
-
+            Console.Clear();
             int failedCount = 0;
-
-            while (failedCount < 3)
+            Console.Write("Enter your name: ");
+            string inputName = Console.ReadLine();
+            Console.Write("Enter your password: ");
+            string inputPassword = Console.ReadLine();
+            foreach (User user in UserDB.allUsers)
             {
-                Console.Write("Enter your name: ");
-                string inputName = Console.ReadLine();
-
-                Console.Write("Enter your password: ");
-                string inputPassword = Console.ReadLine();
-
-
-
-                foreach (User user in AllUsers)
+                while (failedCount != 2)
                 {
-                    if (inputName == user.Name && inputPassword == user.Password)
+                    if (inputName != user.Name)
                     {
-                        Console.WriteLine("Login succeeded!");
-                        return true;
+                        Console.WriteLine("Name not found, please check your spelling and try again.");
+                        Console.Write("Enter your name: ");
+                        inputName = Console.ReadLine();
+                        Console.Write("Enter your password: ");
+                        inputPassword = Console.ReadLine();
+                    }
+                    else if (inputPassword != user.Password)
+                    {
+                        failedCount++;
+                        Console.WriteLine($"Wrong password, please try again. Attempts left: {3 - failedCount}");
+                        Console.Write("Enter your password: ");
+                        inputPassword = Console.ReadLine();
+                    }
+                     else if (inputName.ToLower() == user.Name.ToLower() && inputPassword == user.Password)
+                    {
+                        if (user.IsLocked)
+                        {
+                            Console.WriteLine(" Your account has been locked, please contact your bank.");
+                            break;
+                        }
+                        if (user.FirstTimeLogin)
+                        {
+                            Console.WriteLine("Change password to new one.");
+                            Console.WriteLine("Enter new password: ");
+                            string newPassword = Console.ReadLine();
+
+                            Console.WriteLine("Confirm new password: ");
+                            string confirmNewPassword = Console.ReadLine();
+
+                            while (newPassword != confirmNewPassword)
+                            {
+                                Console.WriteLine("Password did not match, try again.");
+                                Console.WriteLine("Confirm password: ");
+                                confirmNewPassword = Console.ReadLine();
+                            }
+
+                            Console.WriteLine($" New password: {newPassword}");
+                            user.Password = newPassword;
+                            user.FirstTimeLogin = false;
+                        }
+                        break;
                     }
                 }
 
-                failedCount++;
-                Console.WriteLine($"Try again. Attempts left: {3 - failedCount}");
+                if (failedCount == 3)
+                {
+                    user.IsLocked = true;
+                    Console.WriteLine(" Your account has been locked, please contact your bank.");
+                    break;
+                }
             }
 
-            Console.WriteLine("You have been locked out of your account, please contact your bank.");
-            return false;
+                User confirmUser = UserDB.FindUserByName(inputName);
+                Console.WriteLine(confirmUser.ToString());
+             UserMenu.UserMenuStart(confirmUser);
         }
 
-
-
-
-
-        public void Logout()
+        public static void Logout()
         {
-
+            
         }
-
-        public void ResetPassword()
+        
+        public void ChangePassword( User user)
         {
+            Console.WriteLine("Change password.");
+            Console.WriteLine("Enter current password: ");
+            string confirmPassword = Console.ReadLine();
 
+            
+                if (confirmPassword == user.Password) 
+                {
+                    Console.WriteLine("Enter new password: ");
+                    user.Password = Console.ReadLine();
+                    Console.WriteLine("Your password has changed.");
+                
+                }
+
+                else
+                {
+                    Console.WriteLine("Wrong password, please try again.");
+                }
+
+            
         }
 
         public void GetBalanceForAll()
@@ -101,9 +147,9 @@ namespace BankApp.Accounts
         }
 
 
-        public BankAccount CreateBankAccount(string accountName, AccountType accountType, Currency currency, decimal balance)
+        public BankAccount CreateBankAccount(string accountName, AccountType accountType, decimal balance)
         {
-            BankAccount account = new BankAccount(accountName, accountType, currency, balance);
+            BankAccount account = new BankAccount(accountName, accountType, balance);
             if (accountType == AccountType.Savings)
             {
                 account.Interest = 1.5f;

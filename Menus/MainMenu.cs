@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BankApp.Accounts;
 
 namespace BankApp.Menus
 {
@@ -27,8 +28,8 @@ namespace BankApp.Menus
                 switch (menuChoice)
                 {
                     case 0:
-                        UserMenu.UserMenuStart();
-                        //User.Login() Replace later!
+                        //UserMenu.UserMenuStart();
+                        User.Login();
                         break;
                     case 1:
                         AdminMenu.AdminMenuStart();

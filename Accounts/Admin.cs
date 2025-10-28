@@ -4,7 +4,7 @@ namespace BankApp.Accounts
 {
     internal class Admin : User
     {
-        public static BankAccount bankaccount { get; set; } = new BankAccount("admins konto", AccountType.Normal, Currency.SEK, 10000000);
+        public static BankAccount bankaccount { get; set; } = new BankAccount("admins konto", AccountType.Normal, 10000000);
         public Admin(Guid userID, string password, string name) : base(userID, password, name)
         {
 
@@ -16,7 +16,7 @@ namespace BankApp.Accounts
             userBankAccounts.Add(account);
             BankAccountDB.AddBankAccount(account);
             User newUser = new User(Guid.NewGuid(), password, name, userBankAccounts);
-            newUser.AddUser(newUser);
+            UserDB.AddUser(newUser);
             return newUser;
 
         }
@@ -47,7 +47,7 @@ namespace BankApp.Accounts
                     Console.WriteLine("Could not parse the balance input. Please enter a valid input.");
                 }
             }
-            BankAccount bankAccount = new BankAccount("account", Enums.AccountType.Normal, Enums.Currency.SEK, decimalNumber);
+            BankAccount bankAccount = new BankAccount("account", Enums.AccountType.Normal, decimalNumber);
             User createdUser = Admin.CreateUser(password, name, bankAccount);
 
 

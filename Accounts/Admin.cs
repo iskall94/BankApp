@@ -1,5 +1,6 @@
 ﻿using BankApp.Currencies;
 using BankApp.Enums;
+using BankApp.Menus;
 
 namespace BankApp.Accounts
 {
@@ -29,15 +30,46 @@ namespace BankApp.Accounts
 
         public static void UpdateExchangeRates()
         {
-            Console.WriteLine("Choose currency: ");
-            foreach(CurrencyType c in CurrencyManager.AccountCurrency)
+            //Console.WriteLine("Choose currency: ");
+            //foreach(CurrencyType c in CurrencyManager.AccountCurrency.Keys)
+            //{
+            //    Console.WriteLine(c);
+            //}
+
+            Console.Clear();
+            while (true)
             {
-                Console.WriteLine(c);
+                Menu.MenuOptions = CurrencyManager.AccountCurrency.Keys.Select(key => key.ToString()).ToList();
+                Menu.MenuOptions.Add("Back to Admin Menu");
+                string title = "---Change Exchange Rate List---";
+
+                int menuChoice = Menu.Run(title);
+
+                switch (menuChoice)
+                {
+                    case 0:
+                        //Console.WriteLine($"Please change the value of {CurrencyType.SEK}: ");
+                        //Console.ReadLine();
+                        //CurrencyManager.AccountCurrency[CurrencyType.SEK] = 
+                        break;
+                    case 1:
+
+                        break;
+                    case 2:
+
+                        break;
+                    case 3:
+
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        AdminMenu.AdminMenuStart();
+                        break;
+                    default:
+                        break;
+                }
             }
-
         }
-
-
-
     }
 }

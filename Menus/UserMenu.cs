@@ -16,6 +16,7 @@ namespace BankApp.Menus
             "Transfer to Account",
             "Add New Account(s)",
             "Edit Account(s)",
+            "Edit User details",
             "Exit To Main Menu..."
         };
 

@@ -17,6 +17,11 @@ namespace BankApp.Currencies
             {CurrencyType.USD, 0.11m},
             {CurrencyType.GBP, 0.08m},
         };
+
+        public static void ChangeCurrencyValue(int selectedIndex)
+        {
+
+        }
     }
 
         

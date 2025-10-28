@@ -1,6 +1,7 @@
 ﻿using BankApp.Enums;
 using BankApp.Transactions;
 using BankApp.Menus;
+using System.Globalization;
 
 namespace BankApp.Accounts
 {
@@ -19,6 +20,14 @@ namespace BankApp.Accounts
         private Guid UserID { get; set; }
         private string Password { get; set; }
         public string Name { get; set; }
+
+        public string? Email { get; set; }
+
+        public string? Phone { get; set; }
+
+        public string?  Residence { get; set; }
+
+        public string? Gender { get; set; }
 
         public bool FirstTimeLogin { get; set; }
 
@@ -126,6 +135,22 @@ namespace BankApp.Accounts
             
         }
 
+
+        public void EditUser(  User user, string field, string value)
+        {
+            field = field.ToLower();
+
+            switch (field) {
+
+                case "name": user.Name = value; break;
+                case "email": user.Email = value; break;
+                case "phone": user.Phone = value; break;
+                case "residence": user.Residence = value; break;
+                case "gender": user.Gender = value; break;
+            }
+                    
+            
+        }
         public void GetBalanceForAll()
         {
 

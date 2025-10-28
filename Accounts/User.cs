@@ -14,7 +14,7 @@ namespace BankApp.Accounts
         }
 
         private Guid UserID { get; set; }
-        private string Password { get; set; }
+        protected string Password { get; set; }
         public string Name { get; set; }
 
         public static List<User> AllUsers { get; set; } = new List<User>();

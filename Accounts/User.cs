@@ -135,7 +135,7 @@ namespace BankApp.Accounts
         {
             foreach (BankAccount account in UserBankAccounts)
             {
-                Console.WriteLine(account.ToString());
+                Console.WriteLine(account.ToStringLite());
             }
         }
 

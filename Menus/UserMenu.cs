@@ -32,7 +32,7 @@ namespace BankApp.Menus
                 switch (menuChoice)
                 {
                     case 0:
-
+                        currentUser.ShowAllAccounts();
                         break;
                     case 1:
 
@@ -55,5 +55,7 @@ namespace BankApp.Menus
                 }
             }
         }
+
+   
     }
 }

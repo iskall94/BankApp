@@ -84,6 +84,16 @@ namespace BankApp.Accounts
             Console.ReadKey();
         }
 
+        public string ToStringLite()
+        {
+            return $"Account: {AccountName}\n" +
+                  $"Balance: {Balance} + {Currency}\n" +
+                  $"AccountNumber: {AccountNumber}\n";
+        }
+
+        
+
+
         public override string ToString()
         {
             return $"Account: {AccountName}\n" +

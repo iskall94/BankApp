@@ -30,13 +30,8 @@ namespace BankApp.Accounts
 
         public static void UpdateExchangeRates()
         {
-            //Console.WriteLine("Choose currency: ");
-            //foreach(CurrencyType c in CurrencyManager.AccountCurrency.Keys)
-            //{
-            //    Console.WriteLine(c);
-            //}
-
             Console.Clear();
+
             while (true)
             {
                 Menu.MenuOptions = CurrencyManager.AccountCurrency.Keys.Select(key => key.ToString()).ToList();
@@ -45,25 +40,32 @@ namespace BankApp.Accounts
 
                 int menuChoice = Menu.Run(title);
 
+                Console.WriteLine("-------------------------------");
+
+                Console.WriteLine("Current Currency values:");
+                foreach (KeyValuePair<CurrencyType, decimal> ac in CurrencyManager.AccountCurrency)
+                {
+                    Console.WriteLine($"{ac.Key}: {ac.Value}");
+                }
+
+                Console.WriteLine("-------------------------------");
+
                 switch (menuChoice)
                 {
                     case 0:
-                        //Console.WriteLine($"Please change the value of {CurrencyType.SEK}: ");
-                        //Console.ReadLine();
-                        //CurrencyManager.AccountCurrency[CurrencyType.SEK] = 
+                        Console.WriteLine("SEK is always 1,00, cannot be changed.");
+                        Console.ReadKey();
                         break;
                     case 1:
-
+                        CurrencyManager.ChangeCurrencyValue(CurrencyType.EUR);
                         break;
                     case 2:
-
+                        CurrencyManager.ChangeCurrencyValue(CurrencyType.USD);
                         break;
                     case 3:
-
+                        CurrencyManager.ChangeCurrencyValue(CurrencyType.GBP);
                         break;
                     case 4:
-                        break;
-                    case 5:
                         AdminMenu.AdminMenuStart();
                         break;
                     default:

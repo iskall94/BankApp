@@ -1,6 +1,6 @@
 ﻿using BankApp.Enums;
-using BankApp.Transactions;
 using BankApp.Menus;
+using BankApp.Transactions;
 
 namespace BankApp.Accounts
 {
@@ -23,7 +23,7 @@ namespace BankApp.Accounts
         public bool FirstTimeLogin { get; set; }
 
         public bool IsLocked { get; set; }
-       
+
 
         public List<BankAccount>? UserBankAccounts { get; set; } = new List<BankAccount>();
 
@@ -54,7 +54,7 @@ namespace BankApp.Accounts
                         Console.Write("Enter your password: ");
                         inputPassword = Console.ReadLine();
                     }
-                     else if (inputName.ToLower() == user.Name.ToLower() && inputPassword == user.Password)
+                    else if (inputName.ToLower() == user.Name.ToLower() && inputPassword == user.Password)
                     {
                         if (user.IsLocked)
                         {
@@ -93,37 +93,37 @@ namespace BankApp.Accounts
                 }
             }
 
-                User confirmUser = UserDB.FindUserByName(inputName);
-                Console.WriteLine(confirmUser.ToString());
-             UserMenu.UserMenuStart(confirmUser);
+            User confirmUser = UserDB.FindUserByName(inputName);
+            Console.WriteLine(confirmUser.ToString());
+            UserMenu.UserMenuStart(confirmUser);
         }
 
         public static void Logout()
         {
-            
+
         }
-        
-        public void ChangePassword( User user)
+
+        public void ChangePassword(User user)
         {
             Console.WriteLine("Change password.");
             Console.WriteLine("Enter current password: ");
             string confirmPassword = Console.ReadLine();
 
-            
-                if (confirmPassword == user.Password) 
-                {
-                    Console.WriteLine("Enter new password: ");
-                    user.Password = Console.ReadLine();
-                    Console.WriteLine("Your password has changed.");
-                
-                }
 
-                else
-                {
-                    Console.WriteLine("Wrong password, please try again.");
-                }
+            if (confirmPassword == user.Password)
+            {
+                Console.WriteLine("Enter new password: ");
+                user.Password = Console.ReadLine();
+                Console.WriteLine("Your password has changed.");
 
-            
+            }
+
+            else
+            {
+                Console.WriteLine("Wrong password, please try again.");
+            }
+
+
         }
 
         public void GetBalanceForAll()
@@ -137,6 +137,12 @@ namespace BankApp.Accounts
             {
                 Console.WriteLine(account.ToString());
             }
+
+        }
+
+        public List<AccountNumber> AccountNumbersList(User currentUser)
+        {
+            return currentUser.UserBankAccounts.Select(a => a.AccountNumber).ToList();
         }
 
         public BankAccount FindAccount(AccountNumber accountNumber)

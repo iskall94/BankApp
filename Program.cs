@@ -1,6 +1,4 @@
 using BankApp.Menus;
-using BankApp.Accounts;
-using BankApp.Enums;
 
 namespace BankApp
 {
@@ -9,7 +7,7 @@ namespace BankApp
         static void Main(string[] args)
         {
             MainMenu.MainMenuStart();
-            
+
             // To test Login() Method
 
             //List<BankAccount> userBankAccounts = new List<BankAccount>();

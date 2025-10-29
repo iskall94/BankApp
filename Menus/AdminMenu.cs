@@ -29,7 +29,7 @@ namespace BankApp.Menus
                 switch (menuChoice)
                 {
                     case 0:
-                        AdminMenu.AdminCreateUser();
+                        AdminCreateUser();
                         break;
                     case 1:
 

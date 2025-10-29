@@ -1,9 +1,6 @@
 ﻿using BankApp.Accounts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BankApp.Enums;
+using BankApp.Transactions;
 
 namespace BankApp.Menus
 {
@@ -14,6 +11,7 @@ namespace BankApp.Menus
             "Check Accounts",
             "Transfer Money Between Account(s)",
             "Transfer to Account",
+            "Apply for loan",
             "Add New Account(s)",
             "Edit Account(s)",
             "Exit To Main Menu..."
@@ -41,18 +39,68 @@ namespace BankApp.Menus
 
                         break;
                     case 3:
-                        
+                        ApplyForLoan(currentUser);
                         break;
                     case 4:
 
                         break;
                     case 5:
+                        break;
+                    case 6:
                         MainMenu.MainMenuStart();
                         break;
 
                     default:
                         break;
                 }
+            }
+        }
+
+
+        public static void ApplyForLoan(User currentUser)
+        {
+
+            Console.Clear();
+            Console.CursorVisible = true;
+            Console.WriteLine("---Apply for loan---");
+
+
+            Console.WriteLine("Please select the bank account to receive your loan:");
+            List<AccountNumber> allAccountNumbers = currentUser.AccountNumbersList(currentUser);
+            for (int i = 0; i < allAccountNumbers.Count; i++)
+            {
+                Console.WriteLine($"[{i + 1}] - {allAccountNumbers[i]}");
+            }
+            AccountNumber selectedAccount;
+            BankAccount currentUserBankAccount;
+
+            while (true)
+            {
+                string input = Console.ReadLine() ?? "";
+
+                if (int.TryParse(input, out int choice) && choice > 0 && choice <= allAccountNumbers.Count)
+                {
+                    selectedAccount = allAccountNumbers[choice - 1];
+                    currentUserBankAccount = currentUser.FindAccount(selectedAccount);
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid choice. Please try again.");
+                }
+            }
+
+            Console.WriteLine("Please provide a short note describing the purpose of your loan:");
+            string personalNote = Console.ReadLine() ?? "";
+
+            try
+            {
+                Transaction loanTransx = currentUser.CreateLoan(selectedAccount, Admin.bankaccount, 80000, currentUserBankAccount.Balance, personalNote, TransactionType.Loan);
+                loanTransx.ExecuteTransaction(loanTransx);
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }

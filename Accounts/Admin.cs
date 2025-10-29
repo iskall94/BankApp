@@ -22,6 +22,16 @@ namespace BankApp.Accounts
             return newUser;
 
         }
+        public static User CreateUserwInfo(string password, string name, string email, string phone, string residence, string gender, BankAccount account)
+        {
+            List<BankAccount> userBankAccounts = new List<BankAccount>();
+            userBankAccounts.Add(account);
+            BankAccountDB.AddBankAccount(account);
+            User newUser = new User(Guid.NewGuid(), password, name, email, phone, residence, gender, userBankAccounts);
+            UserDB.AddUser(newUser);
+            return newUser;
+
+        }
 
         public static void FreezeBankAccount()
         {

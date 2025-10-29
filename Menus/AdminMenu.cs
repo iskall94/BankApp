@@ -88,9 +88,31 @@ namespace BankApp.Menus
                 }
             }
             BankAccount bankAccount = new BankAccount("account", Enums.AccountType.Normal, decimalNumber);
-             User  createdUser = Admin.CreateUser(Password, name, bankAccount);
-            UserDB.AddUser(createdUser);   
-            Console.WriteLine(createdUser.ToString());
+            Console.WriteLine("Has User provided additional info? \n" +
+                "Y/N");
+            string additionalUserChoice = Console.ReadLine();
+            if (additionalUserChoice == "Y")
+            {
+
+                Console.WriteLine("Please enter user Email:");
+                string email = Console.ReadLine();
+                Console.WriteLine("Please enter user Phone number:");
+                string phone = Console.ReadLine();
+                Console.WriteLine("Please enter user Residence:");
+                string residence = Console.ReadLine();
+                Console.WriteLine("Please enter user Gender:");
+                string gender = Console.ReadLine();
+
+                User createdUserwInfo = Admin.CreateUserwInfo(Password, name, email, phone, residence, gender, bankAccount);
+                Console.WriteLine(createdUserwInfo.ToString());
+            }
+            else 
+            {
+
+                User createdUser = Admin.CreateUser(Password, name, bankAccount);
+                Console.WriteLine(createdUser.ToString());
+            }
+            
             Console.ReadKey();
         }
     }

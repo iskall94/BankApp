@@ -1,3 +1,4 @@
+using BankApp.Accounts;
 using BankApp.Menus;
 
 namespace BankApp
@@ -6,13 +7,13 @@ namespace BankApp
     {
         static void Main(string[] args)
         {
+            List<BankAccount> userBankAccounts = new List<BankAccount>();
+            User user = new User(Guid.NewGuid(), "default", "Gabriel Kassarp", userBankAccounts);
+            UserDB.AddUser(user);
             MainMenu.MainMenuStart();
 
             // To test Login() Method
 
-            //List<BankAccount> userBankAccounts = new List<BankAccount>();
-            //User user = new User(Guid.NewGuid(), "default", "Gabriel Kassarp", userBankAccounts);
-            //UserDB.AddUser(user);
 
             //User.Login();
 

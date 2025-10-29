@@ -132,7 +132,7 @@ namespace BankApp.Menus
 
             currentUser.EditUser(currentUser, field, value);
 
-            Console.WriteLine($"\n{field} updated successfully!");
+            Console.WriteLine($"\n{field} updated successfully! Returning to Menu...");
             Thread.Sleep(1000);
             UserMenu.UserMenuStart(currentUser);
         }

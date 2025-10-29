@@ -49,6 +49,7 @@ namespace BankApp.Menus
                         
                         break;
                     case 4:
+                        Admin.UpdateExchangeRates();
                         break;
                     case 5:
                         MainMenu.MainMenuStart();

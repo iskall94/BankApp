@@ -122,15 +122,7 @@ namespace BankApp.Accounts
 
             Console.ReadKey();
         }
-        
-
-        
-
-        public static void Logout()
-        {
-            
-        }
-        
+      
         public void ChangePassword( User user)
         {
             Console.WriteLine("Change password.");
@@ -151,7 +143,6 @@ namespace BankApp.Accounts
                     Console.WriteLine("Wrong password, please try again.");
                 }
 
-            
         }
 
 
@@ -170,10 +161,7 @@ namespace BankApp.Accounts
                     
             
         }
-        public void GetBalanceForAll()
-        {
-
-        }
+ 
 
         public void ShowAllAccounts()
         {
@@ -256,13 +244,6 @@ namespace BankApp.Accounts
 
             Console.WriteLine($" FROM {From}");
             Console.WriteLine($" TO {To}");
-
-        }
-
-
-
-        public void EditBankAccount()
-        {
 
         }
 

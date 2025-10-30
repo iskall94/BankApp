@@ -66,7 +66,7 @@ namespace BankApp.Accounts
                 {
                     userFound = true; 
 
-                    while (failedCount != 2)
+                    while (failedCount < 3)
                     {
                         if (inputPassword != user.Password)
                         {
@@ -80,7 +80,7 @@ namespace BankApp.Accounts
                             if (user.IsLocked)
                             {
                                 Console.WriteLine("Your account has been locked, please contact your bank.");
-                                break;
+                                return;
                             }
 
                             if (user.FirstTimeLogin)
@@ -99,19 +99,20 @@ namespace BankApp.Accounts
                                     confirmNewPassword = Console.ReadLine();
                                 }
 
-                                Console.WriteLine($"New password set: {newPassword}");
                                 user.Password = newPassword;
                                 user.FirstTimeLogin = false;
+                                Console.WriteLine($"New password set: {newPassword}");
                             }
 
                             Console.WriteLine($"Welcome, {user.Name}!");
-                            return; 
+                            
+             UserMenu.UserMenuStart(user);
+                            break;
                         }
                     }
+                    return;
+       
                 }
-        User confirmUser = UserDB.FindUserByName(inputName);
-                Console.WriteLine(confirmUser.ToString());
-             UserMenu.UserMenuStart(confirmUser);
             }
 
             if (!userFound)

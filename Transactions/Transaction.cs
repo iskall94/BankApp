@@ -1,6 +1,6 @@
 ﻿using BankApp.Accounts;
-using BankApp.Enums;
 using BankApp.Currencies;
+using BankApp.Enums;
 
 namespace BankApp.Transactions
 {
@@ -83,9 +83,6 @@ namespace BankApp.Transactions
 
             senderAccount.AddTransaction(transaction);
             recieverAccount.AddTransaction(transaction);
-
-            Console.WriteLine(senderAccount.Balance);
-            Console.WriteLine(recieverAccount.Balance);
 
         }
 

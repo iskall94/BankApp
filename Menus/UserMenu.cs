@@ -36,16 +36,16 @@ namespace BankApp.Menus
                         break;
                     case 1:
 
-                        UserMenu.EditUserVisual(currentUser);
+                        EditUserVisual(currentUser);
                         break;
                     case 2:
 
                         break;
                     case 3:
 
-                        ApplyForLoan(currentUser);
                         break;
                     case 4:
+                        ApplyForLoan(currentUser);
 
                         break;
                     case 5:
@@ -159,6 +159,7 @@ namespace BankApp.Menus
             Console.WriteLine("---Apply for loan---");
 
 
+
             Console.WriteLine("Please select the bank account to receive your loan:");
             List<AccountNumber> allAccountNumbers = currentUser.AccountNumbersList(currentUser);
             for (int i = 0; i < allAccountNumbers.Count; i++)
@@ -170,9 +171,9 @@ namespace BankApp.Menus
 
             while (true)
             {
-                string input = Console.ReadLine() ?? "";
+                string accountInput = Console.ReadLine() ?? "";
 
-                if (int.TryParse(input, out int choice) && choice > 0 && choice <= allAccountNumbers.Count)
+                if (int.TryParse(accountInput, out int choice) && choice > 0 && choice <= allAccountNumbers.Count)
                 {
                     selectedAccount = allAccountNumbers[choice - 1];
                     currentUserBankAccount = currentUser.FindAccount(selectedAccount);
@@ -184,18 +185,33 @@ namespace BankApp.Menus
                 }
             }
 
+            Console.Clear();
+            Console.WriteLine("---Apply for loan---");
+
+            Console.WriteLine($"Account: {selectedAccount}");
+            Console.WriteLine($"Your current balance: {currentUserBankAccount.Balance}.");
+            Console.WriteLine($"Please note that you can only borrow up to 5 times your current balance.");
+            Console.WriteLine();
+            decimal amountOfLoan = HelperMethod.HelperDecimal("Enter the desired loan amount:");
+
+
             Console.WriteLine("Please provide a short note describing the purpose of your loan:");
             string personalNote = Console.ReadLine() ?? "";
 
+            Console.WriteLine("----------------");
+
             try
             {
-                Transaction loanTransx = currentUser.CreateLoan(selectedAccount, Admin.bankaccount, 80000, currentUserBankAccount.Balance, personalNote, TransactionType.Loan);
+                Transaction loanTransx = currentUser.CreateLoan(selectedAccount, Admin.bankaccount, amountOfLoan, currentUserBankAccount.Balance, personalNote, TransactionType.Loan);
                 loanTransx.ExecuteTransaction(loanTransx);
             }
             catch (InvalidOperationException ex)
             {
                 Console.WriteLine(ex.Message);
             }
+
+
+            Console.ReadKey();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BankApp.Accounts;
 using BankApp.Enums;
+using BankApp.Currencies;
 
 namespace BankApp.Transactions
 {
@@ -25,11 +26,9 @@ namespace BankApp.Transactions
 
         }
 
-
         public Transaction()
         {
         }
-
 
         public void ExecutePendingTransactions()
         {
@@ -74,6 +73,13 @@ namespace BankApp.Transactions
                 senderAccount = BankAccountDB.FindBankAccount(sender);
             }
             BankAccount recieverAccount = BankAccountDB.FindBankAccount(reciever);
+            if (senderAccount.Currency != recieverAccount.Currency)
+            {
+                decimal senderToSEK = CurrencyManager.AccountCurrency[senderAccount.Currency];
+                decimal receiverToSEK = CurrencyManager.AccountCurrency[recieverAccount.Currency];
+
+                transaction.Value = transaction.Value * (senderToSEK / receiverToSEK);
+            }
 
             senderAccount.Withdraw(transaction.Value);
             recieverAccount.Deposit(transaction.Value);

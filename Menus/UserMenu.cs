@@ -114,7 +114,7 @@ namespace BankApp.Menus
                     field = "Gender";
                     break;
                 case 5:
-                    UserMenu.UserMenuStart(currentUser);
+                    UserMenuStart(currentUser);
                     return;
                 default:
                     Console.WriteLine("Invalid choice.");
@@ -133,7 +133,7 @@ namespace BankApp.Menus
             {
                 Console.WriteLine("\nNo input provided. Returning to user menu...");
                 Thread.Sleep(1000);
-                UserMenu.UserMenuStart(currentUser);
+                UserMenuStart(currentUser);
                 return;
             }
 
@@ -141,49 +141,48 @@ namespace BankApp.Menus
 
             Console.WriteLine($"\n{field} updated successfully! Returning to Menu...");
             Thread.Sleep(1000);
-            UserMenu.UserMenuStart(currentUser);
+            UserMenuStart(currentUser);
         }
 
 
         public static void ChangeBankAccountVisual(User currentUser)
         {
-            Console.Clear();
-            Console.WriteLine("--- Select Account to Change Name ---\n");
-
-            var userAccounts = currentUser.UserBankAccounts;
-
-            if (userAccounts.Count == 0)
+            var accounts = currentUser.UserBankAccounts;
+            if (accounts.Count == 0)
             {
                 Console.WriteLine("You have no bank accounts.");
-                Console.WriteLine("Press any key to return to the User Menu...");
                 Console.ReadKey();
-                UserMenu.UserMenuStart(currentUser);
+                UserMenuStart(currentUser);
                 return;
             }
 
-          
-            List<string> accountOptions = userAccounts
-                .Select(acc => $"{acc.AccountNumber} - {acc.AccountName}")
-                .ToList();
-            accountOptions.Add("Return to User Menu");
+            Console.Clear();
+            Console.WriteLine("--- Select Account to Change Name ---\n");
+            int number = 1;
 
-            Menu.MenuOptions = accountOptions;
 
-            Console.WriteLine("Select an account to rename:\n");
-            int choice = Menu.Run();
-
-            if (choice == accountOptions.Count - 1)
+            foreach (var acc in accounts)
             {
-                UserMenu.UserMenuStart(currentUser);
-                return;
+                Console.WriteLine(number + ". " +acc.AccountName);
+                number++;
             }
 
-            var selectedAccount = userAccounts[choice];
+            Console.WriteLine(number + ". Return to User Menu");
+            Console.Write("\nType the number: ");
+            string input = Console.ReadLine();
 
-            BankAccount.ChangeBankAccountName(selectedAccount.AccountNumber);
+            number = 1;
+            foreach (var acc in accounts)
+            {
+                if (input == number.ToString())
+                {
+                    BankAccount.ChangeBankAccountName(acc.AccountNumber);
+                    break;
+                }
+                number++;
+            }
 
-            
-            UserMenu.UserMenuStart(currentUser);
+            UserMenuStart(currentUser);
         }
 
 

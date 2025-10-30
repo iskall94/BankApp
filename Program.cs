@@ -10,6 +10,7 @@ namespace BankApp
         {
             List<BankAccount> userBankAccounts = new List<BankAccount>();
             User user = new User(Guid.NewGuid(), "default", "Gabriel Kassarp", userBankAccounts);
+      
             UserDB.AddUser(user);
             MainMenu.MainMenuStart();
             
@@ -22,7 +23,7 @@ namespace BankApp
 
             // To test ChangeAccountCurrency
 
-            //BankAccount test = new BankAccount("test", AccountType.Normal, 100000m);
+            BankAccount test = new BankAccount("test", AccountType.Normal, 100000m);
             //BankAccountDB.AddBankAccount(test);
             //AccountNumber accountNumber = test.AccountNumber;
             //Console.WriteLine(accountNumber);

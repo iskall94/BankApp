@@ -157,6 +157,7 @@ namespace BankApp.Menus
             }
 
             Console.Clear();
+            Console.CursorVisible = true;
             Console.WriteLine("--- Select Account to Change Name ---\n");
             int number = 1;
 

@@ -1,4 +1,5 @@
 ﻿using BankApp.Accounts;
+using BankApp.Enums;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -17,7 +18,7 @@ namespace BankApp.Menus
             "Transfer Money Between Account(s)",
             "Transfer to Account",
             "Add New Account(s)",
-            "Edit BankAccount(s)",
+            "Edit BankAccount name",
             "Exit To Main Menu..."
         };
 
@@ -50,7 +51,10 @@ namespace BankApp.Menus
 
                         break;
                     case 5:
-                       
+
+                        UserMenu.ChangeBankAccountVisual(currentUser);
+
+
                         break;
                   case 6: 
                      MainMenu.MainMenuStart();
@@ -139,6 +143,49 @@ namespace BankApp.Menus
             Thread.Sleep(1000);
             UserMenu.UserMenuStart(currentUser);
         }
+
+
+        public static void ChangeBankAccountVisual(User currentUser)
+        {
+            Console.Clear();
+            Console.WriteLine("--- Select Account to Change Name ---\n");
+
+            var userAccounts = currentUser.UserBankAccounts;
+
+            if (userAccounts.Count == 0)
+            {
+                Console.WriteLine("You have no bank accounts.");
+                Console.WriteLine("Press any key to return to the User Menu...");
+                Console.ReadKey();
+                UserMenu.UserMenuStart(currentUser);
+                return;
+            }
+
+          
+            List<string> accountOptions = userAccounts
+                .Select(acc => $"{acc.AccountNumber} - {acc.AccountName}")
+                .ToList();
+            accountOptions.Add("Return to User Menu");
+
+            Menu.MenuOptions = accountOptions;
+
+            Console.WriteLine("Select an account to rename:\n");
+            int choice = Menu.Run();
+
+            if (choice == accountOptions.Count - 1)
+            {
+                UserMenu.UserMenuStart(currentUser);
+                return;
+            }
+
+            var selectedAccount = userAccounts[choice];
+
+            BankAccount.ChangeBankAccountName(selectedAccount.AccountNumber);
+
+            
+            UserMenu.UserMenuStart(currentUser);
+        }
+
 
         private static string? GetUserFieldValue(User user, string field)
         {

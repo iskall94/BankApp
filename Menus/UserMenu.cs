@@ -1,4 +1,5 @@
 ﻿using BankApp.Accounts;
+using BankApp.Enums;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -109,7 +110,7 @@ namespace BankApp.Menus
                     field = "Gender";
                     break;
                 case 5:
-                    UserMenu.UserMenuStart(currentUser);
+                    UserMenuStart(currentUser);
                     return;
                 default:
                     Console.WriteLine("Invalid choice.");
@@ -128,7 +129,7 @@ namespace BankApp.Menus
             {
                 Console.WriteLine("\nNo input provided. Returning to user menu...");
                 Thread.Sleep(1000);
-                UserMenu.UserMenuStart(currentUser);
+                UserMenuStart(currentUser);
                 return;
             }
 
@@ -136,8 +137,51 @@ namespace BankApp.Menus
 
             Console.WriteLine($"\n{field} updated successfully! Returning to Menu...");
             Thread.Sleep(1000);
-            UserMenu.UserMenuStart(currentUser);
+            UserMenuStart(currentUser);
         }
+
+
+        public static void ChangeBankAccountVisual(User currentUser)
+        {
+            var accounts = currentUser.UserBankAccounts;
+            if (accounts.Count == 0)
+            {
+                Console.WriteLine("You have no bank accounts.");
+                Console.ReadKey();
+                UserMenuStart(currentUser);
+                return;
+            }
+
+            Console.Clear();
+            Console.CursorVisible = true;
+            Console.WriteLine("--- Select Account to Change Name ---\n");
+            int number = 1;
+
+
+            foreach (var acc in accounts)
+            {
+                Console.WriteLine(number + ". " +acc.AccountName);
+                number++;
+            }
+
+            Console.WriteLine(number + ". Return to User Menu");
+            Console.Write("\nType the number: ");
+            string input = Console.ReadLine();
+
+            number = 1;
+            foreach (var acc in accounts)
+            {
+                if (input == number.ToString())
+                {
+                    BankAccount.ChangeBankAccountName(acc.AccountNumber);
+                    break;
+                }
+                number++;
+            }
+
+            UserMenuStart(currentUser);
+        }
+
 
         private static string? GetUserFieldValue(User user, string field)
         {

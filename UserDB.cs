@@ -31,7 +31,24 @@ namespace BankApp
             return foundUser;
         }
 
-
+        public static List<User> FindUserLocked()
+        {
+            var allUsersLocked = allUsers.FindAll(a => a.IsLocked == true);
+            var allUsersUnlocked = allUsers.FindAll(a => a.IsLocked == false);
+            Console.WriteLine("Current Users that are locked:");
+            foreach (User user in allUsersLocked)
+            {
+                Console.WriteLine(user.Name);
+            }
+            Console.WriteLine("-----------------------------------------");
+            Console.WriteLine("Current Users that are unlocked:");
+            foreach(User user in allUsersUnlocked)
+            {
+                Console.WriteLine(user.Name);
+            }
+            Console.WriteLine("-----------------------------------------");
+            return allUsersLocked;
+        }
 
         public static void ShowAllUsers()
         {

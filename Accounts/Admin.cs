@@ -21,6 +21,27 @@ namespace BankApp.Accounts
 
         }
 
+        public void ChangeBankAccountType(AccountNumber accountNumber, Enums.AccountType AccountType)
+        {
+            Console.WriteLine(accountNumber);
+            var account = BankAccountDB.FindBankAccount(accountNumber);
+            Console.WriteLine(accountNumber.ToString(), AccountType);
+
+            foreach (AccountType type in Enum.GetValues(typeof(AccountType)))
+            {
+                Console.WriteLine($"\n{type}");
+                Console.WriteLine("Enter a new type for your bank account (one of the above): ");
+                string newType = Console.ReadLine();
+                Enum.TryParse(newType, out AccountType);
+
+
+                Console.WriteLine($" The type of your bankaccount ({accountNumber}) has been updated to: {AccountType}");
+
+            }
+
+
+        }
+
         public static void FreezeBankAccount()
         {
 

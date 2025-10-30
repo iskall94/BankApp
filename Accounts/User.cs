@@ -98,10 +98,9 @@ namespace BankApp.Accounts
              UserMenu.UserMenuStart(confirmUser);
         }
 
-        public static void Logout()
-        {
-            
-        }
+
+      
+
         
         public void ChangePassword( User user)
         {
@@ -123,13 +122,9 @@ namespace BankApp.Accounts
                     Console.WriteLine("Wrong password, please try again.");
                 }
 
-            
         }
 
-        public void GetBalanceForAll()
-        {
-
-        }
+       
 
         public void ShowAllAccounts()
         {
@@ -216,11 +211,7 @@ namespace BankApp.Accounts
         }
 
 
-
-        public void EditBankAccount()
-        {
-
-        }
+        
 
         public override string ToString()
         {

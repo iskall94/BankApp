@@ -18,7 +18,7 @@ namespace BankApp.Menus
             "Transfer Money Between Account(s)",
             "Transfer to Account",
             "Add New Account(s)",
-            "Edit Account(s)",
+            "Change bankaccount name",
             "Exit To Main Menu..."
         };
 
@@ -51,6 +51,7 @@ namespace BankApp.Menus
 
                         break;
                     case 5:
+                        UserMenu.ChangeBankAccountVisual(currentUser);
                         
                         break;
                     case 6:

@@ -13,45 +13,39 @@ namespace BankApp
 {
     public  static class EmailService
     {
- 
         private const string SmtpHost = "smtp.gmail.com"; 
         private const int SmtpPort = 587;
-        private const string SenderEmail = "no-reply@yourdomain.com";
-        private const string SenderPassword = "YOUR_APP_PASSWORD";
-        private const string recipientEmail = "";
+        private const string SenderEmail = ""; // Your account gmail here
+        private const string SenderPassword = ""; // Your account APP PASSWORD here
+        private const string recipientEmail = ""; 
 
         private static string lastGeneratedCode;
 
-
         private static readonly Random Random = new Random();
 
-    
         public static  string GenerateRandomCode()
         {
 
             string Block() => Random.Next(0, 11000000).ToString("D6");
-
           
+
             return Block();
         }
-
       
-        public  static string SendLoginCodeEmail(string recipientEmail)
+        public  static string SendLoginCodeEmail()
         {
-          
+            Console.WriteLine("Please write recipients email:");
+            string recipientEmail = Console.ReadLine();
+            
             string loginCode = GenerateRandomCode();
             lastGeneratedCode = loginCode;
-
-
 
             try
             {
                 using (MailMessage mail = new MailMessage())
                 {
-                  
                     mail.From = new MailAddress(SenderEmail, "Secure Login Service");
                     mail.To.Add(recipientEmail);
-
                   
                     mail.Subject = "Your One-Time Login Code";
                   

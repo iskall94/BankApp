@@ -1,6 +1,7 @@
 using BankApp.Menus;
 using BankApp.Accounts;
 using BankApp.Enums;
+using BankApp;
 
 namespace BankApp
 {
@@ -12,7 +13,7 @@ namespace BankApp
             User user = new User(Guid.NewGuid(), "default", "Gabriel Kassarp", userBankAccounts);
             UserDB.AddUser(user);
             MainMenu.MainMenuStart();
-            
+
             // To test Login() Method
 
 

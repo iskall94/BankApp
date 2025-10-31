@@ -122,8 +122,6 @@ namespace BankApp.Accounts
         }
 
 
-
-
         public static void Logout()
         {
 
@@ -263,7 +261,6 @@ namespace BankApp.Accounts
             Console.WriteLine($" TO {To}");
 
         }
-
 
 
         public void EditBankAccount()

@@ -32,25 +32,29 @@ namespace BankApp.Menus
                 switch (menuChoice)
                 {
                     case 0:
-
+                        CheckAccountsVisual(currentUser);
                         break;
                     case 1:
 
                         EditUserVisual(currentUser);
                         break;
                     case 2:
-
+                        HandleTransferVisual(currentUser);
                         break;
                     case 3:
-
+                        //TransactionVisual(currentUser);
                         break;
                     case 4:
-                        ApplyForLoan(currentUser);
-
+                        CreateLoanVisual(currentUser);
                         break;
                     case 5:
+                        // CreateBankAccountVisual(currentUser);
                         break;
                     case 6:
+                        break;
+                    case 7:
+                        break;
+                    case 8:
                         MainMenu.MainMenuStart();
                         break;
 
@@ -60,6 +64,12 @@ namespace BankApp.Menus
             }
         }
 
+        public static void CheckAccountsVisual(User currentUser)
+        {
+            Console.Clear();
+            currentUser.ShowAllAccounts();
+            Console.ReadLine();
+        }
         public static void EditUserVisual(User currentUser)
         {
             Console.Clear();
@@ -137,34 +147,99 @@ namespace BankApp.Menus
             Thread.Sleep(1000);
             UserMenu.UserMenuStart(currentUser);
         }
-
-        private static string? GetUserFieldValue(User user, string field)
+        private static string? GetUserFieldValue(User currentUser, string field)
         {
             return field switch
             {
-                "Name" => user.Name,
-                "Email" => user.Email,
-                "Phone" => user.Phone,
-                "Residence" => user.Residence,
-                "Gender" => user.Gender,
+                "Name" => currentUser.Name,
+                "Email" => currentUser.Email,
+                "Phone" => currentUser.Phone,
+                "Residence" => currentUser.Residence,
+                "Gender" => currentUser.Gender,
                 _ => ""
             };
         }
-
-        public static void ApplyForLoan(User currentUser)
+        public static void HandleTransferVisual(User currentUser)
         {
+            Console.Clear();
+            Console.CursorVisible = true;
+            Console.WriteLine("---Transfer Money Between Account(s)---");
+            List<AccountNumber> allAccountNumbers = currentUser.AccountNumbersList(currentUser);
 
+            if (allAccountNumbers.Count < 2)
+            {
+                Console.WriteLine("You need at least two accounts to make a transfer between your own accounts");
+                Console.ReadKey();
+                UserMenuStart(currentUser);
+                return;
+            }
+            Console.WriteLine("Choose the account you want to transfer money from:");
+            AccountNumber fromAccount = ChooseAccountNumber(currentUser);
+            Console.WriteLine("Choose the account you want to transfer money to: ");
+            AccountNumber toAccount = ChooseAccountNumber(currentUser);
+
+            decimal value = HelperMethod.HelperDecimal("Amount:");
+
+            currentUser.HandleTransfer(toAccount, fromAccount, value);
+
+            Console.ReadKey();
+
+        }
+        //public static void TransactionVisual(User currentUser)
+        //{
+        //    Console.Clear();
+        //    Console.CursorVisible = true;
+        //    Console.WriteLine("---Transfer to Account---");
+
+        //    Console.WriteLine("Choose the account you want to transfer money from:");
+        //    AccountNumber fromAccount = ChooseAccountNumber(currentUser);
+        //    Console.WriteLine("Enter the account you want to transfer money to: ");
+        //    // vet inte hur jag ska göra för att skicka in rätta tygen AccountNumber här då det måste vara att användaren skriver in bankkontonummret som ska ta emot pengarna
+        //    string input = Console.ReadLine();
+
+
+        //    decimal value = HelperMethod.HelperDecimal("Amount:");
+        //    Console.WriteLine("Personal note:");
+        //    string personalNote = Console.ReadLine() ?? "";
+
+        //    Transaction newTransaction = currentUser.CreateTransaction(toAccount, fromAccount, value, personalNote, TransactionType.Normal);
+        //    newTransaction.ExecuteTransaction(newTransaction);
+        //}
+
+        public static AccountNumber ChooseAccountNumber(User currentUser)
+        {
+            List<AccountNumber> allAccountNumbers = currentUser.AccountNumbersList(currentUser);
+            for (int i = 0; i < allAccountNumbers.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. - {allAccountNumbers[i]}");
+            }
+            AccountNumber selectedAccount;
+            while (true)
+            {
+                string accountInput = Console.ReadLine() ?? "";
+                if (int.TryParse(accountInput, out int choice) && choice > 0 && choice <= allAccountNumbers.Count)
+                {
+                    selectedAccount = allAccountNumbers[choice - 1];
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid choice. Please try again.");
+                }
+            }
+            return selectedAccount;
+        }
+        public static void CreateLoanVisual(User currentUser)
+        {
             Console.Clear();
             Console.CursorVisible = true;
             Console.WriteLine("---Apply for loan---");
-
-
 
             Console.WriteLine("Please select the bank account to receive your loan:");
             List<AccountNumber> allAccountNumbers = currentUser.AccountNumbersList(currentUser);
             for (int i = 0; i < allAccountNumbers.Count; i++)
             {
-                Console.WriteLine($"[{i + 1}] - {allAccountNumbers[i]}");
+                Console.WriteLine($"{i + 1}. - {allAccountNumbers[i]}");
             }
             AccountNumber selectedAccount;
             BankAccount currentUserBankAccount;
@@ -213,6 +288,11 @@ namespace BankApp.Menus
 
             Console.ReadKey();
         }
+
+        //public static void CreateBankAccountVisual(User currentUser) 
+        //{
+        //    currentUser.CreateBankAccountVisual();
+        //}
     }
 }
 

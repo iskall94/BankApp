@@ -53,6 +53,20 @@ namespace BankApp.Accounts
 
 
         }
+        public static void Login()
+        {
+          string logincode = EmailService.GetLastLoginCode();
+            Console.WriteLine("Enter your login code");
+            string code = Console.ReadLine();
+            if (code == logincode)
+            {
+                AdminMenu.AdminMenuStart();
+            }
+            else
+            {
+                Console.WriteLine("Invalid code. Please check your email again");
+            }
+        }
 
         public static void FreezeBankAccount()
         {

@@ -1,6 +1,7 @@
 ﻿using BankApp.Currencies;
 using BankApp.Enums;
 using BankApp.Menus;
+using System.Security.Cryptography.X509Certificates;
 
 namespace BankApp.Accounts
 {
@@ -33,9 +34,32 @@ namespace BankApp.Accounts
 
         }
 
-        public static void FreezeBankAccount()
+        public static void UnlockBankAccount()
         {
-
+            Console.Clear();
+            Console.CursorVisible = true;
+            List<User> usersLockedList = UserDB.FindUserLocked();
+            
+            bool correctName = false;
+            foreach (User user in usersLockedList)
+            {
+                while(!correctName)
+                {
+                    Console.WriteLine("Vänligen skriv in användarens namn:");
+                    string userName = Console.ReadLine() ?? "";
+                    if (userName == user.Name)
+                    {
+                        user.IsLocked = false;
+                        correctName = true;
+                        Console.WriteLine($"{user}'s account has been unlocked.");
+                    } 
+                    else
+                    {
+                        Console.WriteLine("Please insert a users name (Case Sensitive).");
+                    }
+                }
+            }
+            Console.ReadKey();
         }
 
         public static void UpdateExchangeRates()

@@ -8,9 +8,9 @@ namespace BankApp.Menus
 
         public static List<string> GetAdminOptions { get; set; } = new List<string>
         {
-            "Create User?",
-            "Freeze User?",
-            "Unfreeze Password for User",
+            "Create User",
+            "Unlock User",
+            "Placeholder",
             "Lists of Accounts",
             "Change Currency Exchange Rate",
             "Exit To Main Menu..."
@@ -32,7 +32,7 @@ namespace BankApp.Menus
                         AdminCreateUser();
                         break;
                     case 1:
-
+                        Admin.UnlockBankAccount();
                         break;
                     case 2:
 

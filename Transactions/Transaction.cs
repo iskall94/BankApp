@@ -75,7 +75,10 @@ namespace BankApp.Transactions
             BankAccount recieverAccount = BankAccountDB.FindBankAccount(reciever);
             if (senderAccount.Currency != recieverAccount.Currency)
             {
-                transaction.Value = transaction.Value * CurrencyManager.AccountCurrency[recieverAccount.Currency];
+                decimal senderToSEK = CurrencyManager.AccountCurrency[senderAccount.Currency];
+                decimal receiverToSEK = CurrencyManager.AccountCurrency[recieverAccount.Currency];
+
+                transaction.Value = transaction.Value * (senderToSEK / receiverToSEK);
             }
 
             senderAccount.Withdraw(transaction.Value);

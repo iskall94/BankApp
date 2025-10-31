@@ -150,46 +150,6 @@ namespace BankApp.Menus
         }
 
 
-        public static void ChangeBankAccountVisual(User currentUser)
-        {
-            var accounts = currentUser.UserBankAccounts;
-            if (accounts.Count == 0)
-            {
-                Console.WriteLine("You have no bank accounts.");
-                Console.ReadKey();
-                UserMenuStart(currentUser);
-                return;
-            }
-
-            Console.Clear();
-            Console.CursorVisible = true;
-            Console.WriteLine("--- Select Account to Change Name ---\n");
-            int number = 1;
-
-
-            foreach (var acc in accounts)
-            {
-                Console.WriteLine(number + ". " + acc.AccountName);
-                number++;
-            }
-
-            Console.WriteLine(number + ". Return to User Menu");
-            Console.Write("\nType the number: ");
-            string input = Console.ReadLine();
-
-            number = 1;
-            foreach (var acc in accounts)
-            {
-                if (input == number.ToString())
-                {
-                    BankAccount.ChangeBankAccountName(acc.AccountNumber);
-                    break;
-                }
-                number++;
-            }
-
-            UserMenuStart(currentUser);
-        }
         private static string? GetUserFieldValue(User currentUser, string field)
         {
             return field switch
@@ -332,10 +292,53 @@ namespace BankApp.Menus
             Console.ReadKey();
         }
 
-        //public static void CreateBankAccountVisual(User currentUser) 
+        //public static void CreateBankAccountVisual(User currentUser)
         //{
-        //    currentUser.CreateBankAccountVisual();
+        //    Console.WriteLine("");
+        //    string accountName = Console.ReadLine();
+
+        //    currentUser.CreateBankAccount(accountName, accountType, balance);
         //}
+        public static void ChangeBankAccountVisual(User currentUser)
+        {
+            var accounts = currentUser.UserBankAccounts;
+            if (accounts.Count == 0)
+            {
+                Console.WriteLine("You have no bank accounts.");
+                Console.ReadKey();
+                UserMenuStart(currentUser);
+                return;
+            }
+
+            Console.Clear();
+            Console.CursorVisible = true;
+            Console.WriteLine("--- Select Account to Change Name ---\n");
+            int number = 1;
+
+
+            foreach (var acc in accounts)
+            {
+                Console.WriteLine(number + ". " + acc.AccountName);
+                number++;
+            }
+
+            Console.WriteLine(number + ". Return to User Menu");
+            Console.Write("\nType the number: ");
+            string input = Console.ReadLine();
+
+            number = 1;
+            foreach (var acc in accounts)
+            {
+                if (input == number.ToString())
+                {
+                    BankAccount.ChangeBankAccountName(acc.AccountNumber);
+                    break;
+                }
+                number++;
+            }
+
+            UserMenuStart(currentUser);
+        }
     }
 }
 

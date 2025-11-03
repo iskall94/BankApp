@@ -1,5 +1,6 @@
-using BankApp.Accounts;
 using BankApp.Menus;
+using BankApp.Accounts;
+using BankApp.Enums;
 
 namespace BankApp
 {
@@ -13,7 +14,7 @@ namespace BankApp
             UserDB.AddUser(user);
             user.IsLocked = true;
             MainMenu.MainMenuStart();
-
+            
             // To test Login() Method
 
 

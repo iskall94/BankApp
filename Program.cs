@@ -12,7 +12,7 @@ namespace BankApp
             User user = new User(Guid.NewGuid(), "default", "Gabriel Kassarp", userBankAccounts);
             UserDB.AddUser(user);
             MainMenu.MainMenuStart();
-            
+
             // To test Login() Method
 
 
@@ -23,6 +23,11 @@ namespace BankApp
             // To test ChangeAccountCurrency
 
             //BankAccount test = new BankAccount("test", AccountType.Normal, 100000m);
+            //string accountNum = test.AccountNumber.ToString();
+            //Console.WriteLine(accountNum);
+            //Console.WriteLine(accountNum.GetType());
+
+
             //BankAccountDB.AddBankAccount(test);
             //AccountNumber accountNumber = test.AccountNumber;
             //Console.WriteLine(accountNumber);

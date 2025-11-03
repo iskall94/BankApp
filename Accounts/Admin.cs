@@ -22,7 +22,7 @@ namespace BankApp.Accounts
             return newUser;
 
         }
-        public static User CreateUserwInfo(string password, string name, string email, string phone, string residence, string gender, BankAccount account)
+        public static User CreateUserwInfo(string password, string name, string email, string phone, string residence , string gender, BankAccount account)
         {
             List<BankAccount> userBankAccounts = new List<BankAccount>();
             userBankAccounts.Add(account);

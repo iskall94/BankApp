@@ -11,14 +11,14 @@ using System.Transactions;
 
 namespace BankApp
 {
-    public  static class EmailService
+   internal static class EmailService
     {
  
         private const string SmtpHost = "smtp.gmail.com"; 
         private const int SmtpPort = 587;
-        private const string SenderEmail = "no-reply@yourdomain.com";
-        private const string SenderPassword = "YOUR_APP_PASSWORD";
-        private const string recipientEmail = "";
+        private const string SenderEmail = "";
+        private const string SenderPassword = "";
+       
 
         private static string lastGeneratedCode;
 
@@ -92,60 +92,60 @@ namespace BankApp
             return lastGeneratedCode;
         }
 
-        //public static string SendIssueCodeEmail( int issueOption, User? user, Transaction? tx )
-        //{
+        public static void SendIssueCodeEmail(int issueOption, User? user, string? issueText , Transaction? tx )
+        {
+            const string recipientEmail = "";
+            string IssueText = issueOption switch
+            {
+                1 => $"A User: {user.Name.ToString()} has had their account locked. \n Assist them if a mistake was made.",
+                2 => $"{issueText}",
+                3 => $"Suspicious Transaction occurred {tx.ToString()}, \n please investigate, and forward to Fraud team if necessary.",
+                _ => "Unknown issue encountered, please check logs."
+            };
+            try
+            {
+                using (MailMessage mail = new MailMessage())
+                {
 
-        //    string IssueText = issueOption switch
-        //    {
-        //        1 => $"A User: {user.Name} has had their account locked, kindly resolve that.",
-        //        2 => "The server seems to be down, please investigate.", 
-        //        3 => $"Suspicious Transaction occurred {tx}, please investigate, and forward to Fraud team if necessary.",
-        //        _ => "Unknown issue encountered, please check logs."     
-        //    };
-        //    try
-        //    {
-        //        using (MailMessage mail = new MailMessage())
-        //        {
-
-        //            mail.From = new MailAddress(SenderEmail, "Issue Code Handler");
-        //            mail.To.Add(recipientEmail);
+                    mail.From = new MailAddress(SenderEmail, "Issue Code Handler");
+                    mail.To.Add(recipientEmail);
 
 
-        //            mail.Subject = "New Issue assigned to you.";
+                    mail.Subject = "New Issue assigned to you.";
 
-        //            mail.IsBodyHtml = true;
-        //            mail.Body = $@"
-        //            <html>
-        //                <body style='font-family: Arial, sans-serif; text-align: center; padding: 20px; border: 1px solid #eee;'>
-        //                    <h2>Hello!</h2>
-        //                    <p>A new issue has been assigned to you.</p>
-        //                    <div style='font-size: 24px; font-weight: bold; color: #4CAF50; padding: 10px; border: 2px solid #4CAF50; display: inline-block; border-radius: 5px; margin: 15px;'>
-        //                       {IssueText}
-        //                    </div>
+                    mail.IsBodyHtml = true;
+                    mail.Body = $@"
+                    <html>
+                        <body style='font-family: Arial, sans-serif; text-align: center; padding: 20px; border: 1px solid #eee;'>
+                            <h2>Hello!</h2>
+                            <p>A new issue has been assigned to you.</p>
+                            <div style='font-size: 24px; font-weight: bold; color: #4CAF50; padding: 10px; border: 2px solid #4CAF50; display: inline-block; border-radius: 5px; margin: 15px;'>
+                               {IssueText}
+                            </div>
                           
-        //                </body>
-        //            </html>";
+                        </body>
+                    </html>";
 
 
-        //            using (SmtpClient smtp = new SmtpClient(SmtpHost, SmtpPort))
-        //            {
-        //                smtp.Credentials = new NetworkCredential(SenderEmail, SenderPassword);
-        //                smtp.EnableSsl = true;
+                    using (SmtpClient smtp = new SmtpClient(SmtpHost, SmtpPort))
+                    {
+                        smtp.Credentials = new NetworkCredential(SenderEmail, SenderPassword);
+                        smtp.EnableSsl = true;
 
-        //                smtp.Send(mail);
-        //            }
-        //        }
+                        smtp.Send(mail);
+                    }
+                }
 
-            
-        //    }
-        //    catch (SmtpException sx)
-        //    {
-        //        Console.WriteLine($" Could not send email. Check your host, port, and credentials. Message: {sx.Message}");
-        //        throw;
-        //    }
 
-        //}
-
+            }
+            catch (SmtpException sx)
+            {
+                Console.WriteLine($" Could not send email. Check your host, port, and credentials. Message: {sx.Message}");
+                throw;
+            }
 
         }
+
+
+    }
 }

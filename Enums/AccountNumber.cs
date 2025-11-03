@@ -15,7 +15,7 @@ namespace BankApp.Enums
 
         public string Value { get; }
 
-        public AccountNumber(string value)
+        private AccountNumber(string value)
         {
             Value = value;
         }

@@ -1,13 +1,12 @@
 ﻿using BankApp.Enums;
-using BankApp.Transactions;
 using BankApp.Menus;
-using System.Globalization;
+using BankApp.Transactions;
 
 namespace BankApp.Accounts
 {
     internal class User
     {
-        public User(Guid userID, string password, string name,  List<BankAccount>? userBankAccounts = null)
+        public User(Guid userID, string password, string name, List<BankAccount>? userBankAccounts = null)
         {
             UserID = Guid.NewGuid();
             Password = password;
@@ -39,14 +38,14 @@ namespace BankApp.Accounts
 
         public string? Phone { get; set; }
 
-        public string?  Residence { get; set; }
+        public string? Residence { get; set; }
 
         public string? Gender { get; set; }
 
         public bool FirstTimeLogin { get; set; }
 
         public bool IsLocked { get; set; }
-       
+
 
         public List<BankAccount>? UserBankAccounts { get; set; } = new List<BankAccount>();
 
@@ -59,12 +58,12 @@ namespace BankApp.Accounts
             Console.Write("Enter your password: ");
             string inputPassword = Console.ReadLine();
 
-              bool userFound = false;
+            bool userFound = false;
             foreach (User user in UserDB.allUsers)
             {
                 if (inputName.ToLower() == user.Name.ToLower())
                 {
-                    userFound = true; 
+                    userFound = true;
 
                     while (failedCount < 3)
                     {
@@ -105,52 +104,53 @@ namespace BankApp.Accounts
                             }
 
                             Console.WriteLine($"Welcome, {user.Name}!");
-                            
-             UserMenu.UserMenuStart(user);
+
+                            UserMenu.UserMenuStart(user);
                             break;
                         }
                     }
                     return;
-       
+
                 }
             }
 
             if (!userFound)
             {
-                Console.WriteLine("Name not found, please check your spelling and try again."); 
+                Console.WriteLine("Name not found, please check your spelling and try again.");
             }
 
             Console.ReadKey();
         }
-      
-        public void ChangePassword( User user)
+
+        public void ChangePassword(User user)
         {
             Console.WriteLine("Change password.");
             Console.WriteLine("Enter current password: ");
             string confirmPassword = Console.ReadLine();
 
-            
-                if (confirmPassword == user.Password) 
-                {
-                    Console.WriteLine("Enter new password: ");
-                    user.Password = Console.ReadLine();
-                    Console.WriteLine("Your password has changed.");
-                
-                }
 
-                else
-                {
-                    Console.WriteLine("Wrong password, please try again.");
-                }
+            if (confirmPassword == user.Password)
+            {
+                Console.WriteLine("Enter new password: ");
+                user.Password = Console.ReadLine();
+                Console.WriteLine("Your password has changed.");
+
+            }
+
+            else
+            {
+                Console.WriteLine("Wrong password, please try again.");
+            }
 
         }
 
 
-        public void EditUser(  User user, string field, string value)
+        public void EditUser(User user, string field, string value)
         {
             field = field.ToLower();
 
-            switch (field) {
+            switch (field)
+            {
 
                 case "name": user.Name = value; break;
                 case "email": user.Email = value; break;
@@ -158,10 +158,10 @@ namespace BankApp.Accounts
                 case "residence": user.Residence = value; break;
                 case "gender": user.Gender = value; break;
             }
-                    
-            
+
+
         }
- 
+
 
         public void ShowAllAccounts()
         {
@@ -170,7 +170,10 @@ namespace BankApp.Accounts
                 Console.WriteLine(account.ToString());
             }
         }
-
+        public List<AccountNumber> AccountNumbersList(User currentUser)
+        {
+            return currentUser.UserBankAccounts.Select(a => a.AccountNumber).ToList();
+        }
         public BankAccount FindAccount(AccountNumber accountNumber)
         {
             BankAccount foundAccount = UserBankAccounts.Find(a => a.AccountNumber == accountNumber);

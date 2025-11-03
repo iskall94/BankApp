@@ -11,8 +11,8 @@ namespace BankApp.Menus
             "Check Accounts",
             "Edit User Info",
             "Transfer Money Between Account(s)",
-            "Apply for loan",
             "Transfer to Account",
+            "Apply for loan",
             "Add New Account(s)",
             "Change bankaccount name",
             "Exit To Main Menu..."
@@ -263,24 +263,26 @@ namespace BankApp.Menus
             Console.WriteLine("Personal note:");
             string personalNote = Console.ReadLine() ?? "";
 
-
-            Console.WriteLine("Enter the account you want to transfer money to: ");
-            string input = Console.ReadLine() ?? "";
             AccountNumber toAccount;
 
-            BankAccount matchedAccount = BankAccountDB.BankAccounts.FirstOrDefault(a => a.AccountNumber.ToString() == input);
             while (true)
             {
+                Console.WriteLine("Enter the account you want to transfer money to: ");
+                string input = Console.ReadLine() ?? "";
+                BankAccount matchedAccount = BankAccountDB.BankAccounts.FirstOrDefault(a => a.AccountNumber.ToString() == input);
 
-                if (matchedAccount != null)
+                if (matchedAccount == null)
                 {
-                    toAccount = matchedAccount.AccountNumber;
-                    break;
+                    Console.WriteLine("Could not find this account number, please try again.");
+                    continue;
                 }
-                else
+                if (currentUser.AccountNumbersList(currentUser).Contains(matchedAccount.AccountNumber))
                 {
-                    Console.WriteLine("Could not find this account number, please try again");
+                    Console.WriteLine("Sorry, you cannot transfer money to your own account.");
+                    continue;
                 }
+                toAccount = matchedAccount.AccountNumber;
+                break;
 
             }
 

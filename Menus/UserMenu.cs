@@ -41,13 +41,13 @@ namespace BankApp.Menus
                         HandleTransferVisual(currentUser);
                         break;
                     case 3:
-                        //TransactionVisual(currentUser);
+                        TransactionVisual(currentUser);
                         break;
                     case 4:
                         CreateLoanVisual(currentUser);
                         break;
                     case 5:
-                        // CreateBankAccountVisual(currentUser);
+                        CreateBankAccountVisual(currentUser);
                         break;
                     case 6:
                         break;
@@ -148,8 +148,6 @@ namespace BankApp.Menus
             Thread.Sleep(1000);
             UserMenuStart(currentUser);
         }
-
-
         private static string? GetUserFieldValue(User currentUser, string field)
         {
             return field switch
@@ -188,26 +186,47 @@ namespace BankApp.Menus
             Console.ReadKey();
 
         }
-        //public static void TransactionVisual(User currentUser)
-        //{
-        //    Console.Clear();
-        //    Console.CursorVisible = true;
-        //    Console.WriteLine("---Transfer to Account---");
+        public static void TransactionVisual(User currentUser)
+        {
+            Console.Clear();
+            Console.CursorVisible = true;
+            Console.WriteLine("---Transfer to Account---");
 
-        //    Console.WriteLine("Choose the account you want to transfer money from:");
-        //    AccountNumber fromAccount = ChooseAccountNumber(currentUser);
-        //    Console.WriteLine("Enter the account you want to transfer money to: ");
-        //    // vet inte hur jag ska göra för att skicka in rätta tygen AccountNumber här då det måste vara att användaren skriver in bankkontonummret som ska ta emot pengarna
-        //    string input = Console.ReadLine();
+            Console.WriteLine("Choose the account you want to transfer money from:");
+            AccountNumber fromAccount = ChooseAccountNumber(currentUser);
+
+            decimal value = HelperMethod.HelperDecimal("Amount:");
+            Console.WriteLine("Personal note:");
+            string personalNote = Console.ReadLine() ?? "";
 
 
-        //    decimal value = HelperMethod.HelperDecimal("Amount:");
-        //    Console.WriteLine("Personal note:");
-        //    string personalNote = Console.ReadLine() ?? "";
+            Console.WriteLine("Enter the account you want to transfer money to: ");
+            string input = Console.ReadLine() ?? "";
+            AccountNumber toAccount;
 
-        //    Transaction newTransaction = currentUser.CreateTransaction(toAccount, fromAccount, value, personalNote, TransactionType.Normal);
-        //    newTransaction.ExecuteTransaction(newTransaction);
-        //}
+            BankAccount matchedAccount = BankAccountDB.BankAccounts.FirstOrDefault(a => a.AccountNumber.ToString() == input);
+            while (true)
+            {
+
+                if (matchedAccount != null)
+                {
+                    toAccount = matchedAccount.AccountNumber;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Could not find this account number, please try again");
+                }
+
+            }
+
+            Transaction newTransaction = currentUser.CreateTransaction(toAccount, fromAccount, value, personalNote, TransactionType.Normal);
+            newTransaction.ExecuteTransaction(newTransaction);
+
+            Console.WriteLine("Your transaction was successful");
+
+            Console.ReadKey();
+        }
 
         public static AccountNumber ChooseAccountNumber(User currentUser)
         {
@@ -291,14 +310,37 @@ namespace BankApp.Menus
 
             Console.ReadKey();
         }
+        public static void CreateBankAccountVisual(User currentUser)
+        {
+            Console.Clear();
+            Console.CursorVisible = true;
+            Console.WriteLine("---Add New Account(s)---");
 
-        //public static void CreateBankAccountVisual(User currentUser)
-        //{
-        //    Console.WriteLine("");
-        //    string accountName = Console.ReadLine();
+            Console.WriteLine("Enter account name:");
+            string accountName = Console.ReadLine() ?? "";
+            decimal balance = HelperMethod.HelperDecimal("Enter balance: ");
 
-        //    currentUser.CreateBankAccount(accountName, accountType, balance);
-        //}
+            Console.WriteLine($"Choose account type: {string.Join(",", Enum.GetNames(typeof(AccountType)))}");
+            string input = Console.ReadLine() ?? "";
+
+
+            while (true)
+            {
+                if (Enum.TryParse(input, true, out AccountType accountType))
+                {
+                    currentUser.CreateBankAccount(accountName, accountType, balance);
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid choice. Please try again.");
+                }
+            }
+            Console.WriteLine("A new bank account has been successfully created!");
+            Console.ReadKey();
+
+
+        }
         public static void ChangeBankAccountVisual(User currentUser)
         {
             var accounts = currentUser.UserBankAccounts;

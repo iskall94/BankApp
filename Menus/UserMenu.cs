@@ -54,7 +54,7 @@ namespace BankApp.Menus
                     case 7:
                         break;
                     case 8:
-                        ChangeBankAccountVisual(currentUser);
+                        ChangeBankAccountNameVisual(currentUser);
                         break;
                     case 9:
                         MainMenu.MainMenuStart();
@@ -64,13 +64,84 @@ namespace BankApp.Menus
                 }
             }
         }
-
         public static void CheckAccountsVisual(User currentUser)
         {
             Console.Clear();
-            currentUser.ShowAllAccounts();
-            Console.ReadLine();
+            Console.CursorVisible = true;
+
+            Console.WriteLine("\nEnter which account you would like to handle: "); 
+            AccountNumber chosenAccountNumber = ChooseAccountNumber(currentUser);
+          
+            BankAccount currentUserBankAccount;
+            currentUserBankAccount = currentUser.FindAccount(chosenAccountNumber);
+
+            List<string> accountOptions = new List<string>
+            {
+                "Deposit",
+                "Withdraw",
+                "Return to User Menu",
+            };
+
+            Menu.MenuOptions = accountOptions;
+          
+
+            Console.WriteLine($"Account: {currentUserBankAccount.AccountNumber} | Balance: {currentUserBankAccount.Balance:C}");
+            Console.WriteLine("Do you want to deposit or withdraw money from account?");
+            int menuChoice = Menu.Run();
+
+            switch (menuChoice)
+            {
+                case 0:
+                    DepositVisual(currentUser, currentUserBankAccount);
+                    break;
+                case 1:
+                    WithdrawVisual(currentUser, currentUserBankAccount);
+                    break;
+                case 2:
+                    UserMenuStart(currentUser);
+                    return;
+            }
         }
+
+        public static void DepositVisual(User currentUser, BankAccount chosenAccountNumber)
+        {
+            Console.Clear();
+            Console.WriteLine($"Depositing money to account: {chosenAccountNumber}");
+            Console.Write("How much money would you like to deposit? ");
+            if (decimal.TryParse(Console.ReadLine(), out decimal amount))
+            {
+                chosenAccountNumber.Deposit(amount); 
+            }
+            else
+            {
+                Console.WriteLine("Invalid input.");
+            }
+
+            Console.WriteLine($"New balance: {chosenAccountNumber.Balance:C}");
+            Console.WriteLine("Press any key to return...");
+            Console.ReadKey();
+        }
+
+        public static void WithdrawVisual(User currentUser, BankAccount chosenAccountNumber)
+        {
+            Console.Clear();
+            Console.WriteLine($"Withdrawing money from account: {chosenAccountNumber}");
+            Console.Write("How much money would you like to withdraw? ");
+            if (decimal.TryParse(Console.ReadLine(), out decimal amount))
+            {
+                chosenAccountNumber.Withdraw(amount); 
+            }
+            else
+            {
+                Console.WriteLine("Invalid input.");
+            }
+
+            Console.WriteLine($"New balance: {chosenAccountNumber.Balance:C}");
+            Console.WriteLine("Press any key to return...");
+            Console.ReadKey();
+        }
+
+
         public static void EditUserVisual(User currentUser)
         {
             Console.Clear();
@@ -150,7 +221,7 @@ namespace BankApp.Menus
         }
 
 
-        public static void ChangeBankAccountVisual(User currentUser)
+        public static void ChangeBankAccountNameVisual(User currentUser)
         {
             var accounts = currentUser.UserBankAccounts;
             if (accounts.Count == 0)

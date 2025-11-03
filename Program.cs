@@ -2,6 +2,7 @@ using BankApp.Menus;
 using BankApp.Accounts;
 using BankApp.Enums;
 using BankApp;
+using Microsoft.Extensions.Configuration;
 
 namespace BankApp
 {
@@ -9,6 +10,14 @@ namespace BankApp
     {
         static void Main(string[] args)
         {
+            // Configures the json file at the start of program
+            IConfiguration configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+            
+            EmailService.Initialize(configuration);
+
             List<BankAccount> userBankAccounts = new List<BankAccount>();
             User user = new User(Guid.NewGuid(), "default", "Gabriel Kassarp", userBankAccounts);
             UserDB.AddUser(user);

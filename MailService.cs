@@ -1,27 +1,37 @@
-﻿using System;
+﻿using BankApp.Accounts;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mail;
 using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
-using System.CodeDom.Compiler;
-using BankApp.Accounts;
 using System.Transactions;
 
 namespace BankApp
 {
     public  static class EmailService
     {
-        private const string SmtpHost = "smtp.gmail.com"; 
-        private const int SmtpPort = 587;
-        private const string SenderEmail = ""; // Your account gmail here
-        private const string SenderPassword = ""; // Your account APP PASSWORD here
-        private const string recipientEmail = ""; 
+        //private const string SmtpHost = "smtp.gmail.com"; 
+        //private const int SmtpPort = 587;
+        //private const string SenderEmail = "";
+        //private const string SenderPassword = "";
+        //private const string recipientEmail = "";
+
+        private static MailConfig? _config;
 
         private static string lastGeneratedCode;
 
         private static readonly Random Random = new Random();
+
+        public static void Initialize(IConfiguration configuration)
+        {
+            // Binds the "EmailSettings" from .json file to our actual code
+            _config = configuration.GetSection("EmailSettings").Get<MailConfig>();
+            
+        }
 
         public static  string GenerateRandomCode()
         {
@@ -44,7 +54,7 @@ namespace BankApp
             {
                 using (MailMessage mail = new MailMessage())
                 {
-                    mail.From = new MailAddress(SenderEmail, "Secure Login Service");
+                    mail.From = new MailAddress(_config.SenderEmail, "Secure Login Service");
                     mail.To.Add(recipientEmail);
                   
                     mail.Subject = "Your One-Time Login Code";
@@ -63,9 +73,9 @@ namespace BankApp
                     </html>";
 
                  
-                    using (SmtpClient smtp = new SmtpClient(SmtpHost, SmtpPort))
+                    using (SmtpClient smtp = new SmtpClient(_config.SmtpHost, _config.SmtpPort))
                     {
-                        smtp.Credentials = new NetworkCredential(SenderEmail, SenderPassword);
+                        smtp.Credentials = new NetworkCredential(_config.SenderEmail, _config.SenderPassword);
                         smtp.EnableSsl = true; 
 
                         smtp.Send(mail);

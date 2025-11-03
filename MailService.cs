@@ -98,7 +98,7 @@ namespace BankApp
 
         public static void SendIssueCodeEmail(int issueOption, User? user, string? issueText , Transaction? tx )
         {
-            const string recipientEmail = "";
+            string recipientEmail = Console.ReadLine();
             string IssueText = issueOption switch
             {
                 1 => $"A User: {user.Name.ToString()} has had their account locked. \n Assist them if a mistake was made.",
@@ -111,7 +111,7 @@ namespace BankApp
                 using (MailMessage mail = new MailMessage())
                 {
 
-                    mail.From = new MailAddress(SenderEmail, "Issue Code Handler");
+                    mail.From = new MailAddress(_config.SenderEmail, "Issue Code Handler");
                     mail.To.Add(recipientEmail);
 
 
@@ -131,9 +131,9 @@ namespace BankApp
                     </html>";
 
 
-                    using (SmtpClient smtp = new SmtpClient(SmtpHost, SmtpPort))
+                    using (SmtpClient smtp = new SmtpClient(_config.SmtpHost, _config.SmtpPort))
                     {
-                        smtp.Credentials = new NetworkCredential(SenderEmail, SenderPassword);
+                        smtp.Credentials = new NetworkCredential(_config.SenderEmail, _config.SenderPassword);
                         smtp.EnableSsl = true;
 
                         smtp.Send(mail);

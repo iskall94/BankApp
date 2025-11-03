@@ -1,6 +1,5 @@
-using BankApp.Menus;
 using BankApp.Accounts;
-using BankApp.Enums;
+using BankApp.Menus;
 
 namespace BankApp
 {
@@ -14,7 +13,7 @@ namespace BankApp
             UserDB.AddUser(user);
             user.IsLocked = true;
             MainMenu.MainMenuStart();
-            
+
             // To test Login() Method
 
 
@@ -24,7 +23,7 @@ namespace BankApp
 
             // To test ChangeAccountCurrency
 
-            BankAccount test = new BankAccount("test", AccountType.Normal, 100000m);
+            
             //BankAccountDB.AddBankAccount(test);
             //AccountNumber accountNumber = test.AccountNumber;
             //Console.WriteLine(accountNumber);

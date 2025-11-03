@@ -1,11 +1,4 @@
 ﻿using BankApp.Accounts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BankApp.Menus
 {
@@ -36,17 +29,17 @@ namespace BankApp.Menus
                 switch (menuChoice)
                 {
                     case 0:
-                        AdminMenu.AdminCreateUser();
+                        AdminCreateUser();
                         break;
                     case 1:
                         Admin.UnlockBankAccount();
                         break;
                     case 2:
-                        
+
                         break;
                     case 3:
                         UserDB.ShowAllUsers();
-                        
+
                         break;
                     case 4:
                         Admin.UpdateExchangeRates();
@@ -68,7 +61,7 @@ namespace BankApp.Menus
             Console.WriteLine("---User Creation Tool---");
             Console.WriteLine("Please enter a name for user:");
             string name = Console.ReadLine() ?? "";
-            
+
             bool successful = false;
             string balanceInput;
             decimal decimalNumber = 0;

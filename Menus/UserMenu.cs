@@ -144,7 +144,7 @@ namespace BankApp.Menus
         public static void TransactionHistoryVisual(BankAccount account)
         {
             Console.Clear();
-            Console.WriteLine($"Transaction history for account {account.AccountNumber}:\n");
+            Console.WriteLine($"Transaction history for account: {account.AccountName} - {account.AccountNumber}:\n");
             account.GetTransactionHistory();
             Console.WriteLine("Press any key to return...");
             Console.ReadKey();

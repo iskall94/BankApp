@@ -256,6 +256,13 @@ namespace BankApp.Menus
             Console.CursorVisible = true;
             Console.WriteLine("---Transfer to Account---");
 
+            Console.WriteLine("Press esc to return to menu");
+            ConsoleKeyInfo escapeKey = Console.ReadKey(true);
+            if (escapeKey.Key == ConsoleKey.Escape)
+            {
+                UserMenuStart(currentUser);
+            }
+
             Console.WriteLine("Choose the account you want to transfer money from:");
             AccountNumber fromAccount = ChooseAccountNumber(currentUser);
 
@@ -279,6 +286,7 @@ namespace BankApp.Menus
                 if (currentUser.AccountNumbersList(currentUser).Contains(matchedAccount.AccountNumber))
                 {
                     Console.WriteLine("Sorry, you cannot transfer money to your own account.");
+
                     continue;
                 }
                 toAccount = matchedAccount.AccountNumber;
@@ -297,9 +305,11 @@ namespace BankApp.Menus
         public static AccountNumber ChooseAccountNumber(User currentUser)
         {
             List<AccountNumber> allAccountNumbers = currentUser.AccountNumbersList(currentUser);
+            BankAccount currentUserBankAccount;
             for (int i = 0; i < allAccountNumbers.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. - {allAccountNumbers[i]}");
+                currentUserBankAccount = currentUser.FindAccount(allAccountNumbers[i]);
+                Console.WriteLine($"{i + 1}. - {allAccountNumbers[i]} - {currentUserBankAccount.AccountName} - {currentUserBankAccount.Balance}{currentUserBankAccount.Currency}");
             }
             AccountNumber selectedAccount;
             while (true)

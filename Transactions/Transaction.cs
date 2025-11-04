@@ -5,7 +5,7 @@ namespace BankApp.Transactions
 {
     internal class Transaction
     {
-        public List<Transaction> PendingTransactions { get; set; }
+        public  static List<Transaction> PendingTransactions { get; set; }
         private Guid TransactionID { get; set; }
         public AccountNumber ToAccount { get; set; }
         public AccountNumber FromAccount { get; set; }
@@ -31,19 +31,19 @@ namespace BankApp.Transactions
         }
 
 
-        public void ExecutePendingTransactions()
+        public static void ExecutePendingTransactions()
         {
             int isQuarter = DateTime.Now.Minute;
 
 
             if (isQuarter % 15 == 0)
             {
-                foreach (Transaction tx in PendingTransactions)
+                foreach (Transaction tx in Transaction.PendingTransactions)
                 {
-                    ExecuteTransaction(tx);
+                    Transaction.ExecuteTransaction(tx);
 
                 }
-                PendingTransactions.Clear();
+                Transaction.PendingTransactions.Clear();
             }
         }
 
@@ -57,7 +57,7 @@ namespace BankApp.Transactions
         /// If the transaction type is <see cref="TransactionType.Loan"/>, the funds are taken from the admin bank account
         /// instead of the sender's account.
         /// </remarks>
-        public void ExecuteTransaction(Transaction transaction) // 15 min delay
+        public static void ExecuteTransaction(Transaction transaction) // 15 min delay
         {
 
             AccountNumber sender = transaction.FromAccount;

@@ -18,6 +18,7 @@ namespace BankApp.Menus
 
         public static void MainMenuStart()
         {
+            TransactionTimer.Start();
             while (true)
             {
                 Menu.MenuOptions = GetMainMenuOptions;

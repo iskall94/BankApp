@@ -22,6 +22,11 @@ namespace BankApp
 
 
 
+            //BankAccount test = new BankAccount("test", AccountType.Normal, 100000m);
+            //BankAccountDB.AddBankAccount(test);
+            //AccountNumber accountNumber = test.AccountNumber;
+            //Console.WriteLine(accountNumber);
+            //test.ChangeAccountCurrency(accountNumber, CurrencyType.USD);
         }
     }
 }

@@ -15,9 +15,9 @@ namespace BankApp.Menus
 
         public static List<string> GetAdminOptions { get; set; } = new List<string>
         {
-            "Create User?",
-            "Freeze User?",
-            "Unfreeze Password for User",
+            "Create User",
+            "Unlock User",
+            "Placeholder",
             "Lists of Accounts",
             "Change Currency Exchange Rate",
             "Exit To Main Menu..."
@@ -39,7 +39,7 @@ namespace BankApp.Menus
                         AdminMenu.AdminCreateUser();
                         break;
                     case 1:
-                        
+                        Admin.UnlockBankAccount();
                         break;
                     case 2:
                         
@@ -49,6 +49,7 @@ namespace BankApp.Menus
                         
                         break;
                     case 4:
+                        Admin.UpdateExchangeRates();
                         break;
                     case 5:
                         MainMenu.MainMenuStart();
@@ -87,9 +88,31 @@ namespace BankApp.Menus
                 }
             }
             BankAccount bankAccount = new BankAccount("account", Enums.AccountType.Normal, decimalNumber);
-             User  createdUser = Admin.CreateUser(Password, name, bankAccount);
-            UserDB.AddUser(createdUser);   
-            Console.WriteLine(createdUser.ToString());
+            Console.WriteLine("Has User provided additional info? \n" +
+                "Y/N");
+            string additionalUserChoice = Console.ReadLine();
+            if (additionalUserChoice == "Y")
+            {
+
+                Console.WriteLine("Please enter user Email:");
+                string email = Console.ReadLine();
+                Console.WriteLine("Please enter user Phone number:");
+                string phone = Console.ReadLine();
+                Console.WriteLine("Please enter user Residence:");
+                string residence = Console.ReadLine();
+                Console.WriteLine("Please enter user Gender:");
+                string gender = Console.ReadLine();
+
+                User createdUserwInfo = Admin.CreateUserwInfo(Password, name, email, phone, residence, gender, bankAccount);
+                Console.WriteLine(createdUserwInfo.ToString());
+            }
+            else 
+            {
+
+                User createdUser = Admin.CreateUser(Password, name, bankAccount);
+                Console.WriteLine(createdUser.ToString());
+            }
+            
             Console.ReadKey();
         }
     }

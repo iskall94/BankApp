@@ -88,6 +88,41 @@ namespace BankApp.Accounts
         }
 
 
+
+
+
+        public static void ChangeBankAccountName(AccountNumber accountNumber)
+        {
+            var account = BankAccountDB.FindBankAccount(accountNumber);
+
+            if (account == null)
+            {
+                Console.WriteLine($"No account found with number {accountNumber}.");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.WriteLine($"Current account name: {account.AccountName}");
+            Console.Write("Enter a new name for your bank account: ");
+            string newName = Console.ReadLine();
+
+            account.AccountName = newName;
+
+            Console.WriteLine($"The name of your bank account ({accountNumber}) has been updated to: {newName}");
+            Console.ReadKey();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
         public static string applyInterest(BankAccount account)
         {
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);

@@ -11,9 +11,9 @@ namespace BankApp.Menus
     {
         public static List<string> GetMainMenuOptions { get; set; } = new List<string>
         {
-            "Logga in?",
-            "Logga in som admin?",
-            "Avsluta"
+            "Login",
+            "Login as Admin",
+            "Exit the Bank App"
         };
 
         public static void MainMenuStart()

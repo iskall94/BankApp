@@ -204,6 +204,7 @@ namespace BankApp.Accounts
         public Transaction CreateTransaction(AccountNumber toAccount, AccountNumber fromAccount, decimal value, string personalNote, TransactionType transactionType)
         {
             Transaction newTx = new Transaction(toAccount, fromAccount, value, personalNote, transactionType);
+            Transaction.PendingTransactions.Add(newTx);
 
             return newTx;
         }
@@ -258,7 +259,7 @@ namespace BankApp.Accounts
             return $"User: {Name}\n" +
                    $"Password: {Password}\n" +
                    "\n---\n" +
-            $"Bank Accounts:\n{UserBankAccounts}";
+            $"Bank Accounts:\n{accountsInfo}";
 
         }
     }

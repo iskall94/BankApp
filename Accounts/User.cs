@@ -31,7 +31,7 @@ namespace BankApp.Accounts
         }
 
         private Guid UserID { get; set; }
-        protected string Password { get; set; }
+        private string Password { get; set; }
         public string Name { get; set; }
 
         public string? Email { get; set; }
@@ -104,13 +104,13 @@ namespace BankApp.Accounts
                             }
 
                             Console.WriteLine($"Welcome, {user.Name}!");
-                            
-             UserMenu.UserMenuStart(user);
+
+                            UserMenu.UserMenuStart(user);
                             break;
                         }
                     }
                     return;
-       
+
                 }
             }
 
@@ -121,8 +121,8 @@ namespace BankApp.Accounts
 
             Console.ReadKey();
         }
-      
-        public void ChangePassword( User user)
+
+        public void ChangePassword(User user)
         {
             Console.WriteLine("Change password.");
             Console.WriteLine("Enter current password: ");
@@ -161,7 +161,7 @@ namespace BankApp.Accounts
 
 
         }
- 
+
 
         public void ShowAllAccounts()
         {
@@ -169,14 +169,11 @@ namespace BankApp.Accounts
             {
                 Console.WriteLine(account.ToString());
             }
-
         }
-
         public List<AccountNumber> AccountNumbersList(User currentUser)
         {
             return currentUser.UserBankAccounts.Select(a => a.AccountNumber).ToList();
         }
-
         public BankAccount FindAccount(AccountNumber accountNumber)
         {
             BankAccount foundAccount = UserBankAccounts.Find(a => a.AccountNumber == accountNumber);

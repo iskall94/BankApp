@@ -1,12 +1,11 @@
-﻿using BankApp.Currencies;
-using BankApp.Enums;
-using BankApp.Menus;
-using BankApp.Transactions;
+﻿using BankApp.Enums;
+using BankApp.Currencies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BankApp.Transactions;
 
 
 namespace BankApp.Accounts
@@ -38,18 +37,21 @@ namespace BankApp.Accounts
 
         public float Interest { get; set; } // Should be private
 
+       
 
-
-        public void Deposit(decimal amount)
+        public decimal Withdraw(decimal value)
         {
-            Balance += amount;
+            Balance = Balance - value;
+
+           return Balance;
         }
 
-        public void Withdraw(decimal amount)
+        public decimal Deposit(decimal value) 
         {
-            Balance -= amount;
-        }
 
+            Balance = Balance + value;
+            return Balance ;
+        }
         public  void AddTransaction(Transaction transaction)
         {
             TransactionHistory.Add(transaction);

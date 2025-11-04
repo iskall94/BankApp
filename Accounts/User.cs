@@ -193,6 +193,7 @@ namespace BankApp.Accounts
             if (accountType == AccountType.Savings)
             {
                 account.Interest = 1.5f;
+                account.LastInterestDate = DateTime.Now;
                 Console.WriteLine(account.Balance);
                 account.Balance = balance * (decimal)(1 + account.Interest / 100);
                 Console.WriteLine(account.Balance);
@@ -208,7 +209,7 @@ namespace BankApp.Accounts
         public Transaction CreateTransaction(AccountNumber toAccount, AccountNumber fromAccount, decimal value, string personalNote, TransactionType transactionType)
         {
             Transaction newTx = new Transaction(toAccount, fromAccount, value, personalNote, transactionType);
-
+            Transaction.PendingTransactions.Add(newTx);
             return newTx;
         }
 
@@ -262,7 +263,7 @@ namespace BankApp.Accounts
             return $"User: {Name}\n" +
                    $"Password: {Password}\n" +
                    "\n---\n" +
-            $"Bank Accounts:\n{UserBankAccounts}";
+             $"Bank Accounts:\n{accountsInfo}";
 
         }
     }

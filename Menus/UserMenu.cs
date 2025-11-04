@@ -295,7 +295,7 @@ namespace BankApp.Menus
             }
 
             Transaction newTransaction = currentUser.CreateTransaction(toAccount, fromAccount, value, personalNote, TransactionType.Normal);
-            newTransaction.ExecuteTransaction(newTransaction);
+  
 
             Console.WriteLine("Your transaction was successful");
 

@@ -6,7 +6,7 @@ namespace BankApp.Transactions
 {
     internal class Transaction
     {
-        public List<Transaction> PendingTransactions { get; set; }
+        public static List<Transaction> PendingTransactions { get; set; } = new List<Transaction>();
         private Guid TransactionID { get; set; }
         public AccountNumber ToAccount { get; set; }
         public AccountNumber FromAccount { get; set; }
@@ -30,7 +30,7 @@ namespace BankApp.Transactions
         {
         }
 
-        public void ExecutePendingTransactions()
+        public  static void ExecutePendingTransactions()
         {
             int isQuarter = DateTime.Now.Minute;
 
@@ -39,7 +39,7 @@ namespace BankApp.Transactions
             {
                 foreach (Transaction tx in PendingTransactions)
                 {
-                    ExecuteTransaction(tx);
+                    tx.ExecuteTransaction(tx);
 
                 }
                 PendingTransactions.Clear();

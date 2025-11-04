@@ -24,7 +24,7 @@ namespace BankApp.Accounts
             AccountNumber = AccountNumber.Generate();
         }
 
-        public static List<Transaction> TransactionHistory { get; set; }  = new List<Transaction>(); 
+        public List<Transaction> TransactionHistory { get; set; }  = new List<Transaction>(); 
 
 
 
@@ -60,12 +60,19 @@ namespace BankApp.Accounts
 
         public void GetTransactionHistory()
         {
+           
+            if (TransactionHistory == null || TransactionHistory.Count == 0)
+            {
+                Console.WriteLine("There are no transactions to show.");
+                return;
+            }
+
             foreach (Transaction transaction in TransactionHistory)
 
             {
                 Console.WriteLine(transaction);
-            }
 
+            }
 
         }
 

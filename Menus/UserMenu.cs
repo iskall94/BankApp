@@ -74,6 +74,7 @@ namespace BankApp.Menus
             {
                 "Deposit",
                 "Withdraw",
+                "Get transaction history",
                 "Return to User Menu",
             };
 
@@ -81,7 +82,7 @@ namespace BankApp.Menus
 
 
             Console.WriteLine($"Account: {currentUserBankAccount.AccountNumber} | Balance: {currentUserBankAccount.Balance:C}");
-            Console.WriteLine("Do you want to deposit or withdraw money from account?");
+            Console.WriteLine("Do you want to deposit/withdraw money or see transaction history from account?");
             int menuChoice = Menu.Run();
 
             switch (menuChoice)
@@ -93,6 +94,10 @@ namespace BankApp.Menus
                     WithdrawVisual(currentUser, currentUserBankAccount);
                     break;
                 case 2:
+                    TransactionHistoryVisual(currentUserBankAccount);
+                    break;
+
+                case 3:
                     UserMenuStart(currentUser);
                     return;
             }
@@ -135,6 +140,16 @@ namespace BankApp.Menus
             Console.WriteLine("Press any key to return...");
             Console.ReadKey();
         }
+
+        public static void TransactionHistoryVisual(BankAccount account)
+        {
+            Console.Clear();
+            Console.WriteLine($"Transaction history for account {account.AccountNumber}:\n");
+            account.GetTransactionHistory();
+            Console.WriteLine("Press any key to return...");
+            Console.ReadKey();
+        }
+
         public static void EditUserVisual(User currentUser)
         {
             Console.Clear();

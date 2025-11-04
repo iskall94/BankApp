@@ -8,17 +8,13 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
-using System.Transactions;
+using BankApp.Transactions;
 
 namespace BankApp
 {
    internal static class EmailService
     {
-        //private const string SmtpHost = "smtp.gmail.com"; 
-        //private const int SmtpPort = 587;
-        //private const string SenderEmail = "";
-        //private const string SenderPassword = "";
-        //private const string recipientEmail = "";
+      
 
         private static MailConfig? _config;
 

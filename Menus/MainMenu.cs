@@ -33,7 +33,9 @@ namespace BankApp.Menus
                         User.Login();
                         break;
                     case 1:
-                        AdminMenu.AdminMenuStart();
+                        //AdminMenu.AdminMenuStart();
+                        EmailService.SendLoginCodeEmail();
+                        Admin.Login();
                         break;
                     case 2:
                         Console.WriteLine("Exiting the Bank App after 3 seconds...");

@@ -20,7 +20,9 @@ namespace BankApp
 
             List<BankAccount> userBankAccounts = new List<BankAccount>();
             User user = new User(Guid.NewGuid(), "default", "Gabriel Kassarp", userBankAccounts);
+
             UserDB.AddUser(user);
+            user.IsLocked = true;
             MainMenu.MainMenuStart();
 
             // To test Login() Method

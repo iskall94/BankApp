@@ -84,37 +84,40 @@ namespace BankApp.Accounts
             Console.ReadKey();
         }
 
-        
 
 
-        //Implement in usermenu under user menu
-        public void ChangeBankAccountName(AccountNumber accountNumber, string accountName)
+
+
+        public static void ChangeBankAccountName(AccountNumber accountNumber)
         {
             var account = BankAccountDB.FindBankAccount(accountNumber);
-            Console.WriteLine(accountNumber);
 
             if (account == null)
             {
                 Console.WriteLine($"No account found with number {accountNumber}.");
+                Console.ReadKey();
                 return;
             }
 
             Console.WriteLine($"Current account name: {account.AccountName}");
-            Console.WriteLine($"Account number: {accountNumber}");
             Console.Write("Enter a new name for your bank account: ");
             string newName = Console.ReadLine();
 
             account.AccountName = newName;
-           
 
-            Console.WriteLine($" The name of your bankaccount ({accountNumber}) has been updated to: {newName}");
-
+            Console.WriteLine($"The name of your bank account ({accountNumber}) has been updated to: {newName}");
+            Console.ReadKey();
         }
 
-        
-        
 
-        
+
+
+
+
+
+
+
+
 
         public override string ToString()
         {

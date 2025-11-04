@@ -1,6 +1,7 @@
 ﻿using BankApp.Currencies;
 using BankApp.Enums;
 using BankApp.Menus;
+using System.Security.Cryptography.X509Certificates;
 
 namespace BankApp.Accounts
 {
@@ -33,22 +34,30 @@ namespace BankApp.Accounts
 
         }
 
-        public void ChangeBankAccountType(AccountNumber accountNumber, Enums.AccountType AccountType)
+        public static void UnlockBankAccount()
         {
-            Console.WriteLine(accountNumber);
-            var account = BankAccountDB.FindBankAccount(accountNumber);
-            Console.WriteLine(accountNumber.ToString(), AccountType);
-
-            foreach (AccountType type in Enum.GetValues(typeof(AccountType)))
+            Console.Clear();
+            Console.CursorVisible = true;
+            List<User> usersLockedList = UserDB.FindUserLocked();
+            
+            bool correctName = false;
+            foreach (User user in usersLockedList)
             {
-                Console.WriteLine($"\n{type}");
-                Console.WriteLine("Enter a new type for your bank account (one of the above): ");
-                string newType = Console.ReadLine();
-                Enum.TryParse(newType, out AccountType);
-
-
-                Console.WriteLine($" The type of your bankaccount ({accountNumber}) has been updated to: {AccountType}");
-
+                while(!correctName)
+                {
+                    Console.WriteLine("Vänligen skriv in användarens namn:");
+                    string userName = Console.ReadLine() ?? "";
+                    if (userName == user.Name)
+                    {
+                        user.IsLocked = false;
+                        correctName = true;
+                        Console.WriteLine($"{user}'s account has been unlocked.");
+                    } 
+                    else
+                    {
+                        Console.WriteLine("Please insert a users name (Case Sensitive).");
+                    }
+                }
             }
 
 

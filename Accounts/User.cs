@@ -45,12 +45,11 @@ namespace BankApp.Accounts
         public bool FirstTimeLogin { get; set; }
 
         public bool IsLocked { get; set; }
-
-
         public List<BankAccount>? UserBankAccounts { get; set; } = new List<BankAccount>();
 
         public static void Login()
         {
+          int MAX_ATTEMPTS = 3;
             Console.Clear();
             int failedCount = 0;
             Console.Write("Enter your name: ");
@@ -65,23 +64,22 @@ namespace BankApp.Accounts
                 {
                     userFound = true;
 
-                    while (failedCount < 3)
+                    while (failedCount < MAX_ATTEMPTS )
                     {
+                        if (user.IsLocked)
+                        {
+                            Console.WriteLine("Your account has been locked, please contact your administrator.");
+                            return;
+                        }
                         if (inputPassword != user.Password)
                         {
-                            failedCount++;
                             Console.WriteLine($"Wrong password, please try again. Attempts left: {3 - failedCount}");
+                            failedCount++;
                             Console.Write("Enter your password: ");
                             inputPassword = Console.ReadLine();
                         }
                         else
                         {
-                            if (user.IsLocked)
-                            {
-                                Console.WriteLine("Your account has been locked, please contact your bank.");
-                                return;
-                            }
-
                             if (user.FirstTimeLogin)
                             {
                                 Console.WriteLine("Change password to new one.");
@@ -108,6 +106,13 @@ namespace BankApp.Accounts
                             UserMenu.UserMenuStart(user);
                             break;
                         }
+                    }
+                    if (failedCount == MAX_ATTEMPTS)
+                    {
+                        user.IsLocked = true;
+                        Console.WriteLine("Your account has been locked, please contact your administrator.");
+                        EmailService.SendIssueCodeEmail(1, user, null, null);
+
                     }
                     return;
 

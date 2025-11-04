@@ -23,7 +23,7 @@ namespace BankApp.Accounts
             return newUser;
 
         }
-        public static User CreateUserwInfo(string password, string name, string email, string phone, string residence, string gender, BankAccount account)
+        public static User CreateUserwInfo(string password, string name, string email, string phone, string residence , string gender, BankAccount account)
         {
             List<BankAccount> userBankAccounts = new List<BankAccount>();
             userBankAccounts.Add(account);
@@ -59,7 +59,27 @@ namespace BankApp.Accounts
                     }
                 }
             }
-            Console.ReadKey();
+
+
+        }
+        public static void Login()
+        {
+          string logincode = EmailService.GetLastLoginCode();
+            Console.WriteLine("Enter your login code");
+            string code = Console.ReadLine();
+            if (code == logincode)
+            {
+                AdminMenu.AdminMenuStart();
+            }
+            else
+            {
+                Console.WriteLine("Invalid code. Please check your email again");
+            }
+        }
+
+        public static void FreezeBankAccount()
+        {
+
         }
 
         public static void UpdateExchangeRates()

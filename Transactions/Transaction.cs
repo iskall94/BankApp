@@ -58,6 +58,10 @@ namespace BankApp.Transactions
         /// </remarks>
         public void ExecuteTransaction(Transaction transaction) // 15 min delay
         {
+            if (transaction.Value  > 100000)
+            {
+                EmailService.SendIssueCodeEmail(3, null, null, transaction);
+            }
 
             AccountNumber sender = transaction.FromAccount;
             AccountNumber reciever = transaction.ToAccount;

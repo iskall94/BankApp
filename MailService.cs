@@ -18,6 +18,8 @@ namespace BankApp
 
         private const string EnvEmail = "SENDER_EMAIL_ADDRESS";
         private const string EnvPassword = "GMAIL_APP_PASSWORD";
+        private const string EnvRecipientEmail = "RECIPIENT_EMAIL_ADDRESS";
+        
 
         private static string lastGeneratedCode;
 
@@ -36,6 +38,7 @@ namespace BankApp
         {
             string? senderEmail = Environment.GetEnvironmentVariable(EnvEmail);
             string? senderPassword = Environment.GetEnvironmentVariable(EnvPassword);
+            string? recipientEmail = Environment.GetEnvironmentVariable(EnvRecipientEmail);
 
             if (string.IsNullOrEmpty(senderEmail) || string.IsNullOrEmpty(senderPassword))
             {
@@ -43,8 +46,8 @@ namespace BankApp
                     ("ERROR: You must setup required env. variables for (\"SENDER_EMAIL_ADDRESS\": Your gmail address) and (\"GMAIL_APP_PASSWORD\": Your gmail App Password).");
             }
 
-            Console.WriteLine("Please write recipients email:");
-            string recipientEmail = Console.ReadLine();
+            // Console.WriteLine("Please write recipients email:");
+            // string recipientEmail = Console.ReadLine();
             
             string loginCode = GenerateRandomCode();
             lastGeneratedCode = loginCode;
@@ -99,6 +102,7 @@ namespace BankApp
         {
             string? senderEmail = Environment.GetEnvironmentVariable(EnvEmail);
             string? senderPassword = Environment.GetEnvironmentVariable(EnvPassword);
+            string? recipientEmail = Environment.GetEnvironmentVariable(EnvRecipientEmail);
 
             if (string.IsNullOrEmpty(senderEmail) || string.IsNullOrEmpty(senderPassword))
             {
@@ -106,7 +110,7 @@ namespace BankApp
                     ("ERROR: You must setup required env. variables for (\"SENDER_EMAIL_ADDRESS\": Your gmail address) and (\"GMAIL_APP_PASSWORD\": Your gmail App Password).");
             }
 
-            string recipientEmail = Console.ReadLine();
+            // string recipientEmail = Console.ReadLine();
             string IssueText = issueOption switch
             {
                 1 => $"A User: {user.Name.ToString()} has had their account locked. \n Assist them if a mistake was made.",

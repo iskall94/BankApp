@@ -26,6 +26,7 @@ namespace BankApp.Menus
                 Menu.MenuOptions = GetUserOptions;
                 string title = "---User Menu---";
 
+                Console.WriteLine($"Welcome, {currentUser.Name}!");
                 int menuChoice = Menu.Run(title);
 
                 switch (menuChoice)
@@ -59,6 +60,8 @@ namespace BankApp.Menus
                 }
             }
         }
+
+        // TODO: Important, add a while loop to esc to menu for every method
         public static void CheckAccountsVisual(User currentUser)
         {
             Console.Clear();
@@ -117,7 +120,7 @@ namespace BankApp.Menus
                 Console.WriteLine("Invalid input.");
             }
 
-            Console.WriteLine($"New balance: {chosenAccountNumber.Balance:C}");
+            Console.WriteLine($"New balance: {chosenAccountNumber.Balance} {chosenAccountNumber.Currency}");
             Console.WriteLine("Press any key to return...");
             Console.ReadKey();
         }
@@ -329,6 +332,7 @@ namespace BankApp.Menus
             AccountNumber selectedAccount;
             while (true)
             {
+                Console.WriteLine("Enter the corresponding account choice:");
                 string accountInput = Console.ReadLine() ?? "";
                 if (int.TryParse(accountInput, out int choice) && choice > 0 && choice <= allAccountNumbers.Count)
                 {
@@ -409,7 +413,7 @@ namespace BankApp.Menus
 
             Console.WriteLine("Enter account name:");
             string accountName = Console.ReadLine() ?? "";
-            decimal balance = HelperMethod.HelperDecimal("Enter balance: ");
+            decimal balance = 0;
 
             Console.WriteLine($"Choose account type: {string.Join(",", Enum.GetNames(typeof(AccountType)))}");
             string input = Console.ReadLine() ?? "";

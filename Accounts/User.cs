@@ -69,6 +69,7 @@ namespace BankApp.Accounts
                         if (user.IsLocked)
                         {
                             Console.WriteLine("Your account has been locked, please contact your administrator.");
+                            Console.ReadKey();
                             return;
                         }
                         if (inputPassword != user.Password)
@@ -100,8 +101,6 @@ namespace BankApp.Accounts
                                 user.FirstTimeLogin = false;
                                 Console.WriteLine($"New password set: {newPassword}");
                             }
-
-                            Console.WriteLine($"Welcome, {user.Name}!");
 
                             UserMenu.UserMenuStart(user);
                             break;
@@ -162,12 +161,14 @@ namespace BankApp.Accounts
                 case "phone": user.Phone = value; break;
                 case "residence": user.Residence = value; break;
                 case "gender": user.Gender = value; break;
+                default: Console.WriteLine("Field not found. Try again."); break;
+                    
             }
 
 
         }
 
-
+        // Add error handling for all 3 methods below
         public void ShowAllAccounts()
         {
             foreach (BankAccount account in UserBankAccounts)
@@ -175,15 +176,15 @@ namespace BankApp.Accounts
                 Console.WriteLine(account.ToString());
             }
         }
+
         public List<AccountNumber> AccountNumbersList(User currentUser)
         {
             return currentUser.UserBankAccounts.Select(a => a.AccountNumber).ToList();
         }
+
         public BankAccount FindAccount(AccountNumber accountNumber)
         {
-            BankAccount foundAccount = UserBankAccounts.Find(a => a.AccountNumber == accountNumber);
-
-            return foundAccount;
+            return UserBankAccounts.Find(a => a.AccountNumber == accountNumber);
         }
 
 

@@ -22,6 +22,7 @@ namespace BankApp
 
         private static void Tick(object? state)
         {
+            Console.WriteLine("Tick test!");
             Transaction.ExecutePendingTransactions();
         }
 

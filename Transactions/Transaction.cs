@@ -90,10 +90,6 @@ namespace BankApp.Transactions
 
             senderAccount.AddTransaction(transaction);
             recieverAccount.AddTransaction(transaction);
-
-            Console.WriteLine(senderAccount.Balance);
-            Console.WriteLine(recieverAccount.Balance);
-
         }
 
         public override string ToString()

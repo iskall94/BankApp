@@ -18,6 +18,8 @@ namespace BankApp.Transactions
         /// <param name="interestRate">The annual interest rate (in percent) applied to the loan.</param>
         /// <param name="years">The duration of the loan in years.</param>
         /// <returns>A string showing the loan amount, interest rate, and total payment.</returns>
+        /// 
+        // TODO: "kr" is hardcoded, set proper currency.
         public string CalculateLoan(decimal loanAmount, decimal interestRate, int years)
         {
             decimal totalInterest = loanAmount * (interestRate / 100) * years;

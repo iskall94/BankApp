@@ -17,7 +17,6 @@ namespace BankApp.Menus
         {
             "Create User",
             "Unlock User",
-            "Placeholder",
             "Lists of Accounts",
             "Change Currency Exchange Rate",
             "Exit To Main Menu..."
@@ -42,25 +41,21 @@ namespace BankApp.Menus
                         Admin.UnlockBankAccount();
                         break;
                     case 2:
-                        
+                        UserDB.ShowAllUsers();
                         break;
                     case 3:
-                        UserDB.ShowAllUsers();
-                        
-                        break;
-                    case 4:
                         Admin.UpdateExchangeRates();
                         break;
-                    case 5:
+                    case 4:
                         MainMenu.MainMenuStart();
                         break;
-
                     default:
                         break;
                 }
             }
         }
 
+        // Add so negative balance cannot be implemented
         public static void AdminCreateUser()
         {
             Console.Clear();

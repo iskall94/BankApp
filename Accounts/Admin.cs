@@ -1,7 +1,6 @@
 ﻿using BankApp.Currencies;
 using BankApp.Enums;
 using BankApp.Menus;
-using System.Security.Cryptography.X509Certificates;
 
 namespace BankApp.Accounts
 {
@@ -34,6 +33,9 @@ namespace BankApp.Accounts
 
         }
 
+        /// <summary>
+        /// Add a list of all locked / unlocked users name, change to a menu
+        /// </summary>
         public static void UnlockBankAccount()
         {
             Console.Clear();
@@ -59,10 +61,10 @@ namespace BankApp.Accounts
                     }
                 }
             }
-
-
         }
-        public static void Login()
+
+        // Add a while loop in case you write the wrong password
+        public static void AdminLogin()
         {
           string logincode = EmailService.GetLastLoginCode();
             Console.WriteLine("Enter your login code");
@@ -75,11 +77,6 @@ namespace BankApp.Accounts
             {
                 Console.WriteLine("Invalid code. Please check your email again");
             }
-        }
-
-        public static void FreezeBankAccount()
-        {
-
         }
 
         public static void UpdateExchangeRates()

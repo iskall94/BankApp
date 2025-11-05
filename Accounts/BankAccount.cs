@@ -1,23 +1,16 @@
 ﻿using BankApp.Enums;
 using BankApp.Currencies;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BankApp.Transactions;
-
 
 namespace BankApp.Accounts
 {
     internal class BankAccount
     {
-      
         public BankAccount(string accountName, AccountType accountType, decimal balance)
         {
             AccountName = accountName;
             AccountType = accountType;
-            Currency = Enums.CurrencyType.SEK;
+            Currency = CurrencyType.SEK;
             Balance = balance;
             Interest = 0;
             TransactionHistory = new List <Transaction>();
@@ -33,9 +26,9 @@ namespace BankApp.Accounts
         public CurrencyType Currency { get; set; }
         
         public AccountNumber AccountNumber { get; set; }
-        public decimal Balance { get; set; } // Should be private
+        public decimal Balance { get; set; }
 
-        public float Interest { get; set; } // Should be private
+        public float Interest { get; set; }
 
         public DateTime? LastInterestDate { get; set; }
 
@@ -43,6 +36,11 @@ namespace BankApp.Accounts
 
         public decimal Withdraw(decimal value)
         {
+            if (value > Balance)
+            {
+                Console.WriteLine("You cannot withdraw more than the current balance.");
+                return Balance;
+            }
             Balance = Balance - value;
 
            return Balance;
@@ -52,7 +50,7 @@ namespace BankApp.Accounts
         {
 
             Balance = Balance + value;
-            return Balance ;
+            return Balance;
         }
         public  void AddTransaction(Transaction transaction)
         {
@@ -78,11 +76,11 @@ namespace BankApp.Accounts
 
         }
 
-        public void ChangeAccountCurrency(AccountNumber accountNumber, Enums.CurrencyType currency)
+        // Handle conversion from non-swedish to non-swedish currency -> Gabriel
+        public void ChangeAccountCurrency(AccountNumber accountNumber, CurrencyType currency)
         {
             Console.WriteLine(accountNumber);
             var account = BankAccountDB.FindBankAccount(accountNumber);
-            Console.WriteLine(account == null ? "account is null" : "account is ok");
             Console.WriteLine(account.ToString());
             
             decimal ExchangeRate = CurrencyManager.AccountCurrency[currency];
@@ -95,7 +93,7 @@ namespace BankApp.Accounts
 
 
 
-
+        // Move error handling into FindBankAccount()
 
         public static void ChangeBankAccountName(AccountNumber accountNumber)
         {
@@ -104,7 +102,6 @@ namespace BankApp.Accounts
             if (account == null)
             {
                 Console.WriteLine($"No account found with number {accountNumber}.");
-                Console.ReadKey();
                 return;
             }
 
@@ -115,7 +112,6 @@ namespace BankApp.Accounts
             account.AccountName = newName;
 
             Console.WriteLine($"The name of your bank account ({accountNumber}) has been updated to: {newName}");
-            Console.ReadKey();
         }
         public static string applyInterest(BankAccount account)
         {
@@ -123,7 +119,7 @@ namespace BankApp.Accounts
 
             DateOnly lastApplied = DateOnly.FromDateTime(account.LastInterestDate.Value);
             DateOnly nextEligibilityDate = lastApplied.AddYears(1);
-            if (currentDate >= nextEligibilityDate)
+            if (currentDate == nextEligibilityDate)
             {
                 double rateFactor = 1.0 + (account.Interest / 100.0);
                 decimal balanceBefore = account.Balance;

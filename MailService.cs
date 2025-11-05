@@ -1,5 +1,4 @@
 ﻿using BankApp.Accounts;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -14,20 +13,15 @@ namespace BankApp
 {
    internal static class EmailService
     {
-      
+        private const string SmtpHost = "smtp.gmail.com";
+        private const int SmtpPort = 587;
 
-        private static MailConfig? _config;
+        private const string EnvEmail = "SENDER_EMAIL_ADDRESS";
+        private const string EnvPassword = "GMAIL_APP_PASSWORD";
 
         private static string lastGeneratedCode;
 
         private static readonly Random Random = new Random();
-
-        public static void Initialize(IConfiguration configuration)
-        {
-            // Binds the "EmailSettings" from .json file to our actual code
-            _config = configuration.GetSection("EmailSettings").Get<MailConfig>();
-            
-        }
 
         public static  string GenerateRandomCode()
         {
@@ -40,6 +34,15 @@ namespace BankApp
       
         public  static string SendLoginCodeEmail()
         {
+            string? senderEmail = Environment.GetEnvironmentVariable(EnvEmail);
+            string? senderPassword = Environment.GetEnvironmentVariable(EnvPassword);
+
+            if (string.IsNullOrEmpty(senderEmail) || string.IsNullOrEmpty(senderPassword))
+            {
+                throw new InvalidOperationException
+                    ("ERROR: You must setup required env. variables for (\"SENDER_EMAIL_ADDRESS\": Your gmail address) and (\"GMAIL_APP_PASSWORD\": Your gmail App Password).");
+            }
+
             Console.WriteLine("Please write recipients email:");
             string recipientEmail = Console.ReadLine();
             
@@ -50,7 +53,7 @@ namespace BankApp
             {
                 using (MailMessage mail = new MailMessage())
                 {
-                    mail.From = new MailAddress(_config.SenderEmail, "Secure Login Service");
+                    mail.From = new MailAddress(senderEmail, "Secure Login Service");
                     mail.To.Add(recipientEmail);
                   
                     mail.Subject = "Your One-Time Login Code";
@@ -69,9 +72,9 @@ namespace BankApp
                     </html>";
 
                  
-                    using (SmtpClient smtp = new SmtpClient(_config.SmtpHost, _config.SmtpPort))
+                    using (SmtpClient smtp = new SmtpClient(SmtpHost, SmtpPort))
                     {
-                        smtp.Credentials = new NetworkCredential(_config.SenderEmail, _config.SenderPassword);
+                        smtp.Credentials = new NetworkCredential(senderEmail, senderPassword);
                         smtp.EnableSsl = true; 
 
                         smtp.Send(mail);
@@ -94,6 +97,15 @@ namespace BankApp
 
         public static void SendIssueCodeEmail(int issueOption, User? user, string? issueText , Transaction? tx )
         {
+            string? senderEmail = Environment.GetEnvironmentVariable(EnvEmail);
+            string? senderPassword = Environment.GetEnvironmentVariable(EnvPassword);
+
+            if (string.IsNullOrEmpty(senderEmail) || string.IsNullOrEmpty(senderPassword))
+            {
+                throw new InvalidOperationException
+                    ("ERROR: You must setup required env. variables for (\"SENDER_EMAIL_ADDRESS\": Your gmail address) and (\"GMAIL_APP_PASSWORD\": Your gmail App Password).");
+            }
+
             string recipientEmail = Console.ReadLine();
             string IssueText = issueOption switch
             {
@@ -107,7 +119,7 @@ namespace BankApp
                 using (MailMessage mail = new MailMessage())
                 {
 
-                    mail.From = new MailAddress(_config.SenderEmail, "Issue Code Handler");
+                    mail.From = new MailAddress(senderEmail, "Issue Code Handler");
                     mail.To.Add(recipientEmail);
 
 
@@ -127,9 +139,9 @@ namespace BankApp
                     </html>";
 
 
-                    using (SmtpClient smtp = new SmtpClient(_config.SmtpHost, _config.SmtpPort))
+                    using (SmtpClient smtp = new SmtpClient(SmtpHost, SmtpPort))
                     {
-                        smtp.Credentials = new NetworkCredential(_config.SenderEmail, _config.SenderPassword);
+                        smtp.Credentials = new NetworkCredential(senderEmail, senderPassword);
                         smtp.EnableSsl = true;
 
                         smtp.Send(mail);

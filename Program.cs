@@ -1,7 +1,6 @@
 using BankApp.Menus;
 using BankApp.Accounts;
 using BankApp.Enums;
-using BankApp;
 
 namespace BankApp
 {

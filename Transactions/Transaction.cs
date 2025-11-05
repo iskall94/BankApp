@@ -56,7 +56,7 @@ namespace BankApp.Transactions
         /// If the transaction type is <see cref="TransactionType.Loan"/>, the funds are taken from the admin bank account
         /// instead of the sender's account.
         /// </remarks>
-        public void ExecuteTransaction(Transaction transaction) // 15 min delay
+        public void ExecuteTransaction(Transaction transaction)
         {
             if (transaction.Value  > 100000)
             {

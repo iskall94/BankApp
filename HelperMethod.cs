@@ -1,13 +1,4 @@
-﻿using BankApp;
-using BankApp.Accounts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace BankApp
+﻿namespace BankApp
 {
     internal static class HelperMethod
     {

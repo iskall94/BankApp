@@ -63,19 +63,38 @@ namespace BankApp.Accounts
             }
         }
 
-        // Add a while loop in case you write the wrong password
+       
         public static void AdminLogin()
         {
-          string logincode = EmailService.GetLastLoginCode();
-            Console.WriteLine("Enter your login code");
-            string code = Console.ReadLine();
-            if (code == logincode)
+            Console.Clear();
+            Console.CursorVisible = true;
+            Console.WriteLine("---Admin Login--- ");
+            string logincode = EmailService.GetLastLoginCode();
+            Console.WriteLine("Press esc key to return to main menu");
+            Console.WriteLine("\nEnter your login code:");
+            string code = "";
+            
+            while (true)
             {
-                AdminMenu.AdminMenuStart();
-            }
-            else
-            {
-                Console.WriteLine("Invalid code. Please check your email again");
+                code = Console.ReadLine();
+
+                if (code == logincode)
+                {
+                    Console.WriteLine("Login successful!");
+                    AdminMenu.AdminMenuStart();
+                    break; 
+                }
+                else
+                {
+                    Console.WriteLine("Invalid code. Please check your email and try again.");
+                }
+                    
+
+                ConsoleKeyInfo escMenu = Console.ReadKey(true);
+                if (escMenu.Key == ConsoleKey.Escape)
+                {
+                    MainMenu.MainMenuStart();
+                }
             }
         }
 
@@ -124,5 +143,7 @@ namespace BankApp.Accounts
                 }
             }
         }
+
+        
     }
 }

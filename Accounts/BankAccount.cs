@@ -1,6 +1,7 @@
 ﻿using BankApp.Currencies;
 using BankApp.Enums;
 using BankApp.Transactions;
+using BankApp.Menus;
 
 namespace BankApp.Accounts
 {
@@ -75,34 +76,42 @@ namespace BankApp.Accounts
 
         }
 
-        // Handle conversion from non-swedish to non-swedish currency -> Gabriel
-        public void ChangeAccountCurrency(AccountNumber accountNumber, CurrencyType currency)
+   
+        public void ChangeAccountCurrency(AccountNumber accountNumber, CurrencyType newCurrency)
         {
+            Console.WriteLine("Entered fn");
             Console.WriteLine(accountNumber);
             var account = BankAccountDB.FindBankAccount(accountNumber);
-            Console.WriteLine(account.ToString());
+            decimal oldBalance = account.Balance;
+            CurrencyType oldCurrency = account.Currency;
 
-            decimal ExchangeRate = CurrencyManager.AccountCurrency[currency];
+            if (oldCurrency == newCurrency)
+            {
+                Console.WriteLine("Currency is already " + newCurrency);
+                Console.ReadKey();
+                UserMenu.GetCurrencyMenu(account);
+                return;
+            }
 
-            account.Currency = currency;
-            account.Balance = Balance * ExchangeRate;
+            Console.WriteLine("changing balances");
+            decimal oldCurrencyRate = CurrencyManager.AccountCurrency[oldCurrency];
+            decimal newCurrencyRate = CurrencyManager.AccountCurrency[newCurrency];
+            decimal balanceInSEK = oldBalance / oldCurrencyRate;
+            decimal newBalance = balanceInSEK * newCurrencyRate;
+
+            account.Currency = newCurrency;
+            account.Balance = newBalance;
             Console.WriteLine(account.ToString());
             Console.ReadKey();
         }
 
 
 
-        // Move error handling into FindBankAccount()
+
 
         public static void ChangeBankAccountName(AccountNumber accountNumber)
         {
             var account = BankAccountDB.FindBankAccount(accountNumber);
-
-            if (account == null)
-            {
-                Console.WriteLine($"No account found with number {accountNumber}.");
-                return;
-            }
 
             Console.WriteLine($"Current account name: {account.AccountName}");
             Console.Write("Enter a new name for your bank account: ");

@@ -1,4 +1,5 @@
 ﻿
+using System.Security.Principal;
 using BankApp.Accounts;
 using BankApp.Enums;
 
@@ -23,6 +24,13 @@ namespace BankApp
         public  static BankAccount FindBankAccount(AccountNumber accountNumber)
         {
              BankAccount foundAccount = BankAccounts.Find(a => a.AccountNumber == accountNumber);
+
+            if (foundAccount == null)
+            {
+                Console.WriteLine($"No account found with number {accountNumber}.");
+                return null;
+            }
+
             return foundAccount;
         }
 

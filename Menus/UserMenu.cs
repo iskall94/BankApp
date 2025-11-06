@@ -1,4 +1,5 @@
 ﻿using BankApp.Accounts;
+using BankApp.Currencies;
 using BankApp.Enums;
 using BankApp.Transactions;
 
@@ -76,6 +77,7 @@ namespace BankApp.Menus
             {
                 "Deposit",
                 "Withdraw",
+                "Change Currency",
                 "Get transaction history",
                 "Return to User Menu",
             };
@@ -95,11 +97,13 @@ namespace BankApp.Menus
                 case 1:
                     WithdrawVisual(currentUser, currentUserBankAccount);
                     break;
-                case 2:
+                case 2: ChangeCurrencyVisual(currentUser, currentUserBankAccount);
+                    break;
+                case 3:
                     TransactionHistoryVisual(currentUserBankAccount);
                     break;
 
-                case 3:
+                case 4:
                     UserMenuStart(currentUser);
                     return;
             }
@@ -539,6 +543,46 @@ namespace BankApp.Menus
             }
 
             UserMenuStart(currentUser);
+        }
+        public static void ChangeCurrencyVisual(User user, BankAccount account)
+        {
+            Console.Clear();
+            Console.WriteLine("Kindly the currenct type you wish to change to.");
+            CurrencyType chosenCurrency = GetCurrencyMenu(account);
+       
+  
+           account.ChangeAccountCurrency(account.AccountNumber, chosenCurrency);
+        }
+
+        public static CurrencyType GetCurrencyMenu(BankAccount account)
+        {
+            Menu.MenuOptions = CurrencyManager.AccountCurrency.Keys.Select(key => key.ToString()).ToList();
+         string title = "Please select the currency you wish to convert into.";
+            int menuChoice = Menu.Run(title);
+
+      
+
+            switch (menuChoice)
+            {
+                case 0:
+
+                    return CurrencyType.SEK;
+                   
+                case 1:
+                
+                    return CurrencyType.EUR;
+                
+                case 2:
+                    return CurrencyType.USD;
+                
+                case 3:
+                    return CurrencyType.GBP;
+        
+       
+                default:
+                    return account.Currency;
+            }
+
         }
 
 

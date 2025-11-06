@@ -41,7 +41,7 @@ namespace BankApp.Accounts
             Console.Clear();
             Console.CursorVisible = true;
             List<User> usersLockedList = UserDB.FindUserLocked();
-            
+
             bool correctName = false;
             foreach (User user in usersLockedList)
             {
@@ -61,6 +61,8 @@ namespace BankApp.Accounts
                     }
                 }
             }
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
         }
 
        

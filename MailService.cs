@@ -120,7 +120,6 @@ namespace BankApp
                     mail.From = new MailAddress(senderEmail, "Issue Code Handler");
                     mail.To.Add(recipientEmail);
 
-
                     mail.Subject = "New Issue assigned to you.";
 
                     mail.IsBodyHtml = true;
@@ -136,7 +135,6 @@ namespace BankApp
                         </body>
                     </html>";
 
-
                     using (SmtpClient smtp = new SmtpClient(SmtpHost, SmtpPort))
                     {
                         smtp.Credentials = new NetworkCredential(senderEmail, senderPassword);
@@ -145,17 +143,12 @@ namespace BankApp
                         smtp.Send(mail);
                     }
                 }
-
-
             }
             catch (SmtpException sx)
             {
                 Console.WriteLine($" Could not send email. Check your host, port, and credentials. Message: {sx.Message}");
                 throw;
             }
-
         }
-
-
     }
 }

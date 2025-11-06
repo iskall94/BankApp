@@ -148,7 +148,6 @@ namespace BankApp.Accounts
 
         }
 
-
         public void EditUser(User user, string field, string value)
         {
             field = field.ToLower();
@@ -168,8 +167,7 @@ namespace BankApp.Accounts
 
         }
 
-        // Add error handling for all 3 methods below
-        public void ShowAllAccounts()
+        public void ShowAllAccounts() // Remove?
         {
             foreach (BankAccount account in UserBankAccounts)
             {
@@ -187,7 +185,6 @@ namespace BankApp.Accounts
             return UserBankAccounts.Find(a => a.AccountNumber == accountNumber);
         }
 
-
         public BankAccount CreateBankAccount(string accountName, AccountType accountType, decimal balance)
         {
             BankAccount account = new BankAccount(accountName, accountType, balance);
@@ -203,8 +200,6 @@ namespace BankApp.Accounts
             BankAccountDB.AddBankAccount(account);
 
             return account;
-
-
         }
 
         public Transaction CreateTransaction(AccountNumber toAccount, AccountNumber fromAccount, decimal value, string personalNote, TransactionType transactionType)
@@ -244,7 +239,6 @@ namespace BankApp.Accounts
             }
         }
 
-
         public void HandleTransfer(AccountNumber to, AccountNumber from, decimal value)
         {
             BankAccount From = FindAccount(from);
@@ -263,7 +257,6 @@ namespace BankApp.Accounts
             {
                 Console.WriteLine(ex.Message);
             }
-
         }
 
         public override string ToString()
@@ -274,7 +267,6 @@ namespace BankApp.Accounts
                    $"Password: {Password}\n" +
                    "\n---\n" +
              $"Bank Accounts:\n{accountsInfo}";
-
         }
     }
 }

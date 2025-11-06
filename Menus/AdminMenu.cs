@@ -100,7 +100,7 @@ namespace BankApp.Menus
                 User createdUser = Admin.CreateUser(Password, name, bankAccount);
                 Console.WriteLine(createdUser.ToString());
             }
-            Console.WriteLine("Press any key to return...");
+            Console.WriteLine("\nPress any key to return...");
             Console.ReadKey();
         }
     }

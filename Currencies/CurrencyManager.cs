@@ -19,6 +19,4 @@ namespace BankApp.Currencies
             AccountCurrency[keyUpdate] = newValue;
         }
     }
-
-        
 }

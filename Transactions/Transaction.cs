@@ -13,7 +13,6 @@ namespace BankApp.Transactions
         public TransactionType TransactionType { get; set; }
         public decimal Value { get; set; }
         public string PersonalNote { get; set; }
-        //bool isRecurring?
 
         public Transaction(AccountNumber toAccount, AccountNumber fromAccount, decimal value, string personalNote, TransactionType transactionType)
         {

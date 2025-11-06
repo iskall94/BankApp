@@ -14,8 +14,6 @@ namespace BankApp
 
         public static List<BankAccount> BankAccounts { get; set; } = new List<BankAccount>();
 
-
-
         public static  void AddBankAccount(BankAccount bankAccount)
         {
             BankAccounts.Add(bankAccount);

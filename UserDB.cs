@@ -5,15 +5,12 @@ namespace BankApp
 {
     internal class UserDB
     {
-
         public UserDB(List<User> allUsers)
         {
             allUsers = new List<User>();
         }
 
         public static List<User> allUsers { get; set; } = new List<User>();
-
-
 
         public static void AddUser(User newUser)
         {

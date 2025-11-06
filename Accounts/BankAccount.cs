@@ -20,8 +20,6 @@ namespace BankApp.Accounts
 
         public List<Transaction> TransactionHistory { get; set; } = new List<Transaction>();
 
-
-
         public string AccountName { get; set; }
         public AccountType AccountType { get; set; }
         public CurrencyType Currency { get; set; }
@@ -32,8 +30,6 @@ namespace BankApp.Accounts
         public float Interest { get; set; }
 
         public DateTime? LastInterestDate { get; set; }
-
-
 
         public decimal Withdraw(decimal value)
         {
@@ -52,11 +48,11 @@ namespace BankApp.Accounts
             Balance = Balance + value;
             return Balance;
         }
+
         public void AddTransaction(Transaction transaction)
         {
             TransactionHistory.Add(transaction);
         }
-
 
         public void GetTransactionHistory()
         {
@@ -71,11 +67,8 @@ namespace BankApp.Accounts
 
             {
                 Console.WriteLine(transaction);
-
             }
-
         }
-
    
         public void ChangeAccountCurrency(AccountNumber accountNumber, CurrencyType newCurrency)
         {

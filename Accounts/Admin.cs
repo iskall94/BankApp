@@ -30,7 +30,6 @@ namespace BankApp.Accounts
             User newUser = new User(Guid.NewGuid(), password, name, email, phone, residence, gender, userBankAccounts);
             UserDB.AddUser(newUser);
             return newUser;
-
         }
 
         /// <summary>
@@ -145,7 +144,5 @@ namespace BankApp.Accounts
                 }
             }
         }
-
-        
     }
 }

@@ -440,6 +440,7 @@ namespace BankApp.Menus
             Console.WriteLine("Press any key to return...");
             Console.ReadKey();
         }
+
         public static void CreateBankAccountVisual(User currentUser)
         {
             Console.Clear();
@@ -467,10 +468,8 @@ namespace BankApp.Menus
                 }
             }
             Console.WriteLine("A new bank account has been successfully created!");
-            Console.WriteLine("Press any key to return...");
+            Console.WriteLine("\nPress any key to return...");
             Console.ReadKey();
-
-
         }
         public static void ChangeBankAccountVisual(User currentUser)
         {
@@ -509,9 +508,9 @@ namespace BankApp.Menus
                 }
                 number++;
             }
-
             UserMenuStart(currentUser);
         }
+
         public static void ChangeBankAccountNameVisual(User currentUser)
         {
             var accounts = currentUser.UserBankAccounts;
@@ -527,7 +526,6 @@ namespace BankApp.Menus
             Console.CursorVisible = true;
             Console.WriteLine("--- Select Account to Change Name ---\n");
             int number = 1;
-
 
             foreach (var acc in accounts)
             {
@@ -552,6 +550,7 @@ namespace BankApp.Menus
 
             UserMenuStart(currentUser);
         }
+
         public static void ChangeCurrencyVisual(User user, BankAccount account)
         {
             Console.Clear();
@@ -568,31 +567,20 @@ namespace BankApp.Menus
             string title = "Please select the currency you wish to convert into.";
             int menuChoice = Menu.Run(title);
 
-
-
             switch (menuChoice)
             {
                 case 0:
-
                     return CurrencyType.SEK;
-
                 case 1:
-
                     return CurrencyType.EUR;
-
                 case 2:
                     return CurrencyType.USD;
-
                 case 3:
                     return CurrencyType.GBP;
-
-
                 default:
                     return account.Currency;
             }
 
         }
-
-
     }
 }

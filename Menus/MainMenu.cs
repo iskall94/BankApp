@@ -42,6 +42,7 @@ namespace BankApp.Menus
                 }
             }
         }
+
         public static string AsciiTitle()
         {
             string asciiTitle = @"

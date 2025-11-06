@@ -52,6 +52,7 @@ namespace BankApp.Accounts
             int MAX_ATTEMPTS = 3;
             Console.Clear();
             int failedCount = 0;
+            Console.WriteLine("---User Login---\n");
             Console.Write("Enter your name: ");
             string inputName = Console.ReadLine();
             Console.Write("Enter your password: ");

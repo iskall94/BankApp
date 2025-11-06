@@ -1,5 +1,5 @@
-﻿using BankApp.Enums;
-using BankApp.Currencies;
+﻿using BankApp.Currencies;
+using BankApp.Enums;
 using BankApp.Transactions;
 
 namespace BankApp.Accounts
@@ -13,18 +13,18 @@ namespace BankApp.Accounts
             Currency = CurrencyType.SEK;
             Balance = balance;
             Interest = 0;
-            TransactionHistory = new List <Transaction>();
+            TransactionHistory = new List<Transaction>();
             AccountNumber = AccountNumber.Generate();
         }
 
-        public List<Transaction> TransactionHistory { get; set; }  = new List<Transaction>(); 
+        public List<Transaction> TransactionHistory { get; set; } = new List<Transaction>();
 
 
 
         public string AccountName { get; set; }
         public AccountType AccountType { get; set; }
         public CurrencyType Currency { get; set; }
-        
+
         public AccountNumber AccountNumber { get; set; }
         public decimal Balance { get; set; }
 
@@ -38,21 +38,20 @@ namespace BankApp.Accounts
         {
             if (value > Balance)
             {
-                Console.WriteLine("You cannot withdraw more than the current balance.");
-                return Balance;
+                throw new InvalidOperationException("You cannot withdraw more than the current balance.");
             }
             Balance = Balance - value;
 
-           return Balance;
+            return Balance;
         }
 
-        public decimal Deposit(decimal value) 
+        public decimal Deposit(decimal value)
         {
 
             Balance = Balance + value;
             return Balance;
         }
-        public  void AddTransaction(Transaction transaction)
+        public void AddTransaction(Transaction transaction)
         {
             TransactionHistory.Add(transaction);
         }
@@ -60,7 +59,7 @@ namespace BankApp.Accounts
 
         public void GetTransactionHistory()
         {
-           
+
             if (TransactionHistory == null || TransactionHistory.Count == 0)
             {
                 Console.WriteLine("There are no transactions to show.");
@@ -82,7 +81,7 @@ namespace BankApp.Accounts
             Console.WriteLine(accountNumber);
             var account = BankAccountDB.FindBankAccount(accountNumber);
             Console.WriteLine(account.ToString());
-            
+
             decimal ExchangeRate = CurrencyManager.AccountCurrency[currency];
 
             account.Currency = currency;

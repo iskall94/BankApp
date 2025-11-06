@@ -48,7 +48,6 @@ namespace BankApp.Menus
             }
         }
 
-        // Add so negative balance cannot be implemented
         public static void AdminCreateUser()
         {
             Console.Clear();
@@ -57,23 +56,17 @@ namespace BankApp.Menus
             Console.WriteLine("Please enter a name for user:");
             string name = Console.ReadLine() ?? "";
 
-            bool successful = false;
-            string balanceInput;
             decimal decimalNumber = 0;
 
-            while (!successful)
+            while (true)
             {
-                Console.WriteLine("Please enter a balance:");
-                balanceInput = Console.ReadLine() ?? "";
-                successful = decimal.TryParse(balanceInput, out decimalNumber);
-                if (successful)
+                decimalNumber = HelperMethod.HelperDecimal("Please enter a balance:");
+                if (decimalNumber < 0)
                 {
-                    Console.WriteLine("Balance successfully implemented.");
+                    Console.WriteLine("You cannot enter a negatve number.");
+                    continue;
                 }
-                else
-                {
-                    Console.WriteLine("Could not parse the balance input. Please enter a valid input.");
-                }
+                break;
             }
             BankAccount bankAccount = new BankAccount("account", Enums.AccountType.Normal, decimalNumber);
             Console.WriteLine("Has User provided additional info? \n" +

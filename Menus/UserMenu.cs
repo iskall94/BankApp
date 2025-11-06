@@ -85,7 +85,7 @@ namespace BankApp.Menus
                 "Return to User Menu",
             };
 
-           
+
             Menu.MenuOptions = accountOptions;
 
 
@@ -101,7 +101,8 @@ namespace BankApp.Menus
                 case 1:
                     WithdrawVisual(currentUser, currentUserBankAccount);
                     break;
-                case 2: ChangeCurrencyVisual(currentUser, currentUserBankAccount);
+                case 2:
+                    ChangeCurrencyVisual(currentUser, currentUserBankAccount);
                     break;
                 case 3:
                     TransactionHistoryVisual(currentUserBankAccount);
@@ -312,7 +313,7 @@ namespace BankApp.Menus
             AskReturnOrContinue(currentUser);
 
             currentUser.HandleTransfer(toAccount, fromAccount, value);
-
+            Console.WriteLine("Press any key to return...");
             Console.ReadKey();
 
         }
@@ -373,6 +374,7 @@ namespace BankApp.Menus
             Transaction newTransaction = currentUser.CreateTransaction(toAccount, fromAccount, value, personalNote, TransactionType.Normal);
 
             Console.WriteLine("Your transaction was successful");
+            Console.WriteLine("Press any key to return...");
             Console.ReadKey();
         }
         public static void CreateLoanVisual(User currentUser)
@@ -435,7 +437,7 @@ namespace BankApp.Menus
                 Console.WriteLine(ex.Message);
             }
 
-
+            Console.WriteLine("Press any key to return...");
             Console.ReadKey();
         }
         public static void CreateBankAccountVisual(User currentUser)
@@ -465,6 +467,7 @@ namespace BankApp.Menus
                 }
             }
             Console.WriteLine("A new bank account has been successfully created!");
+            Console.WriteLine("Press any key to return...");
             Console.ReadKey();
 
 
@@ -554,36 +557,36 @@ namespace BankApp.Menus
             Console.Clear();
             Console.WriteLine("Kindly enter the currenct type you wish to change to.");
             CurrencyType chosenCurrency = GetCurrencyMenu(account);
-       
-  
-           account.ChangeAccountCurrency(account.AccountNumber, chosenCurrency);
+
+
+            account.ChangeAccountCurrency(account.AccountNumber, chosenCurrency);
         }
 
         public static CurrencyType GetCurrencyMenu(BankAccount account)
         {
             Menu.MenuOptions = CurrencyManager.AccountCurrency.Keys.Select(key => key.ToString()).ToList();
-         string title = "Please select the currency you wish to convert into.";
+            string title = "Please select the currency you wish to convert into.";
             int menuChoice = Menu.Run(title);
 
-      
+
 
             switch (menuChoice)
             {
                 case 0:
 
                     return CurrencyType.SEK;
-                   
+
                 case 1:
-                
+
                     return CurrencyType.EUR;
-                
+
                 case 2:
                     return CurrencyType.USD;
-                
+
                 case 3:
                     return CurrencyType.GBP;
-        
-       
+
+
                 default:
                     return account.Currency;
             }

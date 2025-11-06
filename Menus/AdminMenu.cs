@@ -56,7 +56,7 @@ namespace BankApp.Menus
             Console.WriteLine("---User Creation Tool---\n");
             Console.WriteLine("Please enter a name for user:");
             string name = Console.ReadLine() ?? "";
-            
+
             bool successful = false;
             string balanceInput;
             decimal decimalNumber = 0;
@@ -94,13 +94,13 @@ namespace BankApp.Menus
                 User createdUserwInfo = Admin.CreateUserwInfo(Password, name, email, phone, residence, gender, bankAccount);
                 Console.WriteLine(createdUserwInfo.ToString());
             }
-            else 
+            else
             {
 
                 User createdUser = Admin.CreateUser(Password, name, bankAccount);
                 Console.WriteLine(createdUser.ToString());
             }
-            
+            Console.WriteLine("Press any key to return...");
             Console.ReadKey();
         }
     }

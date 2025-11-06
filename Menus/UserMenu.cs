@@ -8,12 +8,12 @@ namespace BankApp.Menus
     {
         public static List<string> GetUserOptions { get; set; } = new List<string>
         {
-            "Check Accounts",
-            "Edit User Info",
-            "Transfer Money Between Account(s)",
-            "Transfer to Account",
+            "Check accounts",
+            "Edit user info",
+            "Own tranfer",
+            "Transaction",
             "Apply for loan",
-            "Add New Account(s)",
+            "Add new account",
             "Change bankaccount name",
             "Exit To Main Menu..."
         };
@@ -61,7 +61,6 @@ namespace BankApp.Menus
             }
         }
 
-        // TODO: Important, add a while loop to esc to menu for every method
         public static void CheckAccountsVisual(User currentUser)
         {
             Console.Clear();
@@ -105,7 +104,43 @@ namespace BankApp.Menus
                     return;
             }
         }
+        public static void AskReturnOrContinue(User currentUser)
+        {
+            Console.WriteLine("Press ESC to return to menu or ENTER to continue");
+            ConsoleKeyInfo key = Console.ReadKey(true);
 
+            if (key.Key == ConsoleKey.Escape)
+            {
+                Console.Clear();
+                UserMenuStart(currentUser);
+            }
+        }
+        public static AccountNumber ChooseAccountNumber(User currentUser)
+        {
+            List<AccountNumber> allAccountNumbers = currentUser.AccountNumbersList(currentUser);
+            BankAccount currentUserBankAccount;
+            for (int i = 0; i < allAccountNumbers.Count; i++)
+            {
+                currentUserBankAccount = currentUser.FindAccount(allAccountNumbers[i]);
+                Console.WriteLine($"{i + 1}. - {allAccountNumbers[i]} - {currentUserBankAccount.AccountName} - {currentUserBankAccount.Balance}{currentUserBankAccount.Currency}");
+            }
+            AccountNumber selectedAccount;
+            while (true)
+            {
+                Console.WriteLine("Enter the corresponding account choice:");
+                string accountInput = Console.ReadLine() ?? "";
+                if (int.TryParse(accountInput, out int choice) && choice > 0 && choice <= allAccountNumbers.Count)
+                {
+                    selectedAccount = allAccountNumbers[choice - 1];
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid choice. Please try again.");
+                }
+            }
+            return selectedAccount;
+        }
         public static void DepositVisual(User currentUser, BankAccount chosenAccountNumber)
         {
             Console.Clear();
@@ -124,7 +159,6 @@ namespace BankApp.Menus
             Console.WriteLine("Press any key to return...");
             Console.ReadKey();
         }
-
         public static void WithdrawVisual(User currentUser, BankAccount chosenAccountNumber)
         {
             Console.Clear();
@@ -143,7 +177,6 @@ namespace BankApp.Menus
             Console.WriteLine("Press any key to return...");
             Console.ReadKey();
         }
-
         public static void TransactionHistoryVisual(BankAccount account)
         {
             Console.Clear();
@@ -152,7 +185,6 @@ namespace BankApp.Menus
             Console.WriteLine("Press any key to return...");
             Console.ReadKey();
         }
-
         public static void EditUserVisual(User currentUser)
         {
             Console.Clear();
@@ -246,7 +278,7 @@ namespace BankApp.Menus
         {
             Console.Clear();
             Console.CursorVisible = true;
-            Console.WriteLine("---Transfer Money Between Account(s)---");
+            Console.WriteLine("---Own Transfer---");
             List<AccountNumber> allAccountNumbers = currentUser.AccountNumbersList(currentUser);
 
             if (allAccountNumbers.Count < 2)
@@ -263,6 +295,9 @@ namespace BankApp.Menus
 
             decimal value = HelperMethod.HelperDecimal("Amount:");
 
+            Console.WriteLine("Continue to complete your transfer");
+            AskReturnOrContinue(currentUser);
+
             currentUser.HandleTransfer(toAccount, fromAccount, value);
 
             Console.ReadKey();
@@ -272,14 +307,7 @@ namespace BankApp.Menus
         {
             Console.Clear();
             Console.CursorVisible = true;
-            Console.WriteLine("---Transfer to Account---");
-
-            Console.WriteLine("Press esc to return to menu");
-            ConsoleKeyInfo escapeKey = Console.ReadKey(true);
-            if (escapeKey.Key == ConsoleKey.Escape)
-            {
-                UserMenuStart(currentUser);
-            }
+            Console.WriteLine("---Transaction---");
 
             Console.WriteLine("Choose the account you want to transfer money from:");
             AccountNumber fromAccount = ChooseAccountNumber(currentUser);
@@ -299,6 +327,7 @@ namespace BankApp.Menus
                 if (matchedAccount == null)
                 {
                     Console.WriteLine("Could not find this account number, please try again.");
+                    AskReturnOrContinue(currentUser);
                     continue;
                 }
                 if (currentUser.AccountNumbersList(currentUser).Contains(matchedAccount.AccountNumber))
@@ -311,40 +340,13 @@ namespace BankApp.Menus
                 break;
 
             }
+            Console.WriteLine("Continue to complete your transaction");
+            AskReturnOrContinue(currentUser);
 
             Transaction newTransaction = currentUser.CreateTransaction(toAccount, fromAccount, value, personalNote, TransactionType.Normal);
-  
 
             Console.WriteLine("Your transaction was successful");
-
             Console.ReadKey();
-        }
-
-        public static AccountNumber ChooseAccountNumber(User currentUser)
-        {
-            List<AccountNumber> allAccountNumbers = currentUser.AccountNumbersList(currentUser);
-            BankAccount currentUserBankAccount;
-            for (int i = 0; i < allAccountNumbers.Count; i++)
-            {
-                currentUserBankAccount = currentUser.FindAccount(allAccountNumbers[i]);
-                Console.WriteLine($"{i + 1}. - {allAccountNumbers[i]} - {currentUserBankAccount.AccountName} - {currentUserBankAccount.Balance}{currentUserBankAccount.Currency}");
-            }
-            AccountNumber selectedAccount;
-            while (true)
-            {
-                Console.WriteLine("Enter the corresponding account choice:");
-                string accountInput = Console.ReadLine() ?? "";
-                if (int.TryParse(accountInput, out int choice) && choice > 0 && choice <= allAccountNumbers.Count)
-                {
-                    selectedAccount = allAccountNumbers[choice - 1];
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid choice. Please try again.");
-                }
-            }
-            return selectedAccount;
         }
         public static void CreateLoanVisual(User currentUser)
         {
@@ -374,6 +376,7 @@ namespace BankApp.Menus
                 else
                 {
                     Console.WriteLine("Invalid choice. Please try again.");
+
                 }
             }
 
@@ -389,6 +392,9 @@ namespace BankApp.Menus
 
             Console.WriteLine("Please provide a short note describing the purpose of your loan:");
             string personalNote = Console.ReadLine() ?? "";
+
+            Console.WriteLine("Continue to apply for your loan");
+            AskReturnOrContinue(currentUser);
 
             Console.WriteLine("----------------");
 
@@ -409,7 +415,7 @@ namespace BankApp.Menus
         {
             Console.Clear();
             Console.CursorVisible = true;
-            Console.WriteLine("---Add New Account(s)---");
+            Console.WriteLine("---Add New Account---");
 
             Console.WriteLine("Enter account name:");
             string accountName = Console.ReadLine() ?? "";
@@ -476,7 +482,6 @@ namespace BankApp.Menus
 
             UserMenuStart(currentUser);
         }
-
         public static void ChangeBankAccountNameVisual(User currentUser)
         {
             var accounts = currentUser.UserBankAccounts;

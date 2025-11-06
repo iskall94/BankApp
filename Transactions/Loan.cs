@@ -19,16 +19,15 @@ namespace BankApp.Transactions
         /// <param name="years">The duration of the loan in years.</param>
         /// <returns>A string showing the loan amount, interest rate, and total payment.</returns>
         /// 
-        // TODO: "kr" is hardcoded, set proper currency.
         public string CalculateLoan(decimal loanAmount, decimal interestRate, int years)
         {
             decimal totalInterest = loanAmount * (interestRate / 100) * years;
             decimal totalPayment = loanAmount + totalInterest;
 
-            return "Your loan has been granted. \n" +
-                   $"Loan Amount: {loanAmount} kr\n" +
+            return "Your loan has been granted.\n" +
+                   $"Loan Amount: {loanAmount}\n" +
                    $"Interest Rate: {interestRate}% per year\n" +
-                   $"Total Payment: {totalPayment} kr\n";
+                   $"Total Payment: {totalPayment}\n";
         }
     }
 }

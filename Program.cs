@@ -21,7 +21,7 @@ namespace BankApp
 
             List<BankAccount> userBankAccounts = new List<BankAccount>();
             userBankAccounts.Add(test);
-            User user = new User(Guid.NewGuid(), "default", "Gabriel Kassarp", userBankAccounts);
+            User user = new User(Guid.NewGuid(), "default", "GK", userBankAccounts);
 
             UserDB.AddUser(user);
             user.IsLocked = false;

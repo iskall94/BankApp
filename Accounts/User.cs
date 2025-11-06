@@ -49,7 +49,7 @@ namespace BankApp.Accounts
 
         public static void Login()
         {
-          int MAX_ATTEMPTS = 3;
+            int MAX_ATTEMPTS = 3;
             Console.Clear();
             int failedCount = 0;
             Console.Write("Enter your name: ");
@@ -64,7 +64,7 @@ namespace BankApp.Accounts
                 {
                     userFound = true;
 
-                    while (failedCount < MAX_ATTEMPTS )
+                    while (failedCount < MAX_ATTEMPTS)
                     {
                         if (user.IsLocked)
                         {
@@ -162,7 +162,7 @@ namespace BankApp.Accounts
                 case "residence": user.Residence = value; break;
                 case "gender": user.Gender = value; break;
                 default: Console.WriteLine("Field not found. Try again."); break;
-                    
+
             }
 
 
@@ -249,11 +249,20 @@ namespace BankApp.Accounts
         {
             BankAccount From = FindAccount(from);
             BankAccount To = FindAccount(to);
-            From.Withdraw(value);
-            To.Deposit(value);
 
-            Console.WriteLine($" FROM {From}");
-            Console.WriteLine($" TO {To}");
+            try
+            {
+                From.Withdraw(value);
+                To.Deposit(value);
+
+                Console.WriteLine($" FROM {From}");
+                Console.WriteLine($" TO {To}");
+
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
         }
 

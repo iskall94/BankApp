@@ -170,7 +170,11 @@ namespace BankApp.Menus
             Console.Write("How much money would you like to withdraw? ");
             if (decimal.TryParse(Console.ReadLine(), out decimal amount))
             {
-                chosenAccountNumber.Withdraw(amount);
+                try
+                {
+                    chosenAccountNumber.Withdraw(amount);
+                }
+                catch (Exception ex) { Console.WriteLine(ex.ToString()); }
             }
             else
             {
@@ -316,17 +320,17 @@ namespace BankApp.Menus
             Console.WriteLine("Choose the account you want to transfer money from:");
             AccountNumber fromAccount = ChooseAccountNumber(currentUser);
 
-            decimal value = HelperMethod.HelperDecimal("Amount:");
             Console.WriteLine("Personal note:");
             string personalNote = Console.ReadLine() ?? "";
 
+            BankAccount matchedAccount;
             AccountNumber toAccount;
 
             while (true)
             {
                 Console.WriteLine("Enter the account you want to transfer money to: ");
                 string input = Console.ReadLine() ?? "";
-                BankAccount matchedAccount = BankAccountDB.BankAccounts.FirstOrDefault(a => a.AccountNumber.ToString() == input);
+                matchedAccount = BankAccountDB.BankAccounts.FirstOrDefault(a => a.AccountNumber.ToString() == input);
 
                 if (matchedAccount == null)
                 {
@@ -342,8 +346,22 @@ namespace BankApp.Menus
                 }
                 toAccount = matchedAccount.AccountNumber;
                 break;
-
             }
+
+            decimal value;
+            while (true)
+            {
+                decimal amount = HelperMethod.HelperDecimal("Amount:");
+                if (amount > matchedAccount.Balance)
+                {
+                    Console.WriteLine("You cannot transfer more than your current balance.");
+                    continue;
+                }
+
+                value = amount;
+                break;
+            }
+
             Console.WriteLine("Continue to complete your transaction");
             AskReturnOrContinue(currentUser);
 

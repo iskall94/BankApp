@@ -1,6 +1,6 @@
 ﻿using BankApp.Accounts;
-using BankApp.Enums;
 using BankApp.Currencies;
+using BankApp.Enums;
 
 namespace BankApp.Transactions
 {
@@ -30,7 +30,7 @@ namespace BankApp.Transactions
         {
         }
 
-        public  static void ExecutePendingTransactions()
+        public static void ExecutePendingTransactions()
         {
             int isQuarter = DateTime.Now.Minute;
 
@@ -58,7 +58,7 @@ namespace BankApp.Transactions
         /// </remarks>
         public void ExecuteTransaction(Transaction transaction)
         {
-            if (transaction.Value  > 100000)
+            if (transaction.Value > 100000)
             {
                 EmailService.SendIssueCodeEmail(3, null, null, transaction);
             }
@@ -81,12 +81,15 @@ namespace BankApp.Transactions
             {
                 decimal senderToSEK = CurrencyManager.AccountCurrency[senderAccount.Currency];
                 decimal receiverToSEK = CurrencyManager.AccountCurrency[recieverAccount.Currency];
-
                 transaction.Value = transaction.Value * (senderToSEK / receiverToSEK);
             }
 
-            senderAccount.Withdraw(transaction.Value);
-            recieverAccount.Deposit(transaction.Value);
+            try
+            {
+                senderAccount.Withdraw(transaction.Value);
+                recieverAccount.Deposit(transaction.Value);
+            }
+            catch (Exception ex) { Console.WriteLine(ex.ToString()); }
 
             senderAccount.AddTransaction(transaction);
             recieverAccount.AddTransaction(transaction);

@@ -11,7 +11,7 @@ namespace BankApp.Menus
         {
             "Check accounts",
             "Edit user info",
-            "Own tranfer",
+            "Own transfer",
             "Transaction",
             "Apply for loan",
             "Add new account",
@@ -66,15 +66,18 @@ namespace BankApp.Menus
         {
             Console.Clear();
             Console.CursorVisible = true;
-
             Console.WriteLine("\nEnter which account you would like to handle: ");
             AccountNumber chosenAccountNumber = ChooseAccountNumber(currentUser);
 
             BankAccount currentUserBankAccount;
             currentUserBankAccount = currentUser.FindAccount(chosenAccountNumber);
+            string title = "---Check Accounts---\n";
+
+
 
             List<string> accountOptions = new List<string>
             {
+
                 "Deposit",
                 "Withdraw",
                 "Change Currency",
@@ -82,12 +85,13 @@ namespace BankApp.Menus
                 "Return to User Menu",
             };
 
+           
             Menu.MenuOptions = accountOptions;
 
 
             Console.WriteLine($"Account: {currentUserBankAccount.AccountNumber} | Balance: {currentUserBankAccount.Balance:C}");
             Console.WriteLine("Do you want to deposit/withdraw money or see transaction history from account?");
-            int menuChoice = Menu.Run();
+            int menuChoice = Menu.Run(title);
 
             switch (menuChoice)
             {
@@ -196,6 +200,7 @@ namespace BankApp.Menus
         public static void EditUserVisual(User currentUser)
         {
             Console.Clear();
+            string title = "---Edit User Info---\n";
 
 
             Console.WriteLine("Current User Information:\n");
@@ -219,7 +224,7 @@ namespace BankApp.Menus
             Menu.MenuOptions = userData;
             Console.WriteLine("Please select a data field to change:\n");
 
-            int menuChoice = Menu.Run();
+            int menuChoice = Menu.Run(title);
 
             string field = "";
 
@@ -286,7 +291,7 @@ namespace BankApp.Menus
         {
             Console.Clear();
             Console.CursorVisible = true;
-            Console.WriteLine("---Own Transfer---");
+            Console.WriteLine("---Own Transfer---\n");
             List<AccountNumber> allAccountNumbers = currentUser.AccountNumbersList(currentUser);
 
             if (allAccountNumbers.Count < 2)
@@ -315,7 +320,7 @@ namespace BankApp.Menus
         {
             Console.Clear();
             Console.CursorVisible = true;
-            Console.WriteLine("---Transaction---");
+            Console.WriteLine("---Transaction---\n");
 
             Console.WriteLine("Choose the account you want to transfer money from:");
             AccountNumber fromAccount = ChooseAccountNumber(currentUser);
@@ -374,7 +379,7 @@ namespace BankApp.Menus
         {
             Console.Clear();
             Console.CursorVisible = true;
-            Console.WriteLine("---Apply for loan---");
+            Console.WriteLine("---Apply for loan---\n");
 
             Console.WriteLine("Please select the bank account to receive your loan:");
             List<AccountNumber> allAccountNumbers = currentUser.AccountNumbersList(currentUser);
@@ -403,7 +408,7 @@ namespace BankApp.Menus
             }
 
             Console.Clear();
-            Console.WriteLine("---Apply for loan---");
+            Console.WriteLine("---Apply for loan---\n");
 
             Console.WriteLine($"Account: {selectedAccount}");
             Console.WriteLine($"Your current balance: {currentUserBankAccount.Balance}.");
@@ -437,7 +442,7 @@ namespace BankApp.Menus
         {
             Console.Clear();
             Console.CursorVisible = true;
-            Console.WriteLine("---Add New Account---");
+            Console.WriteLine("---Add New Account---\n");
 
             Console.WriteLine("Enter account name:");
             string accountName = Console.ReadLine() ?? "";
@@ -547,7 +552,7 @@ namespace BankApp.Menus
         public static void ChangeCurrencyVisual(User user, BankAccount account)
         {
             Console.Clear();
-            Console.WriteLine("Kindly the currenct type you wish to change to.");
+            Console.WriteLine("Kindly enter the currenct type you wish to change to.");
             CurrencyType chosenCurrency = GetCurrencyMenu(account);
        
   

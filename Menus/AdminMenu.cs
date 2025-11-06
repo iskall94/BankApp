@@ -53,7 +53,7 @@ namespace BankApp.Menus
         {
             Console.Clear();
             Console.CursorVisible = true;
-            Console.WriteLine("---User Creation Tool---");
+            Console.WriteLine("---User Creation Tool---\n");
             Console.WriteLine("Please enter a name for user:");
             string name = Console.ReadLine() ?? "";
             

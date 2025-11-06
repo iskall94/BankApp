@@ -48,6 +48,7 @@ namespace BankApp
         public static void ShowAllUsers()
         {
             Console.Clear();
+            Console.WriteLine("---List Of Accounts---\n");
 
             allUsers.ForEach(user =>
             {

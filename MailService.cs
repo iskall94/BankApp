@@ -24,21 +24,25 @@ namespace BankApp
 
             string Block() => Random.Next(0, 11000000).ToString("D6");
           
-
             return Block();
         }
-      
+
+        public static void EnvErrorMessage(string? senderEmail, string? senderPassword, string? recipientEmail)
+        {
+            if (string.IsNullOrEmpty(senderEmail) || string.IsNullOrEmpty(senderPassword) || string.IsNullOrEmpty(recipientEmail))
+            {
+                throw new InvalidOperationException
+                    ("ERROR: You must setup required env. variables for (\"SENDER_EMAIL_ADDRESS\": Your gmail address), (\"GMAIL_APP_PASSWORD\": Your gmail App Password) and (\"RECIPIENT_EMAIL_ADDRESS\": recipients gmail address).");
+            }
+        }
+        
         public  static string SendLoginCodeEmail()
         {
             string? senderEmail = Environment.GetEnvironmentVariable(EnvEmail);
             string? senderPassword = Environment.GetEnvironmentVariable(EnvPassword);
             string? recipientEmail = Environment.GetEnvironmentVariable(EnvRecipientEmail);
 
-            if (string.IsNullOrEmpty(senderEmail) || string.IsNullOrEmpty(senderPassword))
-            {
-                throw new InvalidOperationException
-                    ("ERROR: You must setup required env. variables for (\"SENDER_EMAIL_ADDRESS\": Your gmail address) and (\"GMAIL_APP_PASSWORD\": Your gmail App Password).");
-            }
+            EnvErrorMessage(senderEmail, senderPassword, recipientEmail);
 
             // Console.WriteLine("Please write recipients email:");
             // string recipientEmail = Console.ReadLine();
@@ -98,11 +102,7 @@ namespace BankApp
             string? senderPassword = Environment.GetEnvironmentVariable(EnvPassword);
             string? recipientEmail = Environment.GetEnvironmentVariable(EnvRecipientEmail);
 
-            if (string.IsNullOrEmpty(senderEmail) || string.IsNullOrEmpty(senderPassword))
-            {
-                throw new InvalidOperationException
-                    ("ERROR: You must setup required env. variables for (\"SENDER_EMAIL_ADDRESS\": Your gmail address) and (\"GMAIL_APP_PASSWORD\": Your gmail App Password).");
-            }
+            EnvErrorMessage(senderEmail, senderPassword, recipientEmail);
 
             // string recipientEmail = Console.ReadLine();
             string IssueText = issueOption switch

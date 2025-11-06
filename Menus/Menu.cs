@@ -72,10 +72,9 @@ namespace BankApp.Menus
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.WriteLine($" {currentMenuOption} ");
                 }
-
-                // A simple check to prevent the Console Terminal from messing up its colours.
-                Console.ResetColor();
             }
+            // A simple check to prevent the Console Terminal from messing up its colours.
+            Console.ResetColor();
         }
     }
 }

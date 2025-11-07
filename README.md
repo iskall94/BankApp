@@ -22,6 +22,7 @@ Group 3, Project for Chas Academy
 - https://github.com/users/iskall94/projects/1
 - https://miro.com/app/board/uXjVJ3ZTTn8=/
 <img width="1517" height="917" alt="bild" src="https://github.com/user-attachments/assets/2730b770-b1c9-4ed7-8dc0-71cdefd5f46b" />
+
 ---
 ### All classes in the program:
 #### Admin.cs  

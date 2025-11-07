@@ -34,7 +34,7 @@ namespace BankApp
             }
             Console.WriteLine("-----------------------------------------");
             Console.WriteLine("Current Users that are unlocked:");
-            foreach(User user in allUsersUnlocked)
+            foreach (User user in allUsersUnlocked)
             {
                 Console.WriteLine(user.Name);
             }
@@ -51,9 +51,10 @@ namespace BankApp
             {
                 Console.WriteLine("\n--------------------------------------------------------");
                 Console.WriteLine(user.ToString());
-                
-                
+
+
             });
+            Console.WriteLine("Press any key to return...");
             Console.ReadKey();
         }
     }

@@ -1,15 +1,27 @@
 # Bankapp
 Group 3, Project for Chas Academy
-
 ---
-
 ## Welcome to Chas Bank 3
+<img width="589" height="312" alt="bild" src="https://github.com/user-attachments/assets/5da6a5cd-b6b2-4d03-a42d-e14317e40cd1" />
+
 ---
 ## How To Use the App
+1. You need to first setup an app password, from specifically GMAIL. To do that, go to your gmail account settings, search for app password and then set it up. Copy your APP Password and add it to your Environment Variables in the next step below.
+2. Before starting the program, you need to setup Environment variables on your computer. In your windows searchbar, search for "Environment Variables". In the user section, add the following:
+- Variable: "SENDER_EMAIL_ADDRESS" with value: "your gmail address here"
+- Variable: "RECIPIENT_EMAIL_ADDRESS" with value: "your or someone elses gmail account here"
+- Variable: "GMAIL_APP_PASSWORD" with value: "your app password from step 1 here"
+3. Start the app! Navigate the app using your up and down arrow keys. To do anything, you must first login as admin and create users. If step 2 is done correctly, a code is sent to your recipients email address. Enter the code to enter the admin menu.
+4. Create users with whatever balance you want.
+5. Login as the user you created. Every user starts with default password and is asked to change it.
+6. You are now in user menu, navigate in the different menu options and try things out. Make new accounts, transfer money between own accounts (You can only create a transaction to other User's accounts by knowing their account number provided by Admin), etc.
+7. Sending an unusual high transaction will notify the admin by email.
+8. Test around and have fun!
 ---
-### Links:
+### Links and Images:
 - https://github.com/users/iskall94/projects/1
 - https://miro.com/app/board/uXjVJ3ZTTn8=/
+<img width="1517" height="917" alt="bild" src="https://github.com/user-attachments/assets/2730b770-b1c9-4ed7-8dc0-71cdefd5f46b" />
 ---
 ### All classes in the program:
 #### Admin.cs  

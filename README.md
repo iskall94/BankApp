@@ -4,8 +4,12 @@ Group 3, Project for Chas Academy
 ---
 
 ## Welcome to Chas Bank 3
-
+---
 ## How To Use the App
+---
+### Links:
+- https://github.com/users/iskall94/projects/1
+- https://miro.com/app/board/uXjVJ3ZTTn8=/
 ---
 ### All classes in the program:
 #### Admin.cs  

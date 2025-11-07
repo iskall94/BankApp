@@ -25,9 +25,8 @@ namespace BankApp.Menus
             while (true)
             {
                 Menu.MenuOptions = GetUserOptions;
-                string title = "---User Menu---";
+                string title = $"---User Menu---\nWelcome, {currentUser.Name}!\n";
 
-                Console.WriteLine($"Welcome, {currentUser.Name}!");
                 int menuChoice = Menu.Run(title);
 
                 switch (menuChoice)
@@ -325,6 +324,7 @@ namespace BankApp.Menus
 
             Console.WriteLine("Choose the account you want to transfer money from:");
             AccountNumber fromAccount = ChooseAccountNumber(currentUser);
+            BankAccount fromCurrentUser = currentUser.FindAccount(fromAccount);
 
             Console.WriteLine("Personal note:");
             string personalNote = Console.ReadLine() ?? "";
@@ -358,7 +358,7 @@ namespace BankApp.Menus
             while (true)
             {
                 decimal amount = HelperMethod.HelperDecimal("Amount:");
-                if (amount > matchedAccount.Balance)
+                if (amount >= fromCurrentUser.Balance)
                 {
                     Console.WriteLine("You cannot transfer more than your current balance.");
                     continue;

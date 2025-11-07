@@ -100,7 +100,7 @@ namespace BankApp.Transactions
                    $"To account: {ToAccount}\n" +
                    $"From account: {FromAccount}\n" +
                    $"Value: {Value}\n" +
-                   $"Personal note: {PersonalNote}%\n";
+                   $"Personal note: {PersonalNote}\n";
 
         }
     }
